@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\DaftarController;
+use App\Http\Controllers\api\MasterDataController;
 use App\Http\Controllers\Api\TopUpController;
 use App\Http\Controllers\Api\WithdrawController;
 use Illuminate\Http\Request;
@@ -30,13 +31,14 @@ Route::post('register', [AuthController::class,'Register']);
 Route::post('login', [AuthController::class,'Login']);
 
 // MAIN API BANK
-Route::get('/bank/{type_payment}', [BankController::class, 'showByType_Payment']);
+Route::get('/payment/{type}', [MasterDataController::class, 'showByType']);
 
 //TOPUP
 Route::post('/top_up', [TopUpController::class,'Store']);
 
 
 //WITHDRAW
-Route::post('withdraw', [WithdrawController::class,'Store']);
-Route::post('withdraw', [WithdrawController::class,'Store']);
+Route::post('/withdraw', [WithdrawController::class,'Store']);
 
+Route::get('rate',[MasterDataController::class,'rate']);
+Route::get('metode_pembayaran',[MasterDataController::class,'metode_pembayaran']);

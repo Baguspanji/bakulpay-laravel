@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentMasterDataController;
+use App\Http\Controllers\RateMasterDataController;
+use App\Models\RateMasterData;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -19,7 +22,7 @@ use Illuminate\Support\Facades\Http;
 //     return view('welcome');
 // });
 
-Route::get('/',[HomeController::class,'dashboard'])->name('dashboard');
+Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/payment', [HomeController::class, 'payment'])->name('payment');
 Route::get('/top-up', [HomeController::class, 'topUp'])->name('topup');
 Route::get('/withdraw', [HomeController::class, 'withdraw'])->name('withdraw');
@@ -28,3 +31,12 @@ Route::get('/pay_md', [HomeController::class, 'pay_md'])->name('pay_md');
 Route::get('/transactionmd', [HomeController::class, 'transactionmd'])->name('transactionmd');
 Route::get('/rate', [HomeController::class, 'rate'])->name('rate');
 Route::get('/cs_management', [HomeController::class, 'cs_management'])->name('cs_management');
+
+Route::get('/form_transactionmd', [RateMasterDataController::class, 'createFormRateMasterData']);
+Route::post('submit/form_transactionmd', [RateMasterDataController::class, 'submitForm'])->name('submit.form_transactionmd');
+
+Route::get('/form_paymentmd', [PaymentMasterDataController::class, 'createFormPaymentMasterData']);
+Route::post('submit/form_paymentmd', [PaymentMasterDataController::class, 'submitForm'])->name('submit.form_paymentmd');
+
+Route::get('/edit-rate/{id}', [RateMasterDataController::class, 'edit_rate'])->name('edit_rate');
+Route::post('/update-rate/{id}', [RateMasterDataController::class, 'update_rate'])->name('update_rate');

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PaymentMasterData;
+use App\Models\RateMasterData;
+use App\Models\TopUp;
+use App\Models\Withdraw;
 use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
@@ -20,11 +24,15 @@ class HomeController extends Controller
     }
     public function topup()
     {
-        return view('transactions.topup');
+        $top_up = TopUp::all();
+
+        return view('transactions.topup', ['top_up' => $top_up]);
     }
     public function withdraw()
     {
-        return view('transactions.withdraw');
+        $withdraw = Withdraw::all();
+
+        return view('transactions.withdraw', ['withdraw' => $withdraw]);
     }
 
     public function wallet()
@@ -34,17 +42,23 @@ class HomeController extends Controller
 
     public function pay_md()
     {
-        return view('master_data.paymentmd');
+        $payment_master_data = PaymentMasterData::all();
+
+        return view('master_data.paymentmd', ['payment_master_data' => $payment_master_data]);
     }
 
     public function transactionmd()
     {
-        return view('master_data.transactionmd');
+        $rate_master_data = RateMasterData::all();
+
+        return view('master_data.transactionmd', ['rate_master_data' => $rate_master_data]);
     }
 
     public function rate()
     {
-        return view('settings.rate');
+        $rate_master_data = RateMasterData::all();
+
+        return view('settings.rate', ['rate_master_data' => $rate_master_data]);
     }
 
     public function cs_management()

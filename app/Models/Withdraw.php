@@ -11,9 +11,16 @@ class Withdraw extends Model
     protected $fillable = ['email',
     'jumlah',
     'total_pembayaran',
-    'bank',
-    'kode_bank',
+    'nama_bank',
+    'kode_bank_client',
     'nama',
+    'status',
+    'tanggal',
     'bukti_pembayaran'];
     use HasFactory;
+
+    public function rateMasterData()
+    {
+        return $this->belongsTo(RateMasterData::class, 'nama_bank', 'nama_bank');
+    }
 }

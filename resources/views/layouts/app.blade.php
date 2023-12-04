@@ -73,14 +73,14 @@
                     <a href="{{ route('wallet') }}"><iconify-icon icon="solar:wallet-bold"></iconify-icon>Wallet</a>
                 </li>
 
-                <li class="{{ Request::is('transactionmd*') || Request::is('pay_md*') ? 'active' : '' }}">
+                <li class="{{ Request::is('transactionmd*') || Request::is('pay_md*') || Request::is('form_transactionmd*') ? 'active' : '' }}">
                     <a href="#MDSubmenu" data-toggle="collapse" aria-expanded="false">
                         <iconify-icon icon="tdesign:data"></iconify-icon>
                         Master Data
                         <span class="arrow-icon"><iconify-icon icon="fe:arrow-down"></iconify-icon></span>
                     </a>
                     <ul class="collapse list-unstyled" id="MDSubmenu">
-                        <li class="{{ Request::is('transactionmd*') ? 'active' : '' }}">
+                        <li class="{{ Request::is('transactionmd*') || Request::is('form_transactionmd*') ? 'active' : '' }}">
                             <a href="{{ route('transactionmd') }}"><iconify-icon
                                     icon="fa6-solid:money-bill"></iconify-icon>Transaction MD</a>
                         </li>
@@ -91,14 +91,14 @@
                     </ul>
                 </li>
 
-                <li class="{{ Request::is('rate*') || Request::is('cs_management*') ? 'active' : '' }}">
+                <li class="{{ Request::is('rate*') || Request::is('cs_management*') || Request::is('edit-rate*') ? 'active' : '' }}">
                     <a href="#SettingsSubmenu" data-toggle="collapse" aria-expanded="false">
                         <iconify-icon icon="lets-icons:setting-fill"></iconify-icon>
                         Settings
                         <span class="arrow-icon"><iconify-icon icon="fe:arrow-down"></iconify-icon></span>
                     </a>
                     <ul class="collapse list-unstyled" id="SettingsSubmenu">
-                        <li class="{{ Request::is('rate*') ? 'active' : '' }}">
+                        <li class="{{ Request::is('rate*') || Request::is('edit-rate*') ? 'active' : '' }}">
                             <a href="{{ route('rate') }}"><iconify-icon
                                     icon="fa6-solid:money-bill"></iconify-icon>Rate</a>
                         </li>

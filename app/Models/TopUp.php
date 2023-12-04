@@ -8,12 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class TopUp extends Model
 {
     protected $table = "top_up";
-    protected $fillable = ['email',
-                            'jumlah',
-                            'total_pembayaran',
-                            'bank',
-                            'kode_bank',
-                            'nama',
-                            'bukti_pembayaran'];
+    protected $fillable = [
+        'email',
+        'jumlah',
+        'total_pembayaran',
+        'nama_bank',
+        'kode_bank_client',
+        'nama',
+        'status',
+        'tanggal',
+        'bukti_pembayaran'
+    ];
     use HasFactory;
+
+    public function rateMasterData()
+    {
+        return $this->belongsTo(RateMasterData::class, 'nama_bank', 'nama_bank');
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class WithdrawController extends Controller
 {
     /**
@@ -21,18 +22,18 @@ class WithdrawController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'email'=>'required',
-            'jumlah'=>'required',
-            'total_pembayaran'=>'required',
-            'bank'=>'required',
-            'kode_bank'=>'required',
-            'nama'=>'required',
-            'bukti_pembayaran'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'jumlah' => 'required',
+            'total_pembayaran' => 'required',
+            'nama_bank' => 'required',
+            'kode_bank_client' => 'required',
+            'nama' => 'required',
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if($validator->fails()) {
-            return response()->json($validator->errors(),422);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
         }
         $image = $request->file('bukti_pembayaran');
         $imagePath = $image->store('bukti_pembayaran', 'public');
@@ -42,11 +43,14 @@ class WithdrawController extends Controller
         $post->email = $request->email;
         $post->jumlah = $request->jumlah;
         $post->total_pembayaran = $request->total_pembayaran;
-        $post->bank = $request->bank;
-        $post->kode_bank = $request->kode_bank;
+        $post->nama_bank = $request->nama_bank;
+        $post->kode_bank_client = $request->kode_bank_client;
         $post->nama = $request->nama;
         $post->bukti_pembayaran = $imagePath;
 
+        // Set status secara otomatis
+        $post->status = 'Pending';
+        $post->tanggal = now();
 
         $post->save();
 

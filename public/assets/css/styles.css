@@ -256,10 +256,18 @@ CONTENT STYLE
     background-color: #afaeae;
 }
 
-#content p {
-    color: black;
+#content .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#content .container h2 {
+    color: #37398b;
     font-weight: bold;
     padding-top: 1em;
+    font-size: 18px;
 }
 
 #content .isi {
@@ -267,12 +275,24 @@ CONTENT STYLE
     background-color: #ffffff;
     border-radius: 15px;
     padding-bottom: 20px;
-}
-
-#content .isi {
     padding-top: 20px;
     padding-left: 20px;
     padding-right: 30px;
+    width: 100%;
+}
+
+#content .container a.btn-primary {
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: white;
+    color: black;
+    margin-right: 25px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14;
+    font-weight: bold;
 }
 
 /* Example CSS to move the search box to the left */
@@ -322,7 +342,7 @@ CONTENT STYLE
     font-size: 14px;
 }
 
-#myTable_paginate .paginate_button{
+#myTable_paginate .paginate_button {
     font-size: 14px;
 }
 
