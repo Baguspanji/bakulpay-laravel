@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
 use App\Models\TopUp;
@@ -20,7 +21,9 @@ class HomeController extends Controller
 
     public function payment()
     {
-        return view('transactions.payment');
+        $payment = Payment::all();
+
+        return view('transactions.payment', ['payment' => $payment]);
     }
     public function topup()
     {

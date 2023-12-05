@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\PaymentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentMasterDataController;
 use App\Http\Controllers\RateMasterDataController;
@@ -40,3 +41,9 @@ Route::post('submit/form_paymentmd', [PaymentMasterDataController::class, 'submi
 
 Route::get('/edit-rate/{id}', [RateMasterDataController::class, 'edit_rate'])->name('edit_rate');
 Route::post('/update-rate/{id}', [RateMasterDataController::class, 'update_rate'])->name('update_rate');
+
+Route::get('/form_payment', [PaymentController::class, 'createFormPayment']);
+Route::post('submit/form_payment', [PaymentController::class, 'submitForm'])->name('submit.form_payment');
+Route::get('/edit_payment/{id}', [PaymentController::class, 'edit_payment'])->name('edit_payment');
+Route::post('/update_payment/{id}', [PaymentController::class, 'update_payment'])->name('update_payment');
+
