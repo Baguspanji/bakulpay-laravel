@@ -32,7 +32,7 @@ Route::post('login', [AuthController::class,'Login']);
 Route::post('logout', [AuthController::class, 'logout']);
 
 // MAIN API BANK
-// Route::get('/payment/{type}', [MasterDataController::class, 'showByType']);
+Route::get('/payment/{type}', [MasterDataController::class, 'showByType']);
 
 //TOPUP
 Route::post('/top_up', [TopUpController::class,'Store']);
