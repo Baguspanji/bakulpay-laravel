@@ -19,7 +19,7 @@ a:focus {
     transition: all 0.3s;
 }
 
-.navbar {
+/* .navbar {
     padding: 15px 10px;
     background: #fff;
     border: none;
@@ -39,7 +39,7 @@ a:focus {
     height: 1px;
     border-bottom: 1px dashed #ddd;
     margin: 40px 0;
-}
+} */
 
 /* ---------------------------------------------------
 SIDEBAR STYLE
@@ -232,9 +232,7 @@ a.article:hover {
     width: 90%;
     display: block;
     margin: 0 auto;
-    /* Menengahkan gambar secara horizontal */
     text-align: center;
-    /* Menengahkan gambar secara horizontal */
 }
 
 hr {
@@ -281,7 +279,100 @@ CONTENT STYLE
     width: 100%;
 }
 
-#content .container a.btn-primary {
+/* #content .isi  */
+
+#content .isi form {
+    padding-top: 25px;
+    padding-left: 20px;
+}
+#content .isi .group {
+    color: #a8afbd;
+    display: flex;
+    margin-bottom: 15px;
+    padding-top: 5px;
+}
+
+#content .isi .group input {
+    /* width: 100%;
+    max-width: 200px; */
+    width: 30%;
+}
+#content .isi .group select {
+    /* width: 100%;
+    max-width: 200px; */
+    width: 30%;
+}
+
+#content .isi .label {
+    width: 150px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#content .isi .separator {
+    margin: 0 5px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#content .isi .value {
+    flex: 1;
+    padding-left: 20px;
+}
+#content .isi .value1 {
+    flex: 1;
+    padding-left: 20px;
+}
+#content .isi .value img {
+    border: 1px solid #c9c1c1;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 15px;
+    vertical-align: middle;
+    margin-top: 20px;
+    width: 30%;
+    height: 40%;
+}
+
+#content .isi .value1 img {
+    border: 1px solid #c9c1c1;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+#content .isi form .button {
+    float: right;
+    padding: 3px;
+    border-radius: 10px;
+    width: 100px;
+    background: #ffffff;
+    margin-right: 50px;
+    border: 1px solid #fafafa;
+    background-color: #00a8ed;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#content .container .add {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: white;
+    color: black;
+    margin-right: 25px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14;
+    font-weight: bold;
+}
+
+#content .container a .btn btn-primary {
+    float: right;
     border-radius: 10px;
     border: 1px solid white;
     background-color: white;
@@ -329,12 +420,7 @@ CONTENT STYLE
 #myTable thead th {
     font-size: 14px;
     text-align: center;
-}
-
-/* Mengatur ukuran isi tabel */
-#myTable tbody td {
-    font-size: 12px;
-    text-align: center;
+    color: #A8AFBD;
 }
 
 #myTable_length label,
@@ -345,6 +431,39 @@ CONTENT STYLE
 #myTable_paginate .paginate_button {
     font-size: 14px;
 }
+
+/* Custom styling for bank name and icon */
+#myTable tbody img {
+    float: left;
+    border-radius: 10px;
+    border: 1px solid #A8AFBD;
+    padding: 2px;
+    background-color: white;
+    width: 10%;
+    height: 5%;
+    margin-left: 35%;
+    margin-right: 5%;
+    margin-top: 2%;
+}
+
+#myTable tbody p{
+    float: left;
+    color: #000000;
+    margin-top: 2%;
+}
+
+#myTable tbody td {
+    text-align: center;
+    color: #000000;
+    font-size: 12px;
+}
+
+/* #myTable tbody td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+} */
 
 /* ---------------------------------------------------
 MEDIAQUERIES
@@ -379,6 +498,20 @@ MEDIAQUERIES
         margin-left: 0;
     }
 
+    #content .isi form .button {
+        width: 100%; /* Atau nilai lain yang sesuai */
+        margin-right: 0;
+    }
+
+    #content .isi .group input {
+        width: 100%;
+        max-width: 200px;
+    }
+    #content .isi .group select {
+        width: 100%;
+        max-width: 200px;
+    }
+
     /* #sidebarCollapse {
         display: block;
         position: fixed;
@@ -387,3 +520,4 @@ MEDIAQUERIES
         z-index: 1000;
     } */
 }
+

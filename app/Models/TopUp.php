@@ -9,6 +9,7 @@ class TopUp extends Model
 {
     protected $table = "top_up";
     protected $fillable = [
+        'user_id',
         'email',
         'jumlah',
         'total_pembayaran',

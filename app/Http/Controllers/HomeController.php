@@ -19,6 +19,12 @@ class HomeController extends Controller
         return abort(403);
     }
 
+    // public function dashboard()
+    // {
+    //     return view('/login');
+    //     return abort(403);
+    // }
+
     public function payment()
     {
         $payment = Payment::all();

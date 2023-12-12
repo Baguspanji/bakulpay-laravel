@@ -35,13 +35,13 @@
                             <td>{{ $data->tanggal }}</td>
                             <td>
                                 @if ($data->rateMasterData)
-                                    <img src="{{ asset('storage/' . $data->rateMasterData->icons) }}" alt="Bank Icon"
+                                    <img src="{{ $data->icons }}" alt="Bank Icon"
                                         width="30" height="30">
                                 @endif
                                 {{ $data->nama_bank }}
                             </td>
                             <td>{{ $data->nama }}</td>
-                            <td>{{ $data->kode_bank }}</td>
+                            <td>{{ $data->kode_bank_client }}</td>
                             <td>
                                 <iconify-icon icon="akar-icons:edit"></iconify-icon>
                             </td>

@@ -15,26 +15,26 @@ class AuthController extends Controller
      */
     public function Register(Request $request)
     {
-            $validator = Validator::make($request->all(),[
-            'name'=>'required',
-            'username'=>'required',
-            'number_phone'=>'required',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'username' => 'required',
+            'number_phone' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
 
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                'succes'=> false,
-                'message'=>'something wrong',
-                'data'=>$validator->errors()
+                'succes' => false,
+                'message' => 'something wrong',
+                'data' => $validator->errors()
             ]);
         }
 
         $input = $request->all();
-        $input['password']=bcrypt($input['password']);
+        $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
 
@@ -42,12 +42,10 @@ class AuthController extends Controller
         $success['name'] = $user->name;
 
         return response()->json([
-            'success'=>true,
-            'message'=>'register successful',
-            'data'=> $success
+            'success' => true,
+            'message' => 'register successful',
+            'data' => $success
         ]);
-
-
     }
 
     /**
@@ -55,31 +53,42 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        if(Auth::attempt(
-        ['email'=> $request->email,
-        'password'=> $request->password]
-        )){
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
-        $user = User::where('email', $request->email)->first();
+            $user = User::where('email', $request->email)->first();
 
-        $success['access_token']= $user->createToken('auth_token')->plainTextToken;
-        $success['token_type'] = 'Bearer';
-        $success['name']= $user->name;
+            $success['access_token'] = $user->createToken('auth_token')->plainTextToken;
+            $success['token_type'] = 'Bearer';
+            $success['name'] = $user->name;
+            $success['user_id'] = $user->id;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Login Berhasil',
+                'data' => $success,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cek kembali email dan password',
+                'data' => null
+            ]);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+
+        // Revoke the user's token
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+
         return response()->json([
-            'succes'=> true,
-            'message'=>'Login Berhasil',
-            'data'=> $success,
-
-        ]);
-
-    }else {
-        return response()->json([
-            'succes'=> false,
-             'message'=>'Cek kembali email dan password',
-             'data'=> null
+            'success' => true,
+            'message' => 'Logout berhasil',
         ]);
     }
-    }
+
 
     /**
      * Display the specified resource.

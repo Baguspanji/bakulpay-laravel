@@ -75,4 +75,15 @@ class PaymentController extends Controller
             return redirect()->route('edit_payment', ['id' => $request->input('id')])->with('error', 'Data tidak ditemukan');
         }
     }
+
+    public function getPaymentDetails($id)
+    {
+        $payment = Payment::find($id);
+
+        // Jika menggunakan view
+        return view('transactions.details', compact('payment'));
+
+        // Jika menggunakan data JSON
+        // return response()->json(['payment' => $payment]);
+    }
 }

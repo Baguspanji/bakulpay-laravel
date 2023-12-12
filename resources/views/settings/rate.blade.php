@@ -24,10 +24,10 @@
                 <tbody>
                     @foreach ($rate_master_data as $data)
                         <tr>
-                            <td>
-                                <img src="{{ asset('storage/' . $data->icons) }}" alt="Bank Icon" width="30"
-                                    height="30">
-                                {{ $data->nama_bank }}
+                            <td class="ikon">
+                                <img src="{{ $data->icons }}" alt="Bank Icon">
+                                <p>
+                                    {{ $data->nama_bank }}</p>
                             </td>
                             <td>{{ $data->type }}</td>
                             <td>
@@ -38,7 +38,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a class="btn btn-primary {{ Request::is('edit-rate*') ? 'active' : '' }}" href="{{ route('edit_rate', ['id' => $data->id]) }}">
+                                <a class="btn {{ Request::is('edit-rate*') ? 'active' : '' }}" href="{{ route('edit_rate', ['id' => $data->id]) }}">
                                     <iconify-icon icon="akar-icons:edit"></iconify-icon>
                                 </a>
                             </td>

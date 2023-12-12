@@ -35,9 +35,13 @@ Route::get('/cs_management', [HomeController::class, 'cs_management'])->name('cs
 
 Route::get('/form_transactionmd', [RateMasterDataController::class, 'createFormRateMasterData']);
 Route::post('submit/form_transactionmd', [RateMasterDataController::class, 'submitForm'])->name('submit.form_transactionmd');
+Route::get('/edit-transactionmd/{id}', [RateMasterDataController::class, 'edit_transactionmd'])->name('edit_transactionmd');
+Route::post('/update-transactionmd/{id}', [RateMasterDataController::class, 'update_transactionmd'])->name('update_transactionmd');
 
 Route::get('/form_paymentmd', [PaymentMasterDataController::class, 'createFormPaymentMasterData']);
 Route::post('submit/form_paymentmd', [PaymentMasterDataController::class, 'submitForm'])->name('submit.form_paymentmd');
+Route::get('/edit-paymentmd/{id}', [PaymentMasterDataController::class, 'edit_paymentmd'])->name('edit_paymentmd');
+Route::post('/update-paymentmd/{id}', [PaymentMasterDataController::class, 'update_paymentmd'])->name('update_paymentmd');
 
 Route::get('/edit-rate/{id}', [RateMasterDataController::class, 'edit_rate'])->name('edit_rate');
 Route::post('/update-rate/{id}', [RateMasterDataController::class, 'update_rate'])->name('update_rate');
@@ -47,3 +51,4 @@ Route::post('submit/form_payment', [PaymentController::class, 'submitForm'])->na
 Route::get('/edit_payment/{id}', [PaymentController::class, 'edit_payment'])->name('edit_payment');
 Route::post('/update_payment/{id}', [PaymentController::class, 'update_payment'])->name('update_payment');
 
+Route::get('/get_payment_details/{id}', 'PaymentController@getPaymentDetails')->name('get_payment_details');

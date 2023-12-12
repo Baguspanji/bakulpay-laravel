@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\RateMasterData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class RateMasterDataController extends Controller
 {
@@ -25,18 +27,19 @@ class RateMasterDataController extends Controller
             'icons' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Penanganan penyimpanan file icons
-        $iconPath = $request->file('icons')->store('icons', 'public');
+        $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->extension(), 'public');
 
-        // Simpan data ke dalam model TransactionMD
+        $iconURL = URL::to('/') . Storage::url($iconPath);
+
         $transactionMD = new RateMasterData();
         $transactionMD->nama_bank = $request->nama_bank;
         $transactionMD->type = $request->type;
-        $transactionMD->icons = $iconPath;
+        $transactionMD->icons = $iconURL; // Simpan URL gambar lengkap ke dalam kolom 'icons'
         $transactionMD->save();
 
         return redirect()->route('transactionmd')
-            ->with('success', 'Data transaksi master berhasil ditambahkan!');
+            ->with('success', 'Data transaksi master berhasil ditambahkan!')
+            ->with('iconURL', $iconURL);
     }
 
     public function edit_rate($id)
@@ -72,4 +75,52 @@ class RateMasterDataController extends Controller
         }
     }
 
+    public function edit_transactionmd($id)
+    {
+        // Fetch the rate data based on the $id
+        $rate = RateMasterData::find($id);
+
+        // Return the view with the rate data
+        return view('master_data.edit_transactionmd', ['rate' => $rate]);
+    }
+
+    public function update_transactionmd(Request $request, $id)
+    {
+        // Validate the form data
+        $request->validate([
+            'nama_bank' => 'required',
+            'type' => 'required',
+            'icons' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
+        ]);
+
+        $rate = RateMasterData::find($id);
+
+        if ($rate) {
+            if ($request->hasFile('icons')) {
+                if ($rate->icons) {
+                    Storage::delete($rate->icons);
+                }
+
+                $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
+
+                $iconURL = URL::to('/') . Storage::url($iconPath);
+
+                $rate->update(['icons' => $iconURL]);
+            }
+
+            $rate->update([
+                'nama_bank' => $request->input('nama_bank'),
+                'type' => $request->input('type'),
+            ]);
+
+            $successMessage = 'Rate updated successfully';
+
+            return redirect()->route('transactionmd')->with([
+                'success' => $successMessage,
+                'iconURL' => isset($iconURL) ? $iconURL : null,
+            ]);
+        } else {
+            return redirect()->route('edit_transactionmd', ['id' => $id])->with('error', 'Rate not found');
+        }
+    }
 }
