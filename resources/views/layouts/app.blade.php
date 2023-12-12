@@ -109,6 +109,11 @@
                             <a href="{{ route('pay_md') }}"><iconify-icon
                                     icon="material-symbols:payments"></iconify-icon>Payment MD</a>
                         </li>
+                        <li
+                            class="{{ Request::is('pay_md*') || Request::is('form_paymentmd*') || Request::is('edit-paymentmd*') ? 'active' : '' }}">
+                            <a href="{{ route('pay_md') }}"><iconify-icon
+                                    icon="material-symbols:payments"></iconify-icon>Bank Withdraw</a>
+                        </li>
                     </ul>
                 </li>
 

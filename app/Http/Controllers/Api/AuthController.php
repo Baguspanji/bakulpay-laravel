@@ -13,6 +13,14 @@ class AuthController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function index()
+     {
+         $users = User::all();
+ 
+         return response()->json($users);
+     }
+
     public function Register(Request $request)
     {
         $validator = Validator::make($request->all(), [

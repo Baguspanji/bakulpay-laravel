@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class TopUp extends Model
 {
     protected $table = "top_up";
     protected $fillable = [
         'user_id',
-        'email',
+        'id_pembayaran',
+        'rek_client',
         'jumlah',
         'total_pembayaran',
         'nama_bank',
-        'kode_bank_client',
         'nama',
         'status',
         'tanggal',
