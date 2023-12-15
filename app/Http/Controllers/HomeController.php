@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankWd;
 use App\Models\Payment;
 use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
@@ -31,6 +32,7 @@ class HomeController extends Controller
 
         return view('transactions.payment', ['payment' => $payment]);
     }
+
     public function topup()
     {
         $top_up = TopUp::all();
@@ -61,6 +63,13 @@ class HomeController extends Controller
         $rate_master_data = RateMasterData::all();
 
         return view('master_data.transactionmd', ['rate_master_data' => $rate_master_data]);
+    }
+
+    public function bankwd()
+    {
+        $bank_wd_data = BankWd::all();
+
+        return view('master_data.bank_wd', ['bank_wd_data' => $bank_wd_data]);
     }
 
     public function rate()

@@ -18,52 +18,8 @@ class TopUpController extends Controller
     public function index()
     {
         $top_up = TopUp::all();
-
         return response()->json($top_up);
     }
-
-
-    // public function store(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'email' => 'required',
-    //         'jumlah' => 'required',
-    //         'total_pembayaran' => 'required',
-    //         'nama_bank' => 'required',
-    //         'kode_bank_client' => 'required',
-    //         'nama' => 'required',
-    //         'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json($validator->errors(), 422);
-    //     }
-    //     $image = $request->file('bukti_pembayaran');
-    //     $imagePath = $image->store('bukti_pembayaran', 'public');
-
-
-    //     $post = new TopUp();
-    //     $post->email = $request->email;
-    //     $post->jumlah = $request->jumlah;
-    //     $post->total_pembayaran = $request->total_pembayaran;
-    //     $post->nama_bank = $request->nama_bank;
-    //     $post->kode_bank_client = $request->kode_bank_client;
-    //     $post->nama = $request->nama;
-    //     $post->bukti_pembayaran = $imagePath;
-
-    //     // Set status secara otomatis
-    //     $post->status = 'Pending';
-
-    //     $post->tanggal = now();
-
-
-    //     $post->save();
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'message' => 'Berhasil memasukkan data'
-    //     ]);
-    // }
 
     public function store(Request $request)
     {
@@ -73,8 +29,6 @@ class TopUpController extends Controller
             'jumlah' => 'required',
             'total_pembayaran' => 'required',
             'nama_bank' => 'required',
-            // 'kode_bank_client' => 'required',
-            // 'nama' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -120,22 +74,17 @@ class TopUpController extends Controller
             ], 404);
         }
 
-        // Update nama
         $payment_topup->update(['nama' => $request->nama]);
 
         if ($request->hasFile('bukti_pembayaran')) {
-            // Hapus file bukti pembayaran yang sudah ada
             if ($payment_topup->bukti_pembayaran) {
                 Storage::delete($payment_topup->bukti_pembayaran);
             }
 
-            // Simpan bukti pembayaran yang baru
             $buktiPath = $request->file('bukti_pembayaran')->storeAs('bukti_pembayaran/topup', uniqid() . '.' . $request->file('bukti_pembayaran')->getClientOriginalExtension(), 'public');
 
             $buktiURL = URL::to('/') . Storage::url($buktiPath);
 
-            // Update kolom bukti_pembayaran di database
-            // Update bukti_pembayaran
             $payment_topup->update(['bukti_pembayaran' => $buktiURL, 'status' => 'Pending']);
         }
 

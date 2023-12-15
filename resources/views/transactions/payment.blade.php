@@ -39,12 +39,11 @@
                             <td>{{ $data->customer }}</td>
                             <td>
                                 <!-- Icon mata (eyes) untuk membuka modal -->
-                                <iconify-icon icon="iconamoon:eye" class="open-payment-modal"
-                                    data-payment-id="{{ $data->id }}" data-toggle="modal"
-                                    data-target="#paymentModal"></iconify-icon>
+                                <iconify-icon icon="iconamoon:eye" data-id="{{ $data->id }}"
+                                    onclick="onDetail(this)"></iconify-icon>
                                 <!-- Tombol edit -->
                                 <a class="btn {{ Request::is('edit-payment*') ? 'active' : '' }}"
-                                    href="{{ route('edit_payment', ['id' => $data->id]) }}">
+                                    href="{{ route('edit_payment', $data->id) }}">
                                     <iconify-icon icon="akar-icons:edit"></iconify-icon>
                                 </a>
                             </td>
@@ -76,45 +75,88 @@
         </div>
     </div>
 
+    
 
+
+@endsection
+
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.open-payment-modal').on('click', function() {
-                var paymentId = $(this).data('payment-id');
+                var paymentId = $(this).data('tanggal'); // Ganti ini menjadi data-tanggal
                 $.ajax({
-                    url: '/get_payment_details/' + paymentId,
+                    url: '/get_payment_details/' +
+                        paymentId, // Sesuaikan URL dengan endpoint yang sesuai
                     type: 'GET',
                     success: function(data) {
-                        // Log the data received from the server
-                        console.log('Data received from server:', data);
+                        // Log data yang diterima dari server
+                        console.log('Data diterima dari server:', data);
 
-                        // Parse the JSON data
+                        // Parse data JSON
                         try {
                             var paymentData = JSON.parse(data);
 
-                            // Log the parsed data
-                            console.log('Parsed data:', paymentData);
+                            // Log data yang sudah diparsing
+                            console.log('Data yang sudah diparsing:', paymentData);
 
-                            // Update modal-body content
-                            $('#payment-id').text(paymentData.id);
-                            $('#payment-date').text(paymentData.date);
-                            $('#payment-number').text(paymentData.number_whatsapp);
-                            $('#payment-customer').text(paymentData.customer);
+                            // Periksa apakah properti yang diperlukan ada
+                            if ('id' in paymentData && 'date' in paymentData &&
+                                'number_whatsapp' in paymentData && 'customer' in paymentData) {
+                                // Perbarui konten modal-body
+                                $('#payment-id').text(paymentData.id);
+                                $('#payment-date').text(paymentData.date);
+                                $('#payment-number').text(paymentData.number_whatsapp);
+                                $('#payment-customer').text(paymentData.customer);
 
-                            // Open the modal
-                            $('#paymentModal').modal('show');
+                                // Buka modal
+                                $('#paymentModal').modal('show');
+                            } else {
+                                console.error(
+                                    'Struktur JSON tidak valid: Properti yang diperlukan tidak ada'
+                                );
+                                alert(
+                                    'Struktur JSON tidak valid: Properti yang diperlukan tidak ada'
+                                );
+                            }
                         } catch (e) {
-                            console.error('Error parsing JSON data:', e);
-                            alert('Error parsing payment details');
+                            console.error('Error parsing data JSON:', e);
+                            alert('Error parsing detail pembayaran');
                         }
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching payment details:', error);
-                        alert('Error fetching payment details');
+                        console.error('Error mengambil detail pembayaran:', error);
+                        alert('Error mengambil detail pembayaran');
                     }
                 });
             });
         });
-    </script>
 
-@endsection
+        function onDetail(self) {
+            var paymentId = $(self).data('id')
+
+            axios.get('{{ url('get_payment_details') }}/' + paymentId)
+                .then(function(res) {
+                    if (res.status == 200) {
+                        let data = res.data
+                        console.log(data.date)
+                        $('#payment-id').html(data.id)
+                        $('#payment-date').html(data.date)
+                        $('#payment-number').html(data.number_whatsapp)
+                        $('#payment-customer').html(data.customer)
+
+                        $('#paymentModal').modal('show')
+                    } 
+                })
+                .catch(function(error) {
+                        alert('Data gagal dimuat!')
+                    console.log(error);
+                })
+                .finally(function() {
+                    // always executed
+                });
+
+        }
+    </script>
+@endpush

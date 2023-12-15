@@ -80,10 +80,18 @@ class PaymentController extends Controller
     {
         $payment = Payment::find($id);
 
-        // Jika menggunakan view
-        return view('transactions.details', compact('payment'));
+        // Pastikan $payment tidak null atau handle jika null
+        if (!$payment) {
+            return response()->json(['error' => 'Payment not found'], 404);
+        }
 
-        // Jika menggunakan data JSON
-        // return response()->json(['payment' => $payment]);
+        // Kembalikan data JSON
+        return response()->json([
+            'id' => $payment->id,
+            'date' => $payment->tanggal,
+            'number_whatsapp' => $payment->number_whatsapp,
+            'customer' => $payment->customer,
+            // tambahkan properti lain yang diperlukan
+        ]);
     }
 }

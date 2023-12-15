@@ -18,7 +18,7 @@
                 <div class="group">
                     <div class="label">Tanggal</div>
                     <div class="separator">:</div>
-                    <div class="value"><input type="text" class="form-control" id="tanggal" name="tanggal" required>
+                    <div class="value"><input type="date" class="form-control" id="tanggal" name="tanggal" required>
                     </div>
                 </div>
 

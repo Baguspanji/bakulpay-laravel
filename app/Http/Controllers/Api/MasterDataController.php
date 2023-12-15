@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankWd;
 use App\Models\Payment;
 use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
@@ -17,6 +18,13 @@ class MasterDataController extends Controller
         $rate = RateMasterData::all();
 
         return response()->json($rate);
+    }
+
+    public function BankWd()
+    {
+        $bank_wd = BankWd::all();
+
+        return response()->json($bank_wd);
     }
 
     public function metode_pembayaran()
@@ -45,16 +53,16 @@ class MasterDataController extends Controller
     }
 
     public function index()
-{
-    // Mengambil data dari masing-masing tabel
-    $topUps = TopUp::all();
-    $withdraws = Withdraw::all();
-    $payments = Payment::all();
+    {
+        // Mengambil data dari masing-masing tabel
+        $topUps = TopUp::all();
+        $withdraws = Withdraw::all();
+        $payments = Payment::all();
 
-    // Menggabungkan data dari tiga tabel ke dalam satu array
-    $result = array_merge($topUps->toArray(), $withdraws->toArray(), $payments->toArray());
+        // Menggabungkan data dari tiga tabel ke dalam satu array
+        $result = array_merge($topUps->toArray(), $withdraws->toArray(), $payments->toArray());
 
-    // Mengembalikan response JSON dengan data gabungan
-    return response()->json($result);
-}
+        // Mengembalikan response JSON dengan data gabungan
+        return response()->json($result);
+    }
 }

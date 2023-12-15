@@ -8,15 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Withdraw extends Model
 {
     protected $table = "withdraw";
-    protected $fillable = ['email',
-    'jumlah',
-    'total_pembayaran',
-    'nama_bank',
-    'kode_bank_client',
-    'nama',
-    'status',
-    'tanggal',
-    'bukti_pembayaran'];
+    protected $fillable = [
+        'user_id',
+        'id_pembayaran',
+        'rek_client',
+        'jumlah',
+        'total_pembayaran',
+        'nama_bank',
+        'nama',
+        'status',
+        'tanggal',
+        'bukti_pembayaran'
+    ];
     use HasFactory;
 
     public function rateMasterData()

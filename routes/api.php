@@ -34,14 +34,18 @@ Route::get('users', [AuthController::class, 'index']);
 
 // MAIN API BANK
 Route::get('/payment/{type}', [MasterDataController::class, 'showByType']);
+Route::get('bankwd',[MasterDataController::class,'BankWd']);
 
 //TOPUP
-Route::post('/top_up', [TopUpController::class,'Store']);
 Route::get('/top_up', [TopUpController::class, 'index']);
+Route::post('/top_up', [TopUpController::class,'Store']);
 Route::post('/payment/top_up/{id_pembayaran}', [TopUpController::class, 'payment_topup']);
 
 //WITHDRAW
+Route::get('/withdraw', [WithdrawController::class, 'index']);
 Route::post('/withdraw', [WithdrawController::class,'Store']);
+Route::post('/payment/withdraw/{id_pembayaran}', [WithdrawController::class, 'payment_withdraw']);
+
 
 Route::get('rate',[MasterDataController::class,'rate']);
 Route::get('metode_pembayaran',[MasterDataController::class,'metode_pembayaran']);
