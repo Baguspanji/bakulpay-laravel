@@ -24,6 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('test', function() {
+    return 'Wellcome to Api Bakulpay';
+});
+
 Route::post('daftar', [DaftarController::class,'store']);
 
 //AUTHENTICATION
