@@ -83,55 +83,6 @@
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.open-payment-modal').on('click', function() {
-                var paymentId = $(this).data('tanggal'); // Ganti ini menjadi data-tanggal
-                $.ajax({
-                    url: '/get_payment_details/' +
-                        paymentId, // Sesuaikan URL dengan endpoint yang sesuai
-                    type: 'GET',
-                    success: function(data) {
-                        // Log data yang diterima dari server
-                        console.log('Data diterima dari server:', data);
-
-                        // Parse data JSON
-                        try {
-                            var paymentData = JSON.parse(data);
-
-                            // Log data yang sudah diparsing
-                            console.log('Data yang sudah diparsing:', paymentData);
-
-                            // Periksa apakah properti yang diperlukan ada
-                            if ('id' in paymentData && 'date' in paymentData &&
-                                'number_whatsapp' in paymentData && 'customer' in paymentData) {
-                                // Perbarui konten modal-body
-                                $('#payment-id').text(paymentData.id);
-                                $('#payment-date').text(paymentData.date);
-                                $('#payment-number').text(paymentData.number_whatsapp);
-                                $('#payment-customer').text(paymentData.customer);
-
-                                // Buka modal
-                                $('#paymentModal').modal('show');
-                            } else {
-                                console.error(
-                                    'Struktur JSON tidak valid: Properti yang diperlukan tidak ada'
-                                );
-                                alert(
-                                    'Struktur JSON tidak valid: Properti yang diperlukan tidak ada'
-                                );
-                            }
-                        } catch (e) {
-                            console.error('Error parsing data JSON:', e);
-                            alert('Error parsing detail pembayaran');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error mengambil detail pembayaran:', error);
-                        alert('Error mengambil detail pembayaran');
-                    }
-                });
-            });
-        });
 
         function onDetail(self) {
             var paymentId = $(self).data('id')
