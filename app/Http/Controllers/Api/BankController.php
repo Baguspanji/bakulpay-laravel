@@ -43,16 +43,57 @@ class BankController extends Controller
 
     public function rate()
     {
-        $rate = RateMasterData::all();
-        return response()->json($rate);
+        try {
+            $rate = RateMasterData::all();
+
+            if ($rate->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data rate tidak ditemukan'
+                ], 404);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data rate ditemukan',
+                'data' => $rate
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangkap exception jika terjadi error
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
+
 
     public function metode_pembayaran()
     {
-        $payment = PaymentMasterData::all();
+        try {
+            $payment = PaymentMasterData::all();
 
-        return response()->json($payment);
+            if ($payment->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data metode pembayaran tidak ditemukan'
+                ], 404);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data metode pembayaran ditemukan',
+                'data' => $payment
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangkap exception jika terjadi error
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
+
 
     public function showByType(string $type)
     {
