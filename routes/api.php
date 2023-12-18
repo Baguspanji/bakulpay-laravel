@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\DaftarController;
 use App\Http\Controllers\api\MasterDataController;
 use App\Http\Controllers\Api\TopUpController;
 use App\Http\Controllers\Api\WithdrawController;
+use App\Models\BankWd;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,8 +40,8 @@ Route::get('users', [AuthController::class, 'index']);
 
 // MAIN API BANK
 Route::get('/payment/{type}', [MasterDataController::class, 'showByType']);
-Route::get('bankwd',[MasterDataController::class,'BankWd']);
-
+// Route::get('bankwd', [MasterDataController::class, 'BankWd'])->name('bankwd');
+Route::get('bankwd', [MasterDataController::class, 'BankWd'])->name('bankwd');
 //TOPUP
 Route::get('/top_up', [TopUpController::class, 'index']);
 Route::post('/top_up', [TopUpController::class,'Store']);
