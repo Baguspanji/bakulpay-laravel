@@ -16,9 +16,30 @@ class BankController extends Controller
 
     public function BankWd()
     {
-        $bank_wd = BankWd::all();
-        return response()->json($bank_wd);
+        try {
+            $bank_wd = BankWd::all();
+
+            if ($bank_wd->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data BankWd tidak ditemukan'
+                ], 404);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data BankWd ditemukan',
+                'data' => $bank_wd
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangkap exception jika terjadi error
+            return response()->json([
+                'status' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
+
 
     public function rate()
     {
