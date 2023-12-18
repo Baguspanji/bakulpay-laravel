@@ -11,6 +11,8 @@ class TopUp extends Model
     protected $table = "top_up";
     protected $fillable = [
         'user_id',
+        'product',
+        'price_rate',
         'id_pembayaran',
         'rek_client',
         'jumlah',
