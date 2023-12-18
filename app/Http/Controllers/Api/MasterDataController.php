@@ -14,42 +14,42 @@ use Illuminate\Http\Request;
 
 class MasterDataController extends Controller
 {
-    public function rate()
-    {
-        $rate = RateMasterData::all();
-        return response()->json($rate);
-    }
+    // public function rate()
+    // {
+    //     $rate = RateMasterData::all();
+    //     return response()->json($rate);
+    // }
 
-    public function BankWd()
-    {
-        $bank_wd = BankWd::all();
-        return response()->json($bank_wd);
-    }
+    // public function BankWd()
+    // {
+    //     $bank_wd = BankWd::all();
+    //     return response()->json($bank_wd);
+    // }
 
-    public function metode_pembayaran()
-    {
-        $payment = PaymentMasterData::all();
+    // public function metode_pembayaran()
+    // {
+    //     $payment = PaymentMasterData::all();
 
-        return response()->json($payment);
-    }
+    //     return response()->json($payment);
+    // }
 
-    public function showByType(string $type)
-    {
-        $data = RateMasterData::where('type', $type)->get();
+    // public function showByType(string $type)
+    // {
+    //     $data = RateMasterData::where('type', $type)->get();
 
-        if ($data->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan'
-            ], 404);
-        }
+    //     if ($data->isEmpty()) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Data tidak ditemukan'
+    //         ], 404);
+    //     }
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Data ditemukan',
-            'data' => $data
-        ], 200);
-    }
+    //     return response()->json([
+    //         'status' => true,
+    //         'message' => 'Data ditemukan',
+    //         'data' => $data
+    //     ], 200);
+    // }
 
     public function index()
     {

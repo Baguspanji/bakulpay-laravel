@@ -39,7 +39,7 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::get('users', [AuthController::class, 'index']);
 
 // MAIN API BANK
-Route::get('/payment/{type}', [MasterDataController::class, 'showByType']);
+Route::get('/payment/{type}', [BankController::class, 'showByType']);
 // Route::get('bankwd', [MasterDataController::class, 'BankWd'])->name('bankwd');
 Route::get('bankwd', [BankController::class, 'BankWd'])->name('bankwd');
 //TOPUP
@@ -54,6 +54,6 @@ Route::post('/payment/withdraw/{id_pembayaran}', [WithdrawController::class, 'pa
 
 
 Route::get('rate',[BankController::class,'rate']);
-Route::get('metode_pembayaran',[MasterDataController::class,'metode_pembayaran']);
+Route::get('metode_pembayaran',[BankController::class,'metode_pembayaran']);
 
 Route::get('history',[MasterDataController::class,'index']);

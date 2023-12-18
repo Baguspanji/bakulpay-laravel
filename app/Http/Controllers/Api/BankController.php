@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\BankWd;
 use App\Http\Resources\PostResource;
+use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -24,6 +25,31 @@ class BankController extends Controller
         $rate = RateMasterData::all();
         return response()->json($rate);
     }
+
+    public function metode_pembayaran()
+    {
+        $payment = PaymentMasterData::all();
+
+        return response()->json($payment);
+    }
+
+    public function showByType(string $type)
+    {
+        $data = RateMasterData::where('type', $type)->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data ditemukan',
+            'data' => $data
+        ], 200);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -37,15 +63,15 @@ class BankController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'logo_bank'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'nama_bank'=>'required',
-            'type_payment'=>'required|in:TopUp,withdraw',
-            'price'=>'required'
+        $validator = Validator::make($request->all(), [
+            'logo_bank' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nama_bank' => 'required',
+            'type_payment' => 'required|in:TopUp,withdraw',
+            'price' => 'required'
         ]);
 
-        if($validator->fails()) {
-            return response()->json($validator->errors(),422);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
         }
         $image = $request->file('logo_bank');
         $imagePath = $image->store('logo_banks', 'public');
@@ -83,7 +109,6 @@ class BankController extends Controller
             'message' => 'Data ditemukan',
             'data' => $data
         ], 200);
-
     }
 
     /**
