@@ -16,6 +16,12 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $topup->id }}">
 
+                <div class="judul_1">
+                    <div class="keterangan_1">{{ \Carbon\Carbon::parse($topup->tanggal)->format('j M Y') }}</div>
+                    <div class="nama_1">Date</div>
+
+                </div>
+
                 <div class="judul">
                     <div class="nama">ID Client</div>
                     <div class="keterangan">{{ $topup->id }}</div>
@@ -24,11 +30,6 @@
                 <div class="judul">
                     <div class="nama">Client Name</div>
                     <div class="keterangan">{{ $topup->nama }}</div>
-                </div>
-
-                <div class="judul_1">
-                    <div class="nama_1">Date</div>
-                    <div class="keterangan_1">{{ $topup->tanggal }}</div>
                 </div>
 
                 <hr class="hr_edt">
@@ -55,7 +56,7 @@
 
                 <div class="judul">
                     <div class="nama">Price</div>
-                    <div class="keterangan">Pending</div>
+                    <div class="keterangan_2">Pending</div>
                 </div>
 
                 <div class="judul">
@@ -65,19 +66,21 @@
 
                 <div class="judul">
                     <div class="nama">Total</div>
-                    <div class="keterangan">{{ $topup->total_pembayaran }}</div>
+                    <div class="keterangan_2">{{ $topup->total_pembayaran }}</div>
                 </div>
 
                 <hr class="hr_edt">
 
                 <div class="judul">
                     <div class="nama">Status</div>
-                    <div class="keterangan">Pending</div>
+                    <div class="keterangan_2">Pending</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Photo</div>
-                    <div class="keterangan">Pending</div>
+                    <div class="keterangan">
+                        <img src="{{ asset($topup->bukti_pembayaran) }}" alt="Topup Photo">
+                    </div>
                 </div>
 
 
@@ -85,4 +88,17 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // Loop through each element with class "keterangan_2"
+            $(".keterangan").each(function() {
+                // Check if the content is empty or consists only of whitespace
+                if (!$(this).text().trim()) {
+                    // Replace empty content with a hyphen
+                    $(this).text("-");
+                }
+            });
+        });
+    </script>
 @endsection

@@ -356,34 +356,59 @@ CONTENT STYLE
     font-size: 18px;
 }
 
-#content .isi .judul_1 {
-    overflow: hidden;
-    float: right;
+
+#content .isi .judul {
+    margin-bottom: 12px;
 }
+/* #content .isi .judul_1{
+    float: right;
+    padding-left: 20%;
+} */
+
 #content .isi .judul .nama {
     color: #37398b;
     font-weight: bold;
     float: left;
 }
 
-#content .isi .judul_1 .nama_1 {
+#content .isi .judul .keterangan_2 {
+    color: #000000;
+    text-align: left;
+    padding-left: 28%;
+    font-weight: bold;
+}
+
+#content .isi .judul .keterangan img{
+    width: 40%;
+    height: 15%;
+}
+
+#content .isi .judul_1 .nama_1{
+    float: right;
     color: #37398b;
     font-weight: bold;
-    float: left;
+}
+
+#content .isi .judul_1 .keterangan_1{
+    float: right;
+    color: #A8AFBD;
+    font-weight: bold;
+    padding-left: 15%;
+    padding-right: 5%;
 }
 
 
 #content .isi .keterangan{
     color: #A8AFBD;
     text-align: left;
-    padding-left: 20%;
+    padding-left: 28%;
 }
 
-#content .isi .keterangan_1{
+/* #content .isi .keterangan_1{
     color: #A8AFBD;
     text-align: left;
     padding-left: 20%;
-}
+} */
 
 #content .isi .hr_edt {
     border-top: 2px solid #c2d7ff;

@@ -23,6 +23,8 @@ class WithdrawController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
+            'product' => 'required',
+            'price_rate' => 'required',
             'rek_client' => 'required',
             'jumlah' => 'required',
             'total_pembayaran' => 'required',
@@ -35,6 +37,8 @@ class WithdrawController extends Controller
 
         $post = new Withdraw();
         $post->user_id = $request->user_id;
+        $post->product = $request->product;
+        $post->price_rate = $request->price_rate;
         $post->rek_client = $request->rek_client;
         $post->jumlah = $request->jumlah;
         $post->total_pembayaran = $request->total_pembayaran;

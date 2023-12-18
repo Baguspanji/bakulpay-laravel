@@ -10,6 +10,8 @@ class Withdraw extends Model
     protected $table = "withdraw";
     protected $fillable = [
         'user_id',
+        'product',
+        'price_rate',
         'id_pembayaran',
         'rek_client',
         'jumlah',
