@@ -10,10 +10,6 @@ before_script:
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 deploy_staging:
-  type: deploy
-  environment:
-    name: staging
-    url: bakulpay.jjtech.my.id
   script:
     - ssh $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && git checkout staging && git pull origin staging && exit"
   only:
