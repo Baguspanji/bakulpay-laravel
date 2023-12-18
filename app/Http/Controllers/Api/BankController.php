@@ -4,12 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\BankWd;
 use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class BankController extends Controller
 {
+
+    public function BankWd()
+    {
+        $bank_wd = BankWd::all();
+        return response()->json($bank_wd);
+    }
     /**
      * Display a listing of the resource.
      */

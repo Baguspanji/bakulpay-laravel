@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+
 use App\Http\Controllers\Controller;
 use App\Models\BankWd;
 use App\Models\Payment;
@@ -16,14 +17,12 @@ class MasterDataController extends Controller
     public function rate()
     {
         $rate = RateMasterData::all();
-
         return response()->json($rate);
     }
 
     public function BankWd()
     {
         $bank_wd = BankWd::all();
-
         return response()->json($bank_wd);
     }
 

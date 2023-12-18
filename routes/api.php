@@ -41,7 +41,7 @@ Route::get('users', [AuthController::class, 'index']);
 // MAIN API BANK
 Route::get('/payment/{type}', [MasterDataController::class, 'showByType']);
 // Route::get('bankwd', [MasterDataController::class, 'BankWd'])->name('bankwd');
-Route::get('bankwd', [MasterDataController::class, 'BankWd'])->name('bankwd');
+Route::get('bankwd', [BankController::class, 'BankWd'])->name('bankwd');
 //TOPUP
 Route::get('/top_up', [TopUpController::class, 'index']);
 Route::post('/top_up', [TopUpController::class,'Store']);
