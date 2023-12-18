@@ -53,7 +53,7 @@ Route::post('/withdraw', [WithdrawController::class,'Store']);
 Route::post('/payment/withdraw/{id_pembayaran}', [WithdrawController::class, 'payment_withdraw']);
 
 
-Route::get('rate',[MasterDataController::class,'rate']);
+Route::get('rate',[BankController::class,'rate']);
 Route::get('metode_pembayaran',[MasterDataController::class,'metode_pembayaran']);
 
 Route::get('history',[MasterDataController::class,'index']);

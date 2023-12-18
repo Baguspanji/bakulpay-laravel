@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\BankWd;
 use App\Http\Resources\PostResource;
+use App\Models\RateMasterData;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,12 @@ class BankController extends Controller
     {
         $bank_wd = BankWd::all();
         return response()->json($bank_wd);
+    }
+
+    public function rate()
+    {
+        $rate = RateMasterData::all();
+        return response()->json($rate);
     }
     /**
      * Display a listing of the resource.
