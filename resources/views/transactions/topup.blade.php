@@ -45,7 +45,12 @@
                                 <!-- Icon mata (eyes) untuk membuka modal -->
                                 <iconify-icon icon="iconamoon:eye" data-id="{{ $data->id }}"
                                     onclick="onDetail(this)"></iconify-icon>
-                                <iconify-icon icon="akar-icons:edit"></iconify-icon>
+
+                                <!-- Tombol edit -->
+                                <a class="btn {{ Request::is('edit-topup*') ? 'active' : '' }}"
+                                    href="{{ route('edit_topup', $data->id) }}">
+                                    <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

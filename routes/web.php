@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\PaymentController;
+use App\Http\Controllers\Api\TopUpController;
 use App\Http\Controllers\BankWdController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentMasterDataController;
@@ -57,5 +58,8 @@ Route::get('/form_payment', [PaymentController::class, 'createFormPayment']);
 Route::post('submit/form_payment', [PaymentController::class, 'submitForm'])->name('submit.form_payment');
 Route::get('/edit_payment/{id}', [PaymentController::class, 'edit_payment'])->name('edit_payment');
 Route::post('/update_payment/{id}', [PaymentController::class, 'update_payment'])->name('update_payment');
+
+Route::get('/edit_topup/{id}', [TopUpController::class, 'edit_topup'])->name('edit_topup');
+Route::post('/update_topup/{id}', [TopUpController::class, 'update_topup'])->name('update_topup');
 
 Route::get('/get_payment_details/{id}', [PaymentController::class, 'getPaymentDetails'])->name('get_payment_details');

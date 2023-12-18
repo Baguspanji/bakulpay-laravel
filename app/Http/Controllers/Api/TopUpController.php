@@ -93,4 +93,38 @@ class TopUpController extends Controller
             'message' => 'Berhasil memasukkan bukti pembayaran.'
         ]);
     }
+
+    public function edit_topup($id)
+    {
+        // Fetch the payment data based on the $id
+        $topup = TopUp::find($id);
+
+
+        if (!$topup) {
+            return redirect()->route('topup')->with('error', 'Data not found');
+        }
+
+        return view('transactions.edit_topup', compact('topup'));
+    }
+
+    public function update_topup(Request $request)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $topup = TopUp::find($request->input('id'));
+
+        if ($topup) {
+            $data = [
+                'status' => $request->input('status'),
+            ];
+
+            $topup->update($data);
+
+            return redirect()->route('topup')->with('success', 'Data berhasil diperbarui');
+        } else {
+            return redirect()->route('edit_topup', ['id' => $request->input('id')])->with('error', 'Data tidak ditemukan');
+        }
+    }
 }

@@ -235,7 +235,7 @@ a.article:hover {
     text-align: center;
 }
 
-hr {
+.wrapper #sidebar hr {
     border-top: 2px solid #c2d7ff;
     width: 90%;
     margin: 0 auto;
@@ -356,6 +356,43 @@ CONTENT STYLE
     font-size: 18px;
 }
 
+#content .isi .judul_1 {
+    overflow: hidden;
+    float: right;
+}
+#content .isi .judul .nama {
+    color: #37398b;
+    font-weight: bold;
+    float: left;
+}
+
+#content .isi .judul_1 .nama_1 {
+    color: #37398b;
+    font-weight: bold;
+    float: left;
+}
+
+
+#content .isi .keterangan{
+    color: #A8AFBD;
+    text-align: left;
+    padding-left: 20%;
+}
+
+#content .isi .keterangan_1{
+    color: #A8AFBD;
+    text-align: left;
+    padding-left: 20%;
+}
+
+#content .isi .hr_edt {
+    border-top: 2px solid #c2d7ff;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
 #content .container .add {
     background-color: white;
     border-radius: 10px;
@@ -420,7 +457,7 @@ CONTENT STYLE
 #myTable thead th {
     font-size: 14px;
     text-align: center;
-    color: #A8AFBD;
+    color: #a8afbd;
 }
 
 #myTable_length label,
@@ -436,7 +473,7 @@ CONTENT STYLE
 #myTable tbody img {
     float: left;
     border-radius: 10px;
-    border: 1px solid #A8AFBD;
+    border: 1px solid #a8afbd;
     padding: 2px;
     background-color: white;
     width: 10%;
@@ -446,7 +483,7 @@ CONTENT STYLE
     margin-top: 2%;
 }
 
-#myTable tbody p{
+#myTable tbody p {
     float: left;
     color: #000000;
     margin-top: 2%;
@@ -520,4 +557,3 @@ MEDIAQUERIES
         z-index: 1000;
     } */
 }
-
