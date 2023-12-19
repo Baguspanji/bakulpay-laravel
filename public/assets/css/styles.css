@@ -356,7 +356,6 @@ CONTENT STYLE
     font-size: 18px;
 }
 
-
 #content .isi .judul {
     margin-bottom: 12px;
 }
@@ -377,33 +376,58 @@ CONTENT STYLE
     padding-left: 28%;
     font-weight: bold;
 }
-
-#content .isi .judul .keterangan img{
-    width: 40%;
-    height: 15%;
+#content .isi .judul .keterangan_2 select {
+    color: #000000;
+    font-weight: bold;
+    border: none;
+    margin: 0 auto;
+}
+#content .isi .judul .keterangan_2 select option {
+    color: #000000;
+    font-weight: bold;
+    border: none;
 }
 
-#content .isi .judul_1 .nama_1{
+#content .isi .judul .keterangan img {
+    width: 10%;
+    height: 5%;
+    clip: rect(0, 50%, auto, 0);
+}
+
+.isi .judul .keterangan input[type=file]::file-selector-button {
+    border: none;
+    padding: .2em .4em;
+    border-radius: 10px;
+    background-color: #37398B;
+    transition: 1s;
+    color: #ffffff;
+    width: 65%;
+}
+
+#content .isi .judul_1 .nama_1 {
     float: right;
     color: #37398b;
     font-weight: bold;
 }
 
-#content .isi .judul_1 .keterangan_1{
+#content .isi .judul_1 .keterangan_1 {
     float: right;
-    color: #A8AFBD;
+    color: #a8afbd;
     font-weight: bold;
     padding-left: 15%;
     padding-right: 5%;
 }
 
-
-#content .isi .keterangan{
-    color: #A8AFBD;
+#content .isi .keterangan {
+    color: #a8afbd;
     text-align: left;
     padding-left: 28%;
 }
-
+#content .isi .keterangan_3 {
+    color: #a8afbd;
+    text-align: left;
+    padding-left: 28%;
+}
 /* #content .isi .keterangan_1{
     color: #A8AFBD;
     text-align: left;
@@ -508,16 +532,49 @@ CONTENT STYLE
     margin-top: 2%;
 }
 
-#myTable tbody p {
+/* #myTable tbody p {
     float: left;
     color: #000000;
     margin-top: 2%;
-}
+} */
 
 #myTable tbody td {
     text-align: center;
     color: #000000;
     font-size: 12px;
+}
+#myTable tbody tr td p .stats {
+    float: center;
+}
+
+#myTable tbody td.status-pending p,
+#myTable tbody td.status-failed p,
+#myTable tbody td.status-un-payment p,
+#myTable tbody td.status-success p {
+    padding: 3px;
+    border-radius: 15px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+#myTable tbody td.status-pending p {
+    background-color: #e9f0ff; /* Blue */
+    color: #00a8ed; /* White text */
+}
+
+#myTable tbody td.status-failed p {
+    background-color: #ffe8e8; /* Red */
+    color: #ff0000; /* White text */
+}
+
+#myTable tbody td.status-un-payment p {
+    background-color: #fff4cd; /* Orange */
+    color: #ff7714; /* White text */
+}
+
+#myTable tbody td.status-success p {
+    background-color: #cdffde; /* Green */
+    color: #009633; /* White text */
 }
 
 /* #myTable tbody td div {

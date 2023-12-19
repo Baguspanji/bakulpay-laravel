@@ -29,7 +29,7 @@
                             </td>
                             <td>{{ $data->nama_bank }}</td>
                             <td>
-                                <a class="btn {{ Request::is('edit-transactionmd*') ? 'active' : '' }}" href="{{ route('edit_transactionmd', ['id' => $data->id]) }}">
+                                <a class="btn {{ Request::is('edit-bankwd*') ? 'active' : '' }}" href="{{ route('edit_bankwd', ['id' => $data->id]) }}">
                                     <iconify-icon icon="akar-icons:edit"></iconify-icon>
                                 </a>
                             </td>

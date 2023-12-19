@@ -31,7 +31,9 @@
                     @foreach ($top_up as $data)
                         <tr>
                             <td>{{ $counter++ }}</td>
-                            <td>{{ $data->status }}</td>
+                            <td class="status-{{ strtolower(str_replace(' ', '-', $data->status)) }}">
+                                <p class="stats">{{ $data->status }}</p>
+                            </td>
                             <td>{{ $data->tanggal }}</td>
                             <td>
                                 @if ($data->rateMasterData)
@@ -40,7 +42,7 @@
                                 {{ $data->nama_bank }}
                             </td>
                             <td>{{ $data->nama }}</td>
-                            <td>{{ $data->kode_bank_client }}</td>
+                            <td>{{ $data->rek_client }}</td>
                             <td>
                                 <!-- Icon mata (eyes) untuk membuka modal -->
                                 <iconify-icon icon="iconamoon:eye" data-id="{{ $data->id }}"
@@ -104,10 +106,17 @@
                     alert('Data gagal dimuat!')
                     console.log(error);
                 })
-                .finally(function() {
-                    // always executed
-                });
-
+                .finally(function() {});
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(".isi tbody td:nth-child(5)").each(function() {
+                if (!$(this).text().trim()) {
+                    $(this).text("-");
+                }
+            });
+        });
     </script>
 @endpush

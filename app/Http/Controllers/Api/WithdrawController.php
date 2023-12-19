@@ -94,4 +94,55 @@ class WithdrawController extends Controller
             'message' => 'Berhasil memasukkan bukti pembayaran.'
         ]);
     }
+
+    public function edit_withdraw($id)
+    {
+        // Fetch the payment data based on the $id
+        $withdraw = Withdraw::find($id);
+
+
+        if (!$withdraw) {
+            return redirect()->route('withdraw')->with('error', 'Data not found');
+        }
+
+        return view('transactions.edit_withdraw', compact('withdraw'));
+    }
+
+    public function update_withdraw(Request $request)
+    {
+        $request->validate([
+            'status' => 'required',
+            'bukti_tf' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $withdraw = Withdraw::find($request->input('id'));
+
+        if ($withdraw) {
+            $data = [
+                'status' => $request->input('status'),
+            ];
+
+            // Handle file upload for bukti_tf
+            if ($request->hasFile('bukti_tf')) {
+                // Delete old bukti_tf if exists
+                if ($withdraw->bukti_tf) {
+                    Storage::delete($withdraw->bukti_tf);
+                }
+
+                $buktiPath = $request->file('bukti_tf')->storeAs('bukti_tf/withdraw', uniqid() . '.' . $request->file('bukti_tf')->getClientOriginalExtension(), 'public');
+
+                $buktiURL = URL::to('/') . Storage::url($buktiPath);
+
+                // Update the 'bukti_tf' column with the file URL
+                $data['bukti_tf'] = $buktiURL;
+            }
+
+            // Update the withdraw data
+            $withdraw->update($data);
+
+            return redirect()->route('withdraw')->with('success', 'Data berhasil diperbarui');
+        } else {
+            return redirect()->route('edit_withdraw', ['id' => $request->input('id')])->with('error', 'Data tidak ditemukan');
+        }
+    }
 }

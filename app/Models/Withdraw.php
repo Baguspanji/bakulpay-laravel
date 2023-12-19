@@ -20,7 +20,8 @@ class Withdraw extends Model
         'nama',
         'status',
         'tanggal',
-        'bukti_pembayaran'
+        'bukti_pembayaran',
+        'bukti_tf'
     ];
     use HasFactory;
 

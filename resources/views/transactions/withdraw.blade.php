@@ -31,7 +31,9 @@
                     @foreach ($withdraw as $data)
                         <tr>
                             <td>{{ $counter++ }}</td>
-                            <td>{{ $data->status }}</td>
+                            <td class="status-{{ strtolower(str_replace(' ', '-', $data->status)) }}">
+                                <p class="stats">{{ $data->status }}</p>
+                            </td>
                             <td>{{ $data->tanggal }}</td>
                             <td>
                                 @if ($data->rateMasterData)
@@ -41,9 +43,13 @@
                                 {{ $data->nama_bank }}
                             </td>
                             <td>{{ $data->nama }}</td>
-                            <td>{{ $data->kode_bank }}</td>
+                            <td>{{ $data->rek_client }}</td>
                             <td>
-                                <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                <!-- Tombol edit -->
+                                <a class="btn {{ Request::is('edit-withdraw*') ? 'active' : '' }}"
+                                    href="{{ route('edit_withdraw', $data->id) }}">
+                                    <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -52,3 +58,41 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function onDetail(self) {
+            var paymentId = $(self).data('id')
+
+            axios.get('{{ url('get_payment_details') }}/' + paymentId)
+                .then(function(res) {
+                    if (res.status == 200) {
+                        let data = res.data
+                        console.log(data.date)
+                        $('#payment-id').html(data.id)
+                        $('#payment-date').html(data.date)
+                        $('#payment-number').html(data.number_whatsapp)
+                        $('#payment-customer').html(data.customer)
+
+                        $('#paymentModal').modal('show')
+                    }
+                })
+                .catch(function(error) {
+                    alert('Data gagal dimuat!')
+                    console.log(error);
+                })
+                .finally(function() {});
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(".isi tbody td:nth-child(5)").each(function() {
+                if (!$(this).text().trim()) {
+                    $(this).text("-");
+                }
+            });
+        });
+    </script>
+@endpush

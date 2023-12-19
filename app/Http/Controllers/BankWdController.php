@@ -37,4 +37,51 @@ class BankWdController extends Controller
             ->with('success', 'Data transaksi master berhasil ditambahkan!')
             ->with('iconURL', $iconURL);
     }
+
+    public function edit_bankwd($id)
+    {
+        // Fetch the rate data based on the $id
+        $bankwd = BankWd::find($id);
+
+        // Return the view with the rate data
+        return view('master_data.edit_bankwd', ['bankwd' => $bankwd]);
+    }
+
+    public function update_bankwd(Request $request, $id)
+    {
+        // Validate the form data
+        $request->validate([
+            'nama_bank' => 'required',
+            'icons' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $bankwd = BankWd::find($id);
+
+        if ($bankwd) {
+            if ($request->hasFile('icons')) {
+                if ($bankwd->icons) {
+                    Storage::delete($bankwd->icons);
+                }
+
+                $iconPath = $request->file('icons')->storeAs('bankwd/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
+
+                $iconURL = URL::to('/') . Storage::url($iconPath);
+
+                $bankwd->update(['icons' => $iconURL]);
+            }
+
+            $bankwd->update([
+                'nama_bank' => $request->input('nama_bank'),
+            ]);
+
+            $successMessage = 'Bank Withdraw updated successfully';
+
+            return redirect()->route('bank_wd')->with([
+                'success' => $successMessage,
+                'iconURL' => isset($iconURL) ? $iconURL : null,
+            ]);
+        } else {
+            return redirect()->route('master_data.edit_bankwd', ['id' => $id])->with('error', 'payment not found');
+        }
+    }
 }

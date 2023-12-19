@@ -10,63 +10,74 @@
     </div>
 
     <div class="container">
-        <h2><a href="{{ route('topup') }}">Top Up</a> > Action</h2>
+        <h2><a href="{{ route('withdraw') }}">Withdraw</a> > Action</h2>
         <div class="isi">
-            <form action="{{ route('update_topup', ['id' => $topup->id]) }}" method="post">
+            <form action="{{ route('update_withdraw', ['id' => $withdraw->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="id" value="{{ $topup->id }}">
+                <input type="hidden" name="id" value="{{ $withdraw->id }}">
 
                 <div class="judul_1">
-                    <div class="keterangan_1">{{ \Carbon\Carbon::parse($topup->tanggal)->format('j M Y') }}</div>
+                    <div class="keterangan_1">{{ \Carbon\Carbon::parse($withdraw->tanggal)->format('j M Y') }}</div>
                     <div class="nama_1">Date</div>
 
                 </div>
 
                 <div class="judul">
                     <div class="nama">ID Client</div>
-                    <div class="keterangan">{{ $topup->id }}</div>
+                    <div class="keterangan">{{ $withdraw->id }}</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Client Name</div>
-                    <div class="keterangan_3">{{ $topup->nama }}</div>
+                    <div class="keterangan_3">{{ $withdraw->nama }}</div>
                 </div>
 
                 <hr class="hr_edt">
 
                 <div class="judul">
                     <div class="nama">Bank</div>
-                    <div class="keterangan">{{ $topup->product }}</div>
+                    <div class="keterangan">{{ $withdraw->product }}</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Email</div>
-                    <div class="keterangan">{{ $topup->rek_client }}</div>
+                    <div class="keterangan">{{ $withdraw->rek_client }}</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Transaction</div>
-                    <div class="keterangan">Top Up</div>
+                    <div class="keterangan">Withdraw</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Payment</div>
-                    <div class="keterangan">{{ $topup->nama_bank }}</div>
+                    <div class="keterangan">{{ $withdraw->nama_bank }}</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Price</div>
-                    <div class="keterangan_2">{{ $topup->price_rate }}</div>
+                    <div class="keterangan_2">{{ $withdraw->price_rate }}</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Quantity</div>
-                    <div class="keterangan">{{ $topup->jumlah }}</div>
+                    <div class="keterangan">{{ $withdraw->jumlah }}</div>
                 </div>
 
                 <div class="judul">
                     <div class="nama">Total</div>
-                    <div class="keterangan_2">{{ $topup->total_pembayaran }}</div>
+                    <div class="keterangan_2">{{ $withdraw->total_pembayaran }}</div>
+                </div>
+
+                <div class="judul">
+                    <div class="nama">Photo</div>
+                    <div class="keterangan">
+                        <a href="{{ asset($withdraw->bukti_pembayaran) }}" data-fancybox="withdraw-gallery"
+                            data-options='{"buttons": ["zoom", "slideShow", "fullScreen", "close"], "iframe": {"preload": false, "css": {"width": "100%", "height": "100%"}}}'
+                            data-caption="Bukti Pembayaran" class="view">
+                            <img src="{{ asset($withdraw->bukti_pembayaran) }}" alt="withdraw Photo">
+                        </a>
+                    </div>
                 </div>
 
                 <hr class="hr_edt">
@@ -75,22 +86,16 @@
                     <div class="nama">Status</div>
                     <div class="keterangan_2">
                         <select name="status">
-                            <option value="Pending" @if ($topup->status == 'Pending') selected @endif>Pending</option>
-                            <option value="Success" @if ($topup->status == 'Success') selected @endif>Success</option>
-                            <option value="Failed" @if ($topup->status == 'Failed') selected @endif>Failed</option>
+                            <option value="Pending" @if ($withdraw->status == 'Pending') selected @endif>Pending</option>
+                            <option value="Success" @if ($withdraw->status == 'Success') selected @endif>Success</option>
+                            <option value="Failed" @if ($withdraw->status == 'Failed') selected @endif>Failed</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="judul">
-                    <div class="nama">Photo</div>
-                    <div class="keterangan">
-                        <a href="{{ asset($topup->bukti_pembayaran) }}" data-fancybox="topup-gallery"
-                            data-options='{"buttons": ["zoom", "slideShow", "fullScreen", "close"], "iframe": {"preload": false, "css": {"width": "100%", "height": "100%"}}}'
-                            data-caption="Bukti Pembayaran" class="view">
-                            <img src="{{ asset($topup->bukti_pembayaran) }}" alt="Topup Photo">
-                        </a>
-                    </div>
+                    <div class="nama">Upload Photo</div>
+                    <div class="keterangan"><input type="file" class="upload_foto" id="bukti_tf" name="bukti_tf" accept="image/*" required></div>
                 </div>
 
                 <button type="submit" class="button">Save</button>
@@ -117,7 +122,7 @@
             });
         });
     </script>
-    
+
 
 
 

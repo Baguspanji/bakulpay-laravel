@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\PaymentController;
 use App\Http\Controllers\Api\TopUpController;
+use App\Http\Controllers\Api\WithdrawController;
 use App\Http\Controllers\BankWdController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentMasterDataController;
@@ -48,8 +49,8 @@ Route::post('/update-paymentmd/{id}', [PaymentMasterDataController::class, 'upda
 
 Route::get('/form_bankwd', [BankWdController::class, 'createFormBankWd']);
 Route::post('submit/form_bankwd', [BankWdController::class, 'submitForm'])->name('submit.form_bankwd');
-Route::get('/edit-paymentmd/{id}', [BankWdController::class, 'edit_paymentmd'])->name('edit_paymentmd');
-Route::post('/update-paymentmd/{id}', [BankWdController::class, 'update_paymentmd'])->name('update_paymentmd');
+Route::get('/edit-bankwd/{id}', [BankWdController::class, 'edit_bankwd'])->name('edit_bankwd');
+Route::post('/update-bankwd/{id}', [BankWdController::class, 'update_bankwd'])->name('update_bankwd');
 
 Route::get('/edit-rate/{id}', [RateMasterDataController::class, 'edit_rate'])->name('edit_rate');
 Route::post('/update-rate/{id}', [RateMasterDataController::class, 'update_rate'])->name('update_rate');
@@ -61,5 +62,8 @@ Route::post('/update_payment/{id}', [PaymentController::class, 'update_payment']
 
 Route::get('/edit_topup/{id}', [TopUpController::class, 'edit_topup'])->name('edit_topup');
 Route::post('/update_topup/{id}', [TopUpController::class, 'update_topup'])->name('update_topup');
+
+Route::get('/edit_withdraw/{id}', [WithdrawController::class, 'edit_withdraw'])->name('edit_withdraw');
+Route::post('/update_withdraw/{id}', [WithdrawController::class, 'update_withdraw'])->name('update_withdraw');
 
 Route::get('/get_payment_details/{id}', [PaymentController::class, 'getPaymentDetails'])->name('get_payment_details');
