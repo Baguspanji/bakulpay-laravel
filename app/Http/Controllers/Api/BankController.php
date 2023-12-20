@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\BankWd;
 use App\Http\Resources\PostResource;
+use App\Models\Payment;
 use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
 use Illuminate\Support\Facades\Validator;
@@ -173,19 +174,10 @@ class BankController extends Controller
         ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function createFormPayment()
     {
-        //
-    }
+        $payment = Payment::all();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('transactions.form_payment', ['payment' => $payment]);
     }
 }
