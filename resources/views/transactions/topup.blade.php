@@ -93,7 +93,7 @@
                         <div class="nama">Client Name</div>
                         <div class="keterangan_3"><span id="payment-nama"></div>
                     </div>
-                    <hr class="hr_edt">
+                    <hr class="hr_edti">
                 </div>
 
             </div>
