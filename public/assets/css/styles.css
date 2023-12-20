@@ -573,6 +573,44 @@ CONTENT STYLE
     color: #009633; /* White text */
 }
 
+#content .modal-body {
+    width: 100%;
+    height: 100%;
+}
+
+#content .modal-body .judul_1 .nama_1 {
+    float: right;
+    color: #37398b;
+    font-weight: bold;
+}
+
+#content .modal-body .judul_1 .keterangan_1 {
+    float: right;
+    color: #a8afbd;
+    font-weight: bold;
+    padding-left: 15%;
+    padding-right: 5%;
+}
+
+#content .modal-body .judul .nama {
+    color: #37398b;
+    font-weight: bold;
+    float: left;
+    padding-right: 50%;
+}
+
+#content .modal-body .judul .keterangan {
+    color: #a8afbd;
+    text-align: left;
+    padding-left: 28%;
+}
+
+#content .modal-body .judul .keterangan_3 {
+    color: #a8afbd;
+    text-align: left;
+    padding-left: 28%;
+}
+
 /* #myTable tbody td div {
     display: flex;
     align-items: center;

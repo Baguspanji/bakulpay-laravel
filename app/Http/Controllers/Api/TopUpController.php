@@ -131,4 +131,27 @@ class TopUpController extends Controller
             return redirect()->route('edit_topup', ['id' => $request->input('id')])->with('error', 'Data tidak ditemukan');
         }
     }
+
+    public function getPaymentDetails($id)
+    {
+        $topup = TopUp::find($id);
+        if (!$topup) {
+            return response()->json(['error' => 'Payment not found'], 404);
+        }
+        return response()->json([
+            'id' => $topup->id,
+            'user_id' => $topup->user_id,
+            'id_pembayaran' => $topup->id_pembayaran,
+            'date' => $topup->tanggal,
+            'rek_client' => $topup->rek_client,
+            'jumlah' => $topup->jumlah,
+            'total_pembayaran' => $topup->total_pembayaran,
+            'nama_bank' => $topup->nama_bank,
+            'nama' => $topup->nama,
+            'bukti_pembayaran' => $topup->bukti_pembayaran,
+            'product' => $topup->product,
+            'price_rate' => $topup->price_rate,
+            'status' => $topup->status,
+        ]);
+    }
 }

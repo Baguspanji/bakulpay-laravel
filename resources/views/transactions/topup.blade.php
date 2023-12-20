@@ -66,18 +66,36 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                {{-- <div class="modal-header">
                     <h5 class="modal-title" id="paymentModalLabel">Payment Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                </div> --}}
+
                 <div class="modal-body">
-                    <p>ID: <span id="payment-id"></span></p>
+                    {{-- <p>ID: <span id="payment-id"></span></p>
                     <p>Date: <span id="payment-date"></span></p>
                     <p>Number Whatsapp: <span id="payment-number"></span></p>
-                    <p>Customer: <span id="payment-customer"></span></p>
+                    <p>Customer: <span id="payment-customer"></span></p> --}}
+                    <div class="judul_1">
+                        <div class="keterangan_1"><span id="payment-date"></span></div>
+                        <div class="nama_1">Date</div>
+
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">ID Client</div>
+                        <div class="keterangan"><span id="payment-id"></div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">Client Name</div>
+                        <div class="keterangan_3"><span id="payment-nama"></div>
+                    </div>
+                    <hr class="hr_edt">
                 </div>
+
             </div>
         </div>
     </div>
@@ -95,10 +113,18 @@
                         let data = res.data
                         console.log(data.date)
                         $('#payment-id').html(data.id)
+                        $('#payment-userid').html(data.user_id)
+                        $('#payment-idpembayaran').html(data.id_pembayaran)
                         $('#payment-date').html(data.date)
-                        $('#payment-number').html(data.number_whatsapp)
-                        $('#payment-customer').html(data.customer)
-
+                        $('#payment-rekclient').html(data.rek_client)
+                        $('#payment-jumlah').html(data.jumlah)
+                        $('#payment-totalpembayaran').html(data.total_pembayaran)
+                        $('#payment-namabank').html(data.nama_bank)
+                        $('#payment-nama').html(data.nama)
+                        $('#payment-buktipembayaran').html(data.bukti_pembayaran)
+                        $('#payment-product').html(data.product)
+                        $('#payment-pricerate').html(data.price_rate)
+                        $('#payment-status').html(data.status)
                         $('#paymentModal').modal('show')
                     }
                 })

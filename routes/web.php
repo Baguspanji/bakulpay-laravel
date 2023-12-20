@@ -84,3 +84,4 @@ Route::get('/edit_withdraw/{id}', [WithdrawController::class, 'edit_withdraw'])-
 Route::post('/update_withdraw/{id}', [WithdrawController::class, 'update_withdraw'])->name('update_withdraw');
 
 Route::get('/get_payment_details/{id}', [PaymentController::class, 'getPaymentDetails'])->name('get_payment_details');
+Route::get('/get_payment_details/{id}', [TopUpController::class, 'getPaymentDetails'])->name('get_payment_details');

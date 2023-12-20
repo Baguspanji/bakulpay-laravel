@@ -90,7 +90,8 @@ class RateMasterDataController extends Controller
         $request->validate([
             'nama_bank' => 'required',
             'type' => 'required',
-            'icons' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
+            // 'icons' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
+            'icons' => 'required|file|max:2048',
         ]);
 
         $rate = RateMasterData::find($id);
