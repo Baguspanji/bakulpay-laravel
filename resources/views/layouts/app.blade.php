@@ -23,7 +23,7 @@
 
     <!-- Add this to your HTML -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 
@@ -39,9 +39,9 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script> --}}
+    </script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
 
