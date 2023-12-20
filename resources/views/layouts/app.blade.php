@@ -104,7 +104,7 @@
                 </li>
 
                 <li
-                    class="{{ Request::is('payment*') || Request::is('top-up*') || Request::is('withdraw*') || Request::is('form_payment*') || Request::is('edit_payment*') ? 'active' : '' }}">
+                    class="{{ Request::is('payment*') || Request::is('top-up*') || Request::is('withdraw*') || Request::is('form_payment*') || Request::is('edit_payment*') || Request::is('edit_topup*') || Request::is('edit_withdraw*') ? 'active' : '' }}">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
                         <iconify-icon icon="uil:transaction"></iconify-icon>
                         Transaction
@@ -117,12 +117,12 @@
                                     icon="material-symbols:payments"></iconify-icon>Payment</a>
                         </li>
 
-                        <li class="{{ Request::is('top-up*') ? 'active' : '' }}">
+                        <li class="{{ Request::is('top-up*') || Request::is('edit_topup*') ? 'active' : '' }}">
                             <a href="{{ route('topup') }}"><iconify-icon
                                     icon="majesticons:money-plus-line"></iconify-icon>Top-Up</a>
                         </li>
 
-                        <li class="{{ Request::is('withdraw*') ? 'active' : '' }}">
+                        <li class="{{ Request::is('withdraw*') || Request::is('edit_withdraw*') ? 'active' : '' }}">
                             <a href="{{ route('withdraw') }}"><iconify-icon
                                     icon="majesticons:money-plus-line"></iconify-icon>Withdraw</a>
                         </li>
@@ -134,7 +134,7 @@
                 </li>
 
                 <li
-                    class="{{ Request::is('transactionmd*') || Request::is('pay_md*') || Request::is('form_transactionmd*') || Request::is('edit-transactionmd*') || Request::is('form_paymentmd*') || Request::is('edit-paymentmd*') ? 'active' : '' }}">
+                    class="{{ Request::is('bank_wd*') || Request::is('transactionmd*') || Request::is('pay_md*') || Request::is('form_transactionmd*') || Request::is('edit-transactionmd*') || Request::is('form_paymentmd*') || Request::is('edit-paymentmd*') || Request::is('form_bankwd*') || Request::is('edit-bankwd*') ? 'active' : '' }}">
                     <a href="#MDSubmenu" data-toggle="collapse" aria-expanded="false">
                         <iconify-icon icon="tdesign:data"></iconify-icon>
                         Master Data
@@ -152,7 +152,7 @@
                                     icon="material-symbols:payments"></iconify-icon>Payment MD</a>
                         </li>
                         <li
-                            class="{{ Request::is('bank_wd*') || Request::is('form_paymentmd*') || Request::is('edit-paymentmd*') ? 'active' : '' }}">
+                            class="{{ Request::is('bank_wd*') || Request::is('form_bankwd*') || Request::is('edit-bankwd*') ? 'active' : '' }}">
                             <a href="{{ route('bank_wd') }}"><iconify-icon
                                     icon="material-symbols:payments"></iconify-icon>Bank Withdraw</a>
                         </li>
