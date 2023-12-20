@@ -16,8 +16,7 @@ class HomeController extends Controller
 {
     public function dashboard()
     {
-        return view('/home');
-        return abort(403);
+        return view('home'); // Gantilah 'home' dengan nama file view dashboard Anda
     }
 
     // public function dashboard()

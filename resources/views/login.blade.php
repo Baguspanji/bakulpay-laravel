@@ -181,7 +181,16 @@
                     <img src="{{ asset('assets/images/logo bakulpay.png') }}" alt="Logo">
                 </div>
                 <div class="card-body">
-                    <form class="form-login" method="POST" action="">
+                    {{-- <form class="form-login" method="POST" action="{{ route('login') }}">
+                    @csrf
+                        <label class="form-label">Username</label>
+                        <input type="email" name="email" class="form-input">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-input">
+                        <button type="submit" class="btn btn-login">Login</button>
+                    </form> --}}
+                    <form class="form-login" method="POST" action="{{ route('ProsesLogin') }}">
+                        @csrf
                         <label class="form-label">Username</label>
                         <input type="email" name="email" class="form-input">
                         <label class="form-label">Password</label>

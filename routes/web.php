@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\api\PaymentController;
 use App\Http\Controllers\Api\TopUpController;
 use App\Http\Controllers\Api\WithdrawController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankWdController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentMasterDataController;
@@ -27,7 +28,21 @@ use Illuminate\Support\Facades\Http;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+// Route::post('/login', [AuthController::class, 'login']);
+// Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+// Route::middleware(['web', 'auth:sanctum'])->group(function () {
+//     Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
+// });
+// Route::middleware('web')->group(function () {
+//     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+//     Route::post('/login', [AuthController::class, 'login']);
+// });
+
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'ProsesLogin'])->name('ProsesLogin');
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+
 Route::get('/payment', [HomeController::class, 'payment'])->name('payment');
 Route::get('/top-up', [HomeController::class, 'topUp'])->name('topup');
 Route::get('/withdraw', [HomeController::class, 'withdraw'])->name('withdraw');
