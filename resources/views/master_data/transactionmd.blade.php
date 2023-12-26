@@ -17,6 +17,7 @@
                 <thead>
                     <tr>
                         <th>Bank Name</th>
+                        <th>Blockchain</th>
                         <th>Type</th>
                         <th>Action</th>
                     </tr>
@@ -29,6 +30,7 @@
                                 <p>
                                 {{ $data->nama_bank }}</p>
                             </td>
+                            <td></td>
                             <td>{{ $data->type }}</td>
                             <td>
                                 <a class="btn {{ Request::is('edit-transactionmd*') ? 'active' : '' }}" href="{{ route('edit_transactionmd', ['id' => $data->id]) }}">

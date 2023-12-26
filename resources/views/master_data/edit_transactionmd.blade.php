@@ -12,9 +12,10 @@
     <div class="container">
         <h2><a href="{{ route('transactionmd') }}">Transaction Master Data</a> > Edit</h2>
         <div class="isi">
-            <form action="{{ route('update_transactionmd', ['id' => $rate->id]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('update_transactionmd', ['id' => $rate->id]) }}" method="post"
+                enctype="multipart/form-data">
                 @csrf
-                
+
                 <div class="group">
                     <div class="label">Bank Name</div>
                     <div class="separator">:</div>
@@ -48,8 +49,43 @@
                     </div>
                 </div>
 
+                <div id="withdrawFields"
+                    style="{{ old('type', $rate->type) == 'Withdraw' ? 'display: block;' : 'display: none;' }}">
+                    <div class="group">
+                        <div class="label">Nama</div>
+                        <div class="separator">:</div>
+                        <div class="value">
+                            <input type="text" class="form-control" id="nama" name="nama"
+                                value="{{ old('nama', $rate->nama) }}">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="label">No Rekening</div>
+                        <div class="separator">:</div>
+                        <div class="value">
+                            <input type="text" class="form-control" id="no_rekening" name="no_rekening"
+                                value="{{ old('no_rekening', $rate->no_rekening) }}">
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="button">Save</button>
             </form>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var typeSelect = document.getElementById('type');
+            var withdrawFields = document.getElementById('withdrawFields');
+
+            function toggleWithdrawFields() {
+                withdrawFields.style.display = typeSelect.value === 'Withdraw' ? 'block' : 'none';
+            }
+
+            toggleWithdrawFields(); // Panggil fungsi ini saat halaman dimuat
+
+            typeSelect.addEventListener('change', toggleWithdrawFields);
+        });
+    </script>
 @endsection

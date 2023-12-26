@@ -16,6 +16,7 @@
                 <thead>
                     <tr>
                         <th>Bank Name</th>
+                        <th>Blockchain</th>
                         <th>Type</th>
                         <th>Price</th>
                         <th>Action</th>
@@ -29,6 +30,7 @@
                                 <p>
                                     {{ $data->nama_bank }}</p>
                             </td>
+                            <td></td>
                             <td>{{ $data->type }}</td>
                             <td>
                                 @if ($data->price !== null)

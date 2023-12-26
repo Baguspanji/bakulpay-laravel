@@ -18,7 +18,9 @@
                 <div class="group">
                     <div class="label">Bank Name</div>
                     <div class="separator">:</div>
-                    <div class="value"><input type="text" class="form-control" id="nama_bank" name="nama_bank" required></div>
+                    <div class="value">
+                        <input type="text" class="form-control" id="nama_bank" name="nama_bank" required>
+                    </div>
                 </div>
 
                 <div class="group">
@@ -36,7 +38,25 @@
                     <div class="label">Icons</div>
                     <div class="separator">:</div>
                     <div class="value">
-                        <input type="file" class="form-control-file" id="icons" name="icons" accept="image/*" required>
+                        <input type="file" class="form-control-file" id="icons" name="icons" accept="image/*"
+                            required>
+                    </div>
+                </div>
+
+                <div id="withdrawFields" style="display: none;">
+                    <div class="group">
+                        <div class="label">Nama</div>
+                        <div class="separator">:</div>
+                        <div class="value">
+                            <input type="text" class="form-control" id="nama" name="nama">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="label">No Rekening</div>
+                        <div class="separator">:</div>
+                        <div class="value">
+                            <input type="text" class="form-control" id="no_rekening" name="no_rekening">
+                        </div>
                     </div>
                 </div>
 
@@ -44,4 +64,15 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('type').addEventListener('change', function() {
+            console.log("Type changed:", this.value);
+            var withdrawFields = document.getElementById('withdrawFields');
+            withdrawFields.style.display = this.value === 'Withdraw' ? 'block' : 'none';
+        });
+    </script>
+
+
+
 @endsection
