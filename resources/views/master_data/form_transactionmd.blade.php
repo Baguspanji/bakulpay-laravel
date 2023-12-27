@@ -21,6 +21,10 @@
                     <div class="value">
                         <input type="text" class="form-control" id="nama_bank" name="nama_bank" required>
                     </div>
+
+                    <!-- Tambahkan ini sebelum formulir -->
+                    <button type="button" id="addBlockchain" class="btn btn-success">Tambah Blockchain</button>
+
                 </div>
 
                 <div class="group">
@@ -60,10 +64,25 @@
                     </div>
                 </div>
 
+                <div id="blockchainsContainer"></div>
+
+                <div id="blockchainTemplate" style="display: none;">
+                    <div class="group">
+                        <div class="label">Blockchain Name</div>
+                        <div class="separator">:</div>
+                        <div class="value">
+                            <input type="text" class="form-control" name="blockchain_name[]" required>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="button">Submit</button>
             </form>
         </div>
     </div>
+
+    <!-- Tambahkan jQuery dari CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
         document.getElementById('type').addEventListener('change', function() {
@@ -72,7 +91,26 @@
             withdrawFields.style.display = this.value === 'Withdraw' ? 'block' : 'none';
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            var counter = 1;
 
+            $("#addBlockchain").click(function() {
+                var newBlockchainGroup = $("#blockchainTemplate").clone();
+                newBlockchainGroup.attr("id", "blockchainGroup" + counter);
+                newBlockchainGroup.find("input").each(function() {
+                    $(this).attr("name", $(this).attr("name") + counter);
+                });
 
+                newBlockchainGroup.appendTo("#blockchainsContainer");
+                counter++;
+            });
+
+            $("#type").change(function() {
+                var withdrawFields = $("#withdrawFields");
+                withdrawFields.toggle(this.value === 'Withdraw');
+            });
+        });
+    </script>
 
 @endsection

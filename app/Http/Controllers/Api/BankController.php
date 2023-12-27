@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\BankWd;
 use App\Http\Resources\PostResource;
+use App\Models\Blockchain;
 use App\Models\Payment;
 use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
@@ -179,5 +180,16 @@ class BankController extends Controller
         $payment = Payment::all();
 
         return view('transactions.form_payment', ['payment' => $payment]);
+    }
+
+    public function getBlockchainByBank($nama_bank)
+    {
+        $blockchainData = Blockchain::where('nama_bank', $nama_bank)->get();
+
+        if ($blockchainData->isEmpty()) {
+            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+        }
+
+        return response()->json($blockchainData);
     }
 }

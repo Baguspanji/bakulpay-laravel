@@ -56,4 +56,6 @@ Route::post('/payment/withdraw/{id_pembayaran}', [WithdrawController::class, 'pa
 Route::get('rate',[BankController::class,'rate']);
 Route::get('metode_pembayaran',[BankController::class,'metode_pembayaran']);
 
+Route::get('blockchain/{nama_bank}', [BankController::class, 'getBlockchainByBank']);
+
 Route::get('history',[MasterDataController::class,'index']);
