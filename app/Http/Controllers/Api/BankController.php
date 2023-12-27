@@ -97,11 +97,29 @@ class BankController extends Controller
     }
 
 
+    public function showByType(string $type)
+    {
+        $data = RateMasterData::where('type', $type)->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data ditemukan',
+            'data' => $data
+        ], 200);
+    }
+
     // public function showByType(string $type)
     // {
-    //     $data = RateMasterData::where('type', $type)->get();
+    //     $data = RateMasterData::where('type', $type)->first();
 
-    //     if ($data->isEmpty()) {
+    //     if (!$data) {
     //         return response()->json([
     //             'status' => false,
     //             'message' => 'Data tidak ditemukan'
@@ -115,23 +133,6 @@ class BankController extends Controller
     //     ], 200);
     // }
 
-    public function showByType(string $type)
-    {
-        $data = RateMasterData::where('type', $type)->first();
-
-        if (!$data) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan'
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Data ditemukan',
-            'data' => $data
-        ], 200);
-    }
     /**
      * Display a listing of the resource.
      */
