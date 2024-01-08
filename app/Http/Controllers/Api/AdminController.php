@@ -158,7 +158,7 @@ class AdminController extends Controller
         if (!$request->email && !$request->name) {
             return response()->json([
                 'success' => false,
-                'message' => 'Email atau username tidak boleh kosong',
+                'message' => 'Email atau name tidak boleh kosong',
                 'data' => null
             ]);
         }
