@@ -250,6 +250,14 @@ class BankController extends Controller
             'topups' => $topups,
         ];
 
+        if ($withdraws->isEmpty() && $topups->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No history found',
+                'data' => null,
+            ]);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'History retrieved successfully',
