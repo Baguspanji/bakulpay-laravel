@@ -83,14 +83,14 @@
                         <div class="nama_1">Date</div>
                     </div>
 
-                    <div class="judul_1">
-                        <div class="keterangan_1"><span id="payment-date"></span></div>
-                        <div class="nama_1">Date</div>
-                    </div>
-
                     <div class="judul">
                         <div class="nama">ID Client</div>
                         <div class="keterangan"><span id="payment-id"></div>
+                    </div>
+
+                    <div class="judul_1">
+                        <div class="keterangan_1"><span id="payment-status"></span></div>
+                        <div class="nama_1">Status</div>
                     </div>
 
                     <div class="judul">

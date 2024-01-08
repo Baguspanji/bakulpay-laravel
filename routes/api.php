@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\DaftarController;
@@ -33,10 +34,18 @@ Route::get('test', function() {
 Route::post('daftar', [DaftarController::class,'store']);
 
 //AUTHENTICATION
-Route::post('register', [AuthController::class,'Register']);
-Route::post('login', [AuthController::class,'Login']);
-Route::post('logout', [AuthController::class, 'logout']);
-Route::get('users', [AuthController::class, 'index']);
+// Route::post('register', [AuthController::class,'Register']);
+// Route::post('login', [AuthController::class,'Login']);
+// Route::post('logout', [AuthController::class, 'logout']);
+// Route::get('users', [AuthController::class, 'index']);
+
+//ADMIN AUTHENTICATION
+Route::post('register', [AdminController::class,'Daftar']);
+Route::post('login', [AdminController::class,'Masuk'])->name('Masuk');
+Route::post('login_gm', [AdminController::class,'Login_GM'])->name('Login_GM');
+Route::post('logout', [AdminController::class, 'logout']);
+Route::get('admins', [AdminController::class, 'index']);
+
 
 // MAIN API BANK
 Route::get('/payment/{type}', [BankController::class, 'showByType']);

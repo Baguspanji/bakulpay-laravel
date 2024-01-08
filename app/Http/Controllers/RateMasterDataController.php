@@ -21,7 +21,6 @@ class RateMasterDataController extends Controller
 
     public function submitForm(Request $request)
     {
-        // Validasi form
         $validator = Validator::make($request->all(), [
             'nama_bank' => 'required|string',
             'type' => 'required|in:Top Up,Withdraw',
@@ -30,14 +29,12 @@ class RateMasterDataController extends Controller
             'no_rekening' => 'nullable|required_if:type,Withdraw',
         ]);
 
-        // Cek apakah validasi berhasil
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        // Proses penyimpanan data
         $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->extension(), 'public');
 
         $iconURL = URL::to('/') . Storage::url($iconPath);
@@ -46,13 +43,12 @@ class RateMasterDataController extends Controller
         $transactionMD->nama_bank = $request->nama_bank;
         $transactionMD->type = $request->type;
 
-        // Set 'Nama' dan 'No Rekening' hanya jika jenis transaksi adalah 'Withdraw'
         if ($request->type == 'Withdraw') {
             $transactionMD->nama = $request->nama;
             $transactionMD->no_rekening = $request->no_rekening;
         }
 
-        $transactionMD->icons = $iconURL; // Simpan URL gambar lengkap ke dalam kolom 'icons'
+        $transactionMD->icons = $iconURL;
         $transactionMD->save();
 
         return redirect()->route('transactionmd')
