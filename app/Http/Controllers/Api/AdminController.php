@@ -155,32 +155,22 @@ class AdminController extends Controller
     public function Login_GM(Request $request)
     {
         // Validasi input kosong
-        if (!$request->email && !$request->name) {
+        if (!$request->email) {
             return response()->json([
                 'success' => false,
-                'message' => 'Email atau name tidak boleh kosong',
+                'message' => 'Email tidak boleh kosong',
                 'data' => null
             ]);
         }
 
-        // Inisialisasi variabel untuk user
-        $admin = null;
-
-        // Validasi berdasarkan email atau username
-        if ($request->email && $request->name) {
-            // Jika keduanya diberikan, pilih salah satu (misalnya, email)
-            $admin = Admin::where('email', $request->email)->first();
-        } elseif ($request->email) {
-            $admin = Admin::where('email', $request->email)->first();
-        } elseif ($request->name) {
-            $admin = Admin::where('username', $request->name)->first();
-        }
+        // Cari user berdasarkan email
+        $admin = Admin::where('email', $request->email)->first();
 
         // Jika user tidak ditemukan, kembalikan respons error
         if (!$admin) {
             return response()->json([
                 'success' => false,
-                'message' => 'Cek kembali email atau username',
+                'message' => 'Cek kembali email',
                 'data' => null
             ]);
         }
@@ -194,11 +184,12 @@ class AdminController extends Controller
             'data' => [
                 'access_token' => $token,
                 'token_type' => 'Bearer',
-                'name' => $admin->name,
+                'name' => $admin->name, // Include name if needed
                 'user_id' => $admin->id,
             ],
         ]);
     }
+
 
     public function Masuk(Request $request)
     {
