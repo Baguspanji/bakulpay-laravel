@@ -155,7 +155,7 @@ class AdminController extends Controller
     public function Login_GM(Request $request)
     {
         // Validasi input kosong
-        if (!$request->email && !$request->username) {
+        if (!$request->email && !$request->name) {
             return response()->json([
                 'success' => false,
                 'message' => 'Email atau username tidak boleh kosong',
@@ -167,13 +167,13 @@ class AdminController extends Controller
         $admin = null;
 
         // Validasi berdasarkan email atau username
-        if ($request->email && $request->username) {
+        if ($request->email && $request->name) {
             // Jika keduanya diberikan, pilih salah satu (misalnya, email)
             $admin = Admin::where('email', $request->email)->first();
         } elseif ($request->email) {
             $admin = Admin::where('email', $request->email)->first();
-        } elseif ($request->username) {
-            $admin = Admin::where('username', $request->username)->first();
+        } elseif ($request->name) {
+            $admin = Admin::where('username', $request->name)->first();
         }
 
         // Jika user tidak ditemukan, kembalikan respons error

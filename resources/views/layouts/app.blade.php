@@ -68,7 +68,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
                 "dom": '<"top"lf>rt<"bottom"ip>',
@@ -87,7 +87,62 @@
             $('.dataTables_filter label').append(
                 '<iconify-icon icon="ic:round-search" class="search-icon"></iconify-icon>');
         });
+    </script> --}}
+
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                "dom": '<"top"lf>rt<"bottom"ip>',
+                "language": {
+                    "search": "",
+                    "searchPlaceholder": "Search...",
+                },
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+            });
+
+            // Add search icon
+            $('.dataTables_filter input').attr('placeholder', 'Search');
+            $('.dataTables_filter label').append(
+                '<iconify-icon icon="ic:round-search" class="search-icon"></iconify-icon>');
+
+            // Custom filter for Bank Name (replace 3 with your Bank Name column index)
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var selectedBank = $('#bank-filter').val();
+                    var bankName = data[3]; // Assuming Bank Name is in the fourth column (adjust as needed)
+
+                    if (selectedBank === '' || selectedBank === bankName) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            );
+
+            // Custom filter for Status (replace 1 with your Status column index)
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var selectedStatus = $('#status-filter').val();
+                    var status = data[1]; // Assuming Status is in the second column (adjust as needed)
+
+                    if (selectedStatus === '' || selectedStatus === status) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            );
+
+            // Apply custom filters on select change
+            $('#bank-filter, #status-filter').on('change', function() {
+                $('#myTable').DataTable().draw();
+            });
+        });
     </script>
+
 
     @stack('script')
 

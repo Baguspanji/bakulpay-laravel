@@ -140,6 +140,8 @@
         }
     </script>
 
+    
+
     <script>
         $(document).ready(function() {
             $(".isi tbody td:nth-child(5)").each(function() {

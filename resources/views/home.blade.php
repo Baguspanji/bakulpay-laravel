@@ -10,7 +10,7 @@
     </div>
     <p>Dashboard</p>
     <div class="isi">
-        Pending
+        test
     </div>
 
 @endsection

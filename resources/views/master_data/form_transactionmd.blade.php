@@ -20,8 +20,8 @@
                     <div class="separator">:</div>
                     <div class="value">
                         <input type="text" class="form-control" id="nama_bank" name="nama_bank" required>
-                        {{-- <span id="addBlockchain" class="plus-sign">+</span> --}}
                     </div>
+                    <a name="" id="" class="btn_1" href="#" role="button">+</a>
                 </div>
 
                 <div class="group" id="blockchainGroup" style="display: none;">
@@ -74,16 +74,4 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('addBlockchain').addEventListener('click', function() {
-            var blockchainGroup = document.getElementById('blockchainGroup');
-            blockchainGroup.style.display = 'block';
-        });
-
-        document.getElementById('type').addEventListener('change', function() {
-            console.log("Type changed:", this.value);
-            var withdrawFields = document.getElementById('withdrawFields');
-            withdrawFields.style.display = this.value === 'Withdraw' ? 'block' : 'none';
-        });
-    </script>
 @endsection
