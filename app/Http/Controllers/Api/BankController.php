@@ -10,6 +10,8 @@ use App\Models\Blockchain;
 use App\Models\Payment;
 use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
+use App\Models\TopUp;
+use App\Models\Withdraw;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -210,5 +212,48 @@ class BankController extends Controller
         }
 
         return response()->json($blockchainData);
+    }
+
+    // public function history(Request $request)
+    // {
+    //     $userId = $request->user_id;
+
+    //     $withdraws = Withdraw::where('user_id', $userId)->get();
+    //     $topups = TopUp::where('user_id', $userId)->get();
+
+    //     $history = [
+    //         'withdraws' => $withdraws,
+    //         'topups' => $topups,
+    //     ];
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'History retrieved successfully',
+    //         'data' => $history,
+    //     ]);
+    // }
+
+    public function history(Request $request)
+    {
+        $userId = $request->user_id;
+
+        $withdraws = Withdraw::where('user_id', $userId)
+            ->whereNotIn('status', ['un payment'])
+            ->get();
+
+        $topups = TopUp::where('user_id', $userId)
+            ->whereNotIn('status', ['un payment'])
+            ->get();
+
+        $history = [
+            'withdraws' => $withdraws,
+            'topups' => $topups,
+        ];
+
+        return response()->json([
+            'success' => true,
+            'message' => 'History retrieved successfully',
+            'data' => $history,
+        ]);
     }
 }

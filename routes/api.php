@@ -67,4 +67,7 @@ Route::get('metode_pembayaran',[BankController::class,'metode_pembayaran']);
 
 Route::get('blockchain/{nama_bank}', [BankController::class, 'getBlockchainByBank']);
 
-Route::get('history',[MasterDataController::class,'index']);
+// Route::get('history',[MasterDataController::class,'index']);
+
+//History
+Route::get('history/{user_id}', [BankController::class, 'history']);
