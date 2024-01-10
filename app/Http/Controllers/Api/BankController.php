@@ -245,12 +245,27 @@ class BankController extends Controller
             ->whereNotIn('status', ['un payment'])
             ->get();
 
-        $history = [
-            'withdraws' => $withdraws,
-            'topups' => $topups,
-        ];
+        $history = [];
 
-        if ($withdraws->isEmpty() && $topups->isEmpty()) {
+        if (!$withdraws->isEmpty()) {
+            $modifiedWithdraws = $withdraws->map(function ($withdraw) {
+                $withdraw['type'] = 'Withdraw';
+                return $withdraw;
+            });
+
+            $history = $modifiedWithdraws->toArray();
+        }
+
+        if (!$topups->isEmpty()) {
+            $modifiedTopups = $topups->map(function ($topup) {
+                $topup['type'] = 'Top-Up';
+                return $topup;
+            });
+
+            $history = array_merge($history, $modifiedTopups->toArray());
+        }
+
+        if (empty($history)) {
             return response()->json([
                 'success' => false,
                 'message' => 'No history found',
