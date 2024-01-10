@@ -95,29 +95,60 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'username' => 'required',
-            'email' => 'required|email|unique:admins,email', // Add unique validation for 'email'
+            'email' => 'required|email|unique:admins,email',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'noHp' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors();
+
+            $responseMessage = 'Validation failed';
+
+            // Check for specific field errors and customize the response message
+            if ($errors->has('email')) {
+                $responseMessage = $errors->first('email');
+            } elseif ($errors->has('username')) {
+                $responseMessage = $errors->first('username');
+            } elseif ($errors->has('confirm_password')) {
+                $responseMessage = 'The password confirmation does not match';
+            } elseif ($errors->has('name')) {
+                $responseMessage = $errors->first('name');
+            }
+            // Add similar checks for other fields if needed
+
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
+                'message' => $responseMessage,
             ]);
         }
 
         $input = $request->all();
 
-        // Check if the email already exists in the database
-        $existingUser = Admin::where('email', $input['email'])->first();
+        // Check if the email or username already exists in the database
+        $existingEmail = Admin::where('email', $input['email'])->first();
+        $existingUsername = Admin::where('username', $input['username'])->first();
 
-        if ($existingUser) {
+        if ($existingEmail || $existingUsername) {
+            $responseMessage = 'The ';
+
+            if ($existingEmail) {
+                $responseMessage .= 'email';
+                if ($existingUsername) {
+                    $responseMessage .= ' and ';
+                }
+            }
+
+            if ($existingUsername) {
+                $responseMessage .= 'username';
+            }
+
+            $responseMessage .= ' has already been taken';
+
             return response()->json([
                 'success' => false,
-                'message' => 'Email already registered',
+                'message' => $responseMessage,
             ]);
         }
 
@@ -136,6 +167,7 @@ class AdminController extends Controller
             'data' => $success
         ]);
     }
+
 
 
 
