@@ -292,15 +292,24 @@ CONTENT STYLE
     padding-top: 5px;
 }
 
+#content .isi .group a #addBlockchainBtn {
+    flex: 1;
+    border: 1 solid #000000;
+    width: 2%;
+    height: 2%;
+    color: #007bff;
+    text-align: center;
+}
+
 #content .isi .group input {
     /* width: 100%;
     max-width: 200px; */
-    width: 30%;
+    /* width: 30%; */
 }
 #content .isi .group select {
     /* width: 100%;
     max-width: 200px; */
-    width: 30%;
+    /* width: 30%; */
 }
 
 #content .isi .label {

@@ -95,10 +95,10 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'username' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:admins,email', // Add unique validation for 'email'
             'password' => 'required',
             'confirm_password' => 'required|same:password',
-            'noHp' => 'required|numeric', // Add validation for 'noHp'
+            'noHp' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -110,6 +110,17 @@ class AdminController extends Controller
         }
 
         $input = $request->all();
+
+        // Check if the email already exists in the database
+        $existingUser = Admin::where('email', $input['email'])->first();
+
+        if ($existingUser) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Email already registered',
+            ]);
+        }
+
         $input['password'] = bcrypt($input['password']);
 
         // Ensure 'noHp' is added to the fillable property in the Admin model
@@ -117,7 +128,7 @@ class AdminController extends Controller
 
         $success['email'] = $user->email;
         $success['name'] = $user->name;
-        $success['noHp'] = $user->noHp; // Include 'noHp' in the response
+        $success['noHp'] = $user->noHp;
 
         return response()->json([
             'success' => true,
@@ -125,6 +136,7 @@ class AdminController extends Controller
             'data' => $success
         ]);
     }
+
 
 
     // public function login(Request $request)

@@ -15,21 +15,17 @@
             <form action="{{ route('submit.form_transactionmd') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
-                <div class="group">
+                <div class="group" id="bankGroup">
                     <div class="label">Bank Name</div>
                     <div class="separator">:</div>
                     <div class="value">
                         <input type="text" class="form-control" id="nama_bank" name="nama_bank" required>
                     </div>
-                    <a name="" id="" class="btn_1" href="#" role="button">+</a>
+                    <a href="#" class="btn_1" id="addBankBlockchainBtn">Tambah Blockchain</a>
                 </div>
 
-                <div class="group" id="blockchainGroup" style="display: none;">
-                    <div class="label">Blockchain</div>
-                    <div class="separator">:</div>
-                    <div class="value">
-                        <input type="text" class="form-control" id="nama_blockchain" name="nama_blockchain">
-                    </div>
+                <div id="blockchainFieldsContainer"> <!-- Container untuk menyimpan input blockchain dinamis -->
+                    <!-- Daftar blockchain akan ditambahkan di sini -->
                 </div>
 
                 <div class="group">
@@ -73,5 +69,60 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            function toggleBlockchainInput() {
+                var blockchainGroup = $('<div class="group">' +
+                    '<div class="label">Blockchain</div>' +
+                    '<div class="separator">:</div>' +
+                    '<div class="value">' +
+                    '<input type="text" class="form-control" name="nama_blockchain[]">' +
+                    '</div>' +
+                    '<a href="#" class="btn_1 remove-blockchain-field">-</a>' +
+                    '</div>');
+
+                $('#blockchainFieldsContainer').append(blockchainGroup);
+
+                // Periksa jenis (Type) saat menambahkan Blockchain
+                if ($('#type').val() === 'Withdraw') {
+                    $('#withdrawFields #nama').parent('.group').hide(); // Menyembunyikan form "Nama"
+                } else {
+                    $('#withdrawFields #nama').parent('.group').show();
+                }
+
+                // Selalu menampilkan form "No Rekening"
+                $('#withdrawFields #no_rekening').parent('.group').show();
+            }
+
+
+
+
+            function addBankBlockchainField() {
+                toggleBlockchainInput(); // Show the Blockchain input field
+            }
+
+            // Event handler for the "+" button related to "Bank Name"
+            $('#addBankBlockchainBtn').on('click', function(e) {
+                e.preventDefault();
+                toggleBlockchainInput(); // Memanggil fungsi yang benar
+            });
+
+            // Event handler for the "-" button in dynamically added Blockchain fields
+            $(document).on('click', '.remove-blockchain-field', function(e) {
+                e.preventDefault();
+                $(this).parent().remove(); // Remove the corresponding Blockchain field
+            });
+
+            // Event handler for the "Type" select change
+            $('#type').on('change', function() {
+                if ($(this).val() === 'Withdraw') {
+                    $('#withdrawFields').show();
+                } else {
+                    $('#withdrawFields').hide();
+                }
+            });
+        });
+    </script>
 
 @endsection
