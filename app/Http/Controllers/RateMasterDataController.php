@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blockchain;
 use App\Models\RateMasterData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,14 +20,108 @@ class RateMasterDataController extends Controller
         return view('master_data.form_transactionmd', ['rate_master_data' => $rate_master_data]);
     }
 
+    // public function submitForm(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'nama_bank' => 'required|string',
+    //         'type' => 'required|in:Top Up,Withdraw',
+    //         'icons' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    //         'nama' => 'nullable|required_if:type,Withdraw',
+    //         'no_rekening' => 'nullable|required_if:type,Withdraw',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return redirect()->back()
+    //             ->withErrors($validator)
+    //             ->withInput();
+    //     }
+
+    //     $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->extension(), 'public');
+
+    //     $iconURL = URL::to('/') . Storage::url($iconPath);
+
+    //     $transactionMD = new RateMasterData();
+    //     $transactionMD->nama_bank = $request->nama_bank;
+    //     $transactionMD->type = $request->type;
+
+    //     if ($request->type == 'Withdraw') {
+    //         $transactionMD->nama = $request->nama;
+    //         $transactionMD->no_rekening = $request->no_rekening;
+    //     }
+
+    //     $transactionMD->icons = $iconURL;
+    //     $transactionMD->save();
+
+    //     return redirect()->route('transactionmd')
+    //         ->with('success', 'Data transaksi master berhasil ditambahkan!')
+    //         ->with('iconURL', $iconURL);
+    // }
+
+    // public function submitForm(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'nama_bank' => 'required|string',
+    //         'type' => 'required|in:Top Up,Withdraw',
+    //         'icons' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    //         'nama' => 'nullable|required_if:type,Withdraw',
+    //         'no_rekening' => 'nullable|required_if:type,Withdraw',
+    //         'nama_blockchain.*' => 'nullable|string', // Validasi untuk setiap input blockchain
+    //         'rekening_wallet.*' => 'nullable|string', // Validasi untuk setiap input rekening_wallet
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return redirect()->back()
+    //             ->withErrors($validator)
+    //             ->withInput();
+    //     }
+
+    //     $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->extension(), 'public');
+    //     $iconURL = URL::to('/') . Storage::url($iconPath);
+
+    //     $transactionMD = new RateMasterData();
+    //     $transactionMD->nama_bank = $request->nama_bank;
+    //     $transactionMD->type = $request->type;
+
+    //     if ($request->type == 'Withdraw') {
+    //         $transactionMD->nama = $request->nama;
+    //         $transactionMD->no_rekening = $request->no_rekening;
+    //     }
+
+    //     $transactionMD->icons = $iconURL;
+    //     $transactionMD->save();
+
+    //     // Menyimpan data blockchain ke tabel kedua (blockchain_data)
+    //     if ($request->has('nama_blockchain')) {
+    //         foreach ($request->nama_blockchain as $key => $namaBlockchain) {
+    //             $blockchainData = new Blockchain();
+    //             $blockchainData->id_rate = $transactionMD->id; // Menggunakan id dari record yang baru dibuat di RateMasterData
+    //             $blockchainData->nama_bank = $transactionMD->nama_bank;
+    //             $blockchainData->type = $transactionMD->type;
+    //             $blockchainData->nama_blockchain = $namaBlockchain;
+
+    //             // Jika jenis 'Top Up', nama dan no_rekening tidak perlu disimpan di 'blockchain_data'
+    //             if ($transactionMD->type == 'Withdraw') {
+    //                 $blockchainData->rekening_wallet = $request->rekening_wallet[$key];
+    //             }
+
+    //             $blockchainData->save();
+    //         }
+    //     }
+
+    //     return redirect()->route('transactionmd')
+    //         ->with('success', 'Data transaksi master berhasil ditambahkan!')
+    //         ->with('iconURL', $iconURL);
+    // }
+
     public function submitForm(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama_bank' => 'required|string',
             'type' => 'required|in:Top Up,Withdraw',
             'icons' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'nama' => 'nullable|required_if:type,Withdraw',
-            'no_rekening' => 'nullable|required_if:type,Withdraw',
+            'nama' => 'nullable|string',
+            'no_rekening' => 'nullable',
+            'nama_blockchain.*' => 'nullable|string', // Validasi untuk setiap input blockchain
         ]);
 
         if ($validator->fails()) {
@@ -35,8 +130,51 @@ class RateMasterDataController extends Controller
                 ->withInput();
         }
 
-        $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->extension(), 'public');
+        // Cek apakah nama_bank sudah ada di database
+        $existingTransaction = RateMasterData::where('nama_bank', $request->nama_bank)->first();
 
+        if ($existingTransaction) {
+            // Jika nama_bank sudah ada
+            if ($request->has('nama_blockchain')) {
+                // Jika ada tambahan blockchain
+                foreach ($request->nama_blockchain as $namaBlockchain) {
+                    // Cek apakah nama_blockchain sudah ada di database kedua (Blockchain)
+                    $blockchainExists = Blockchain::where('nama_blockchain', $namaBlockchain)->exists();
+
+                    if (!$blockchainExists) {
+                        $blockchainData = new Blockchain();
+                        $blockchainData->id_rate = $existingTransaction->id;
+                        $blockchainData->nama_bank = $existingTransaction->nama_bank;
+                        $blockchainData->type = $existingTransaction->type;
+
+                        if ($existingTransaction->type == 'Withdraw') {
+                            // Hanya tambahkan no_rekening untuk blockchain pertama
+                            if (!isset($noRekeningAdded)) {
+                                $blockchainData->rekening_wallet = $request->no_rekening;
+                                $noRekeningAdded = true;
+                            }
+                        }
+
+                        $blockchainData->nama_blockchain = $namaBlockchain;
+                        $blockchainData->save();
+                    } else {
+                        return redirect()->route('transactionmd')
+                            ->with('warning', 'Nama blockchain sudah ada di database. Tambahkan blockchain unik atau kembali ke halaman transactionmd.');
+                    }
+                }
+
+                return redirect()->route('transactionmd')
+                    ->with('success', 'Data transaksi master berhasil ditambahkan!')
+                    ->with('iconURL', $existingTransaction->icons);
+            } else {
+                // Jika tidak ada tambahan blockchain
+                return redirect()->route('transactionmd')
+                    ->with('warning', 'Nama bank sudah ada. Tambahkan blockchain atau kembali ke halaman transactionmd.');
+            }
+        }
+
+        // Jika nama_bank belum ada di database
+        $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->extension(), 'public');
         $iconURL = URL::to('/') . Storage::url($iconPath);
 
         $transactionMD = new RateMasterData();
@@ -45,16 +183,49 @@ class RateMasterDataController extends Controller
 
         if ($request->type == 'Withdraw') {
             $transactionMD->nama = $request->nama;
-            $transactionMD->no_rekening = $request->no_rekening;
+            // no_rekening diisi jika tidak ada tambahan blockchain
+            if (!$request->has('nama_blockchain')) {
+                $transactionMD->no_rekening = $request->no_rekening;
+            }
         }
 
         $transactionMD->icons = $iconURL;
         $transactionMD->save();
 
+        // Menyimpan data blockchain ke tabel kedua (blockchain_data)
+        if ($request->has('nama_blockchain')) {
+            foreach ($request->nama_blockchain as $namaBlockchain) {
+                // Cek apakah nama_blockchain sudah ada di database kedua (Blockchain)
+                $blockchainExists = Blockchain::where('nama_blockchain', $namaBlockchain)->exists();
+
+                if (!$blockchainExists) {
+                    $blockchainData = new Blockchain();
+                    $blockchainData->id_rate = $transactionMD->id;
+                    $blockchainData->nama_bank = $transactionMD->nama_bank;
+                    $blockchainData->type = $transactionMD->type;
+                    $blockchainData->nama_blockchain = $namaBlockchain;
+
+                    if ($transactionMD->type == 'Withdraw') {
+                        // Hanya tambahkan no_rekening untuk blockchain pertama
+                        if (!isset($noRekeningAdded)) {
+                            $blockchainData->rekening_wallet = $request->no_rekening;
+                            $noRekeningAdded = true;
+                        }
+                    }
+
+                    $blockchainData->save();
+                } else {
+                    return redirect()->route('transactionmd')
+                        ->with('warning', 'Nama blockchain sudah ada di database. Tambahkan blockchain unik atau kembali ke halaman transactionmd.');
+                }
+            }
+        }
+
         return redirect()->route('transactionmd')
             ->with('success', 'Data transaksi master berhasil ditambahkan!')
             ->with('iconURL', $iconURL);
     }
+
 
 
     public function edit_rate($id)
@@ -93,14 +264,18 @@ class RateMasterDataController extends Controller
     public function edit_transactionmd($id)
     {
         // Fetch the rate data based on the $id
-        $rate = RateMasterData::find($id);
+        $rate = RateMasterData::findOrFail($id);
+
+        // Ambil entri blockchain sesuai dengan id_rate dari rate_master_data
+        $blockchains = Blockchain::where('id_rate', $id)->get();
 
         // Return the view with the rate data
-        return view('master_data.edit_transactionmd', ['rate' => $rate]);
+        return view('master_data.edit_transactionmd', ['rate' => $rate, 'blockchains' => $blockchains]);
     }
 
     public function update_transactionmd(Request $request, $id)
     {
+
         $validatorRules = [
             'nama_bank' => 'required',
             'type' => 'required',
@@ -110,6 +285,10 @@ class RateMasterDataController extends Controller
         if ($request->input('type') === 'Withdraw') {
             $validatorRules['nama'] = 'required';
             $validatorRules['no_rekening'] = 'required';
+
+            // Add validation for nama_blockchain and rekening_wallet
+            $validatorRules['nama_blockchain.*'] = 'required';
+            $validatorRules['rekening_wallet.*'] = 'required';
         }
 
         $request->validate($validatorRules);
@@ -142,6 +321,20 @@ class RateMasterDataController extends Controller
             }
 
             $rate->update($updateData);
+
+            // Update 'nama_blockchain' and 'rekening_wallet' in the 'blockchain' table if present
+            if ($request->input('type') === 'Withdraw' && $request->has('nama_blockchain')) {
+                $namaBlockchainArray = $request->input('nama_blockchain');
+                $rekeningWalletArray = $request->input('rekening_wallet');
+
+                foreach ($namaBlockchainArray as $index => $namaBlockchain) {
+                    $blockchain = $rate->blockchains[$index];
+                    $blockchain->update([
+                        'nama_blockchain' => $namaBlockchain,
+                        'rekening_wallet' => $rekeningWalletArray[$index],
+                    ]);
+                }
+            }
 
             $successMessage = 'Rate updated successfully';
 

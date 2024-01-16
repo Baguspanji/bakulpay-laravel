@@ -301,17 +301,35 @@ CONTENT STYLE
     text-align: center;
 }
 
-#content .isi .group input {
+/* #content .isi .group input {
     /* width: 100%;
     max-width: 200px; */
-    /* width: 30%; */
-}
-#content .isi .group select {
+/* width: 30%; */
+/* } */
+/* #content .isi .group select {
     /* width: 100%;
     max-width: 200px; */
-    /* width: 30%; */
+/* width: 30%; */
+/* } */
+
+/* .btn_1 {
+    margin-left: 10px;
+    background-color: red;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
 }
 
+.remove-blockchain-field {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
 #content .isi .label {
     width: 150px;
     color: #000000;
@@ -331,8 +349,8 @@ CONTENT STYLE
 #content .isi .value1 {
     flex: 1;
     padding-left: 20px;
-}
-#content .isi .value img {
+} */
+/* #content .isi .value img {
     border: 1px solid #c9c1c1;
     border-radius: 10px;
     text-align: center;
@@ -341,7 +359,54 @@ CONTENT STYLE
     margin-top: 20px;
     width: 30%;
     height: 40%;
+} */
+
+.btn_1 {
+    margin-left: 10px;
+    background-color: rgb(47, 255, 0);
+    color: rgb(0, 0, 0);
+    padding: 4px 5px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
 }
+
+.remove-blockchain-field {
+    background-color: red;
+    color: white;
+    padding: 4px 8px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.label {
+    width: 150px;
+    color: #000000;
+    font-weight: bold;
+    display: inline-block; /* tambahkan ini agar label tidak pecah */
+}
+
+.separator {
+    margin: 0 5px;
+    color: #000000;
+    font-weight: bold;
+}
+
+.value input {
+    width: 300px;
+}
+.value select {
+    width: 300px;
+}
+
+
+.value1 {
+    flex: 1;
+    padding-left: 20px;
+    display: inline-block; /* tambahkan ini agar input field bersebelahan */
+}
+
 
 #content .isi .value1 img {
     border: 1px solid #c9c1c1;
@@ -399,11 +464,11 @@ CONTENT STYLE
     clip: rect(0, 50%, auto, 0);
 }
 
-.isi .judul .keterangan input[type=file]::file-selector-button {
+.isi .judul .keterangan input[type="file"]::file-selector-button {
     border: none;
-    padding: .2em .4em;
+    padding: 0.2em 0.4em;
     border-radius: 10px;
-    background-color: #37398B;
+    background-color: #37398b;
     transition: 1s;
     color: #ffffff;
     width: 65%;

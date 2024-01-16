@@ -12,4 +12,9 @@ class RateMasterData extends Model
     protected $fillable = ['nama_bank', 'icons', 'type', 'price'];
 
     use HasFactory;
+
+    public function blockchains()
+    {
+        return $this->hasMany(Blockchain::class, 'id_rate', 'id');
+    }
 }

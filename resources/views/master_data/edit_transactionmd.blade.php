@@ -12,18 +12,26 @@
     <div class="container">
         <h2><a href="{{ route('transactionmd') }}">Transaction Master Data</a> > Edit</h2>
         <div class="isi">
-            <form action="{{ route('update_transactionmd', ['id' => $rate->id]) }}" method="post"
-                enctype="multipart/form-data">
+            <form
+                action="{{ route('update_transactionmd', ['id' => $rate->id, 'blockchain_id' => request('blockchain_id')]) }}"
+                method="post" enctype="multipart/form-data">
                 @csrf
 
-                <div class="group">
+                <div class="group" id="bankGroup">
                     <div class="label">Bank Name</div>
                     <div class="separator">:</div>
                     <div class="value">
                         <input type="text" class="form-control" id="nama_bank" name="nama_bank"
                             value="{{ old('nama_bank', $rate->nama_bank) }}" required>
                     </div>
+                    <a href="#" class="btn_1" id="addBankBlockchainBtn" disabled>Add Blockchain</a>
                 </div>
+
+                <div id="blockchainFieldsContainer"> <!-- Container untuk menyimpan input blockchain dinamis -->
+                    <input type="hidden" name="blockchain_id" value="{{ request('blockchain_id') }}">
+
+                </div>
+
 
                 <div class="group">
                     <div class="label">Type</div>
@@ -69,23 +77,101 @@
                     </div>
                 </div>
 
+                <!-- Bagian lain dari formulir Anda -->
+
                 <button type="submit" class="button">Save</button>
             </form>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var typeSelect = document.getElementById('type');
-            var withdrawFields = document.getElementById('withdrawFields');
+        $(document).ready(function() {
+            // Variable untuk melacak apakah tombol "Tambah Blockchain" telah diklik
+            var blockchainButtonClicked = false;
 
-            function toggleWithdrawFields() {
-                withdrawFields.style.display = typeSelect.value === 'Withdraw' ? 'block' : 'none';
+            // Mengambil nilai blockchain_id dari URL
+            var blockchainIdFromUrl = getParameterByName('blockchain_id');
+
+            // Function untuk mendapatkan nilai parameter dari URL
+            function getParameterByName(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
             }
 
-            toggleWithdrawFields(); // Panggil fungsi ini saat halaman dimuat
+            function addBankBlockchainField() {
+                if (!blockchainButtonClicked) {
+                    var blockchainGroup = $('<div class="group">' +
+                        '<div class="label">Nama Blockchain</div>' +
+                        '<div class="separator">:</div>' +
+                        '<div class="value">' +
+                        '<input type="text" class="form-control" name="nama_blockchain[]" required>' +
+                        '</div>' +
+                        '<a href="#" class="btn_1 remove-blockchain-field">X</a>' +
+                        '</div>');
 
-            typeSelect.addEventListener('change', toggleWithdrawFields);
+                    // Set nilai nama_blockchain sesuai dengan blockchain_id dari URL
+                    if (blockchainIdFromUrl && $('#blockchainFieldsContainer').find('[data-blockchain-id="' +
+                            blockchainIdFromUrl + '"]').length === 0) {
+                        var blockchainInput = blockchainGroup.find('input[name="nama_blockchain[]"]');
+                        blockchainInput.val(blockchainIdFromUrl);
+                        blockchainGroup.attr('data-blockchain-id', blockchainIdFromUrl);
+
+                        // Set label text to "Nama Blockchain"
+                        blockchainGroup.find('.label').text('Nama Blockchain');
+
+                        $('#blockchainFieldsContainer').append(blockchainGroup);
+                    }
+
+                    // Nonaktifkan input "Nama" jika jenis (Type) adalah 'Withdraw' dan ada field blockchain
+                    updateNamaFieldStatus();
+
+                    // Nonaktifkan tombol "Tambah Blockchain" setelah ditambahkan satu kali
+                    blockchainButtonClicked = true;
+                    $('#addBankBlockchainBtn').prop('disabled', true);
+                }
+            }
+
+
+            // Panggil fungsi untuk menambahkan bidang blockchain
+            addBankBlockchainField();
+
+            function updateNamaFieldStatus() {
+                if ($('#type').val() === 'Withdraw' && $('#blockchainFieldsContainer .group').length > 0) {
+                    $('#withdrawFields #nama').prop('disabled', true);
+                } else {
+                    $('#withdrawFields #nama').prop('disabled', false);
+                }
+            }
+
+            // Event handler untuk tombol "+" terkait "Bank Name"
+            $('#addBankBlockchainBtn').on('click', function(e) {
+                e.preventDefault();
+                addBankBlockchainField();
+            });
+
+            // Event handler untuk tombol "-" pada bidang Blockchain yang ditambahkan secara dinamis
+            $(document).on('click', '.remove-blockchain-field', function(e) {
+                e.preventDefault();
+                $(this).closest('.group').remove();
+                updateNamaFieldStatus();
+                // Aktifkan kembali tombol "Tambah Blockchain" setelah menghapus blockchain field
+                blockchainButtonClicked = false;
+                $('#addBankBlockchainBtn').prop('disabled', false);
+            });
+
+            // Event handler untuk perubahan pilihan jenis
+            $('#type').on('change', function() {
+                if ($(this).val() === 'Withdraw') {
+                    $('#withdrawFields').show();
+                } else {
+                    $('#withdrawFields').hide();
+                }
+                updateNamaFieldStatus();
+            });
         });
     </script>
 @endsection
