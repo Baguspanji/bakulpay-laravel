@@ -130,16 +130,20 @@ class RateMasterDataController extends Controller
                 ->withInput();
         }
 
-        // Cek apakah nama_bank sudah ada di database
-        $existingTransaction = RateMasterData::where('nama_bank', $request->nama_bank)->first();
+        // Cek apakah nama_bank dan type sudah ada di database
+        $existingTransaction = RateMasterData::where('nama_bank', $request->nama_bank)
+            ->where('type', $request->type)
+            ->first();
 
         if ($existingTransaction) {
-            // Jika nama_bank sudah ada
+            // Jika nama_bank dan type sudah ada di database rate_master_data
             if ($request->has('nama_blockchain')) {
                 // Jika ada tambahan blockchain
                 foreach ($request->nama_blockchain as $namaBlockchain) {
                     // Cek apakah nama_blockchain sudah ada di database kedua (Blockchain)
-                    $blockchainExists = Blockchain::where('nama_blockchain', $namaBlockchain)->exists();
+                    $blockchainExists = Blockchain::where('nama_blockchain', $namaBlockchain)
+                        ->where('id_rate', $existingTransaction->id)
+                        ->exists();
 
                     if (!$blockchainExists) {
                         $blockchainData = new Blockchain();
@@ -173,9 +177,9 @@ class RateMasterDataController extends Controller
             }
         }
 
-        // Jika nama_bank belum ada di database
+        // Jika nama_bank dan type belum ada di database
         $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->extension(), 'public');
-        $iconURL = URL::to('/') . Storage::url($iconPath);
+        $iconURL = URL::to('/') . '/storage/' . $iconPath;
 
         $transactionMD = new RateMasterData();
         $transactionMD->nama_bank = $request->nama_bank;
@@ -196,7 +200,9 @@ class RateMasterDataController extends Controller
         if ($request->has('nama_blockchain')) {
             foreach ($request->nama_blockchain as $namaBlockchain) {
                 // Cek apakah nama_blockchain sudah ada di database kedua (Blockchain)
-                $blockchainExists = Blockchain::where('nama_blockchain', $namaBlockchain)->exists();
+                $blockchainExists = Blockchain::where('nama_blockchain', $namaBlockchain)
+                    ->where('id_rate', $transactionMD->id)
+                    ->exists();
 
                 if (!$blockchainExists) {
                     $blockchainData = new Blockchain();
