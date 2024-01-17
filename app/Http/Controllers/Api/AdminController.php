@@ -304,6 +304,7 @@ class AdminController extends Controller
                 'user_id' => $admin->id,
                 'photo' => $admin->photo,
                 'email' => $admin->email,
+                'noHp' => $admin->noHp,
 
             ],
         ]);
@@ -350,6 +351,7 @@ class AdminController extends Controller
                 'user_id' => $admin->id,
                 'photo' => $admin->photo,
                 'email' => $admin->email,
+                'noHp' => $admin->noHp,
             ],
         ]);
     }
