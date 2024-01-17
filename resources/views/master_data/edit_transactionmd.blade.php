@@ -64,15 +64,23 @@
                         <div class="separator">:</div>
                         <div class="value">
                             <input type="text" class="form-control" id="nama" name="nama"
-                                value="{{ old('nama', $rate->nama) }}">
+                                value="{{ old('nama', $rate->nama) }}"
+                                {{ old('type', $rate->type) == 'Withdraw' && count($rate->blockchains) > 0 ? 'disabled' : '' }}>
                         </div>
                     </div>
                     <div class="group">
                         <div class="label">No Rekening</div>
                         <div class="separator">:</div>
                         <div class="value">
-                            <input type="text" class="form-control" id="no_rekening" name="no_rekening"
-                                value="{{ old('no_rekening', $rate->no_rekening) }}">
+                            @if (old('type', $rate->type) == 'Withdraw' && count($rate->blockchains) > 0)
+                                <!-- Jika ada nama blockchain, ambil dari tabel blockchain -->
+                                <input type="text" class="form-control" id="no_rekening" name="no_rekening"
+                                    value="{{ old('no_rekening', $rate->blockchains[0]->rekening_wallet) }}">
+                            @else
+                                <!-- Jika tidak ada nama blockchain, ambil dari tabel rate_master_data -->
+                                <input type="text" class="form-control" id="no_rekening" name="no_rekening"
+                                    value="{{ old('no_rekening', $rate->no_rekening) }}">
+                            @endif
                         </div>
                     </div>
                 </div>

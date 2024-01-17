@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RateMasterDataController extends Controller
 {
@@ -279,77 +280,180 @@ class RateMasterDataController extends Controller
         return view('master_data.edit_transactionmd', ['rate' => $rate, 'blockchains' => $blockchains]);
     }
 
+
+    // public function update_transactionmd(Request $request, $id)
+    // {
+    //     $validatorRules = [
+    //         'nama_bank' => 'required',
+    //         'type' => 'required',
+    //         'icons' => 'required|file|max:2048',
+    //     ];
+
+    //     $request->validate($validatorRules);
+
+    //     $rate = RateMasterData::find($id);
+
+    //     if ($rate) {
+    //         // Update 'icons' if a new file is uploaded
+    //         if ($request->hasFile('icons')) {
+    //             if ($rate->icons) {
+    //                 Storage::delete($rate->icons);
+    //             }
+
+    //             $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
+
+    //             $iconURL = URL::to('/') . Storage::url($iconPath);
+
+    //             $rate->update(['icons' => $iconURL]);
+    //         }
+
+    //         // Update 'nama_bank' and 'type'
+    //         $rate->update([
+    //             'nama_bank' => $request->input('nama_bank'),
+    //             'type' => $request->input('type'),
+    //         ]);
+
+    //         // Update 'nama_blockchain' in the 'blockchain' table if present
+    //         if ($request->has('nama_blockchain')) {
+    //             $namaBlockchainArray = $request->input('nama_blockchain');
+
+    //             foreach ($namaBlockchainArray as $namaBlockchain) {
+    //                 $blockchain = Blockchain::updateOrCreate(
+    //                     ['id_rate' => $rate->id],
+    //                     ['nama_blockchain' => $namaBlockchain]
+    //                 );
+    //             }
+    //         }
+
+    //         // Redirect with success message
+    //         return redirect()->route('transactionmd')->with([
+    //             'success' => 'Rate updated successfully',
+    //             'iconURL' => isset($iconURL) ? $iconURL : null,
+    //         ]);
+    //     } else {
+    //         return redirect()->route('edit_transactionmd', ['id' => $id])->with('error', 'Rate not found');
+    //     }
+    // }
+
+    // public function update_transactionmd(Request $request, $id)
+    // {
+    //     $validatorRules = [
+    //         'nama_bank' => 'required',
+    //         'type' => 'required',
+    //         'icons' => 'nullable|file|max:2048', // Make 'icons' optional
+    //     ];
+
+    //     $request->validate($validatorRules);
+
+    //     $rate = RateMasterData::find($id);
+
+    //     if (!$rate) {
+    //         return redirect()->route('edit_transactionmd', ['id' => $id])->with('error', 'Rate not found');
+    //     }
+
+    //     // Update 'icons' if a new file is uploaded
+    //     if ($request->hasFile('icons')) {
+    //         if ($rate->icons) {
+    //             Storage::delete($rate->icons);
+    //         }
+
+    //         $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
+
+    //         $rate->update(['icons' => URL::to('/') . Storage::url($iconPath)]);
+    //     }
+
+    //     // Update 'nama_bank' and 'type'
+    //     $rate->update([
+    //         'nama_bank' => $request->input('nama_bank'),
+    //         'type' => $request->input('type'),
+    //     ]);
+
+    //     // Update 'nama_blockchain' in the 'blockchain' table if present
+    //     if ($request->has('nama_blockchain')) {
+    //         $namaBlockchainArray = $request->input('nama_blockchain');
+
+    //         foreach ($namaBlockchainArray as $namaBlockchain) {
+    //             // Periksa apakah 'nama_blockchain' berubah
+    //             $existingBlockchain = $rate->blockchains()->where(['id_rate' => $rate->id, 'nama_blockchain' => $namaBlockchain])->first();
+
+    //             if (!$existingBlockchain || $existingBlockchain->nama_bank !== $request->input('nama_bank')) {
+    //                 // Jika 'nama_blockchain' berubah atau 'nama_bank' berbeda, update atau insert
+    //                 $rate->blockchains()->updateOrCreate(
+    //                     ['id_rate' => $rate->id, 'nama_blockchain' => $namaBlockchain],
+    //                     ['nama_bank' => $request->input('nama_bank')]
+    //                 );
+    //             }
+    //         }
+    //     }
+
+    //     // Update 'nama_bank' in 'blockchain' entries with the same 'id_rate'
+    //     $rate->blockchains()->where('id_rate', $rate->id)->update(['nama_bank' => $request->input('nama_bank')]);
+
+    //     // Redirect with success message
+    //     return redirect()->route('transactionmd')->with([
+    //         'success' => 'Rate updated successfully',
+    //         'iconURL' => $rate->icons ?? null,
+    //     ]);
+    // }
+
     public function update_transactionmd(Request $request, $id)
     {
-
         $validatorRules = [
             'nama_bank' => 'required',
             'type' => 'required',
-            'icons' => 'required|file|max:2048',
+            'icons' => 'nullable|file|max:2048', // Make 'icons' optional
         ];
-
-        if ($request->input('type') === 'Withdraw') {
-            $validatorRules['nama'] = 'required';
-            $validatorRules['no_rekening'] = 'required';
-
-            // Add validation for nama_blockchain and rekening_wallet
-            $validatorRules['nama_blockchain.*'] = 'required';
-            $validatorRules['rekening_wallet.*'] = 'required';
-        }
 
         $request->validate($validatorRules);
 
         $rate = RateMasterData::find($id);
 
-        if ($rate) {
-            if ($request->hasFile('icons')) {
-                if ($rate->icons) {
-                    Storage::delete($rate->icons);
-                }
-
-                $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
-
-                $iconURL = URL::to('/') . Storage::url($iconPath);
-
-                $rate->update(['icons' => $iconURL]);
-            }
-
-            // Update the columns based on 'type'
-            $updateData = [
-                'nama_bank' => $request->input('nama_bank'),
-                'type' => $request->input('type'),
-            ];
-
-            // Update 'nama' and 'no_rekening' only if 'type' is 'Withdraw'
-            if ($request->input('type') === 'Withdraw') {
-                $updateData['nama'] = $request->input('nama');
-                $updateData['no_rekening'] = $request->input('no_rekening');
-            }
-
-            $rate->update($updateData);
-
-            // Update 'nama_blockchain' and 'rekening_wallet' in the 'blockchain' table if present
-            if ($request->input('type') === 'Withdraw' && $request->has('nama_blockchain')) {
-                $namaBlockchainArray = $request->input('nama_blockchain');
-                $rekeningWalletArray = $request->input('rekening_wallet');
-
-                foreach ($namaBlockchainArray as $index => $namaBlockchain) {
-                    $blockchain = $rate->blockchains[$index];
-                    $blockchain->update([
-                        'nama_blockchain' => $namaBlockchain,
-                        'rekening_wallet' => $rekeningWalletArray[$index],
-                    ]);
-                }
-            }
-
-            $successMessage = 'Rate updated successfully';
-
-            return redirect()->route('transactionmd')->with([
-                'success' => $successMessage,
-                'iconURL' => isset($iconURL) ? $iconURL : null,
-            ]);
-        } else {
+        if (!$rate) {
             return redirect()->route('edit_transactionmd', ['id' => $id])->with('error', 'Rate not found');
         }
+
+        // Update 'icons' if a new file is uploaded
+        if ($request->hasFile('icons')) {
+            if ($rate->icons) {
+                Storage::delete($rate->icons);
+            }
+
+            $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
+
+            $rate->update(['icons' => URL::to('/') . Storage::url($iconPath)]);
+        }
+
+        // Update 'nama_bank' and 'type'
+        $rate->update([
+            'nama_bank' => $request->input('nama_bank'),
+            'type' => $request->input('type'),
+        ]);
+
+        // Update 'nama_blockchain' in the 'blockchain' table if present
+        if ($request->has('nama_blockchain')) {
+            $namaBlockchainArray = $request->input('nama_blockchain');
+
+            foreach ($namaBlockchainArray as $namaBlockchain) {
+                // Periksa apakah 'nama_blockchain' berubah
+                $existingBlockchain = $rate->blockchains()->where(['id_rate' => $rate->id, 'nama_blockchain' => $namaBlockchain])->first();
+
+                if (!$existingBlockchain || $existingBlockchain->nama_bank !== $request->input('nama_bank')) {
+                    // Jika 'nama_blockchain' berubah atau 'nama_bank' berbeda, update atau insert
+                    $rate->blockchains()->updateOrCreate(
+                        ['id_rate' => $rate->id, 'nama_blockchain' => $namaBlockchain],
+                        ['nama_bank' => $request->input('nama_bank')]
+                    );
+                }
+            }
+        }
+
+        // Update 'nama_bank' in 'blockchain' entries with the same 'id_rate'
+        $rate->blockchains()->where('id_rate', $rate->id)->update(['nama_bank' => $request->input('nama_bank')]);
+
+        // Redirect with success message
+        return redirect()->route('transactionmd')->with([
+            'success' => 'Rate updated successfully',
+            'iconURL' => $rate->icons ?? null,
+        ]);
     }
 }

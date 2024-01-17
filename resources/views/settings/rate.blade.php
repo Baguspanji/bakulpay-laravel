@@ -12,6 +12,7 @@
     <div class="container">
         <h2>Rate</h2>
         <div class="isi">
+
             <table id="myTable" class="display">
                 <thead>
                     <tr>
@@ -23,29 +24,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rate_master_data as $data)
+                    @forelse ($rate_master_data as $data)
+                        @if (count($data->blockchains) > 0)
+                            @foreach ($data->blockchains as $blockchain)
+                                <tr>
+                                    <td class="ikon">
+                                        <img src="{{ $data->icons }}" alt="Bank Icon">
+                                        <p>{{ $data->nama_bank }}</p>
+                                    </td>
+                                    <td>{{ $blockchain->nama_blockchain }}</td>
+                                    <td>{{ $data->type }}</td>
+                                    <td></td>
+                                    <td>
+                                        <a class="btn {{ Request::is('edit-rate*' . $data->id . '/' . $blockchain->id) ? 'active' : '' }}"
+                                            href="{{ route('edit_rate', ['id' => $data->id, 'blockchain_id' => $blockchain->nama_blockchain]) }}">
+                                            <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            {{-- Display a row with empty blockchain --}}
+                            <tr>
+                                <td class="ikon">
+                                    <img src="{{ $data->icons }}" alt="Bank Icon">
+                                    <p>{{ $data->nama_bank }}</p>
+                                </td>
+                                <td></td> {{-- Empty blockchain --}}
+                                <td>{{ $data->type }}</td>
+                                <td></td>
+                                <td>
+                                    <a class="btn {{ Request::is('edit-rate*' . $data->id) ? 'active' : '' }}"
+                                        href="{{ route('edit_rate', ['id' => $data->id]) }}">
+                                        <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endif
+                    @empty
+                        {{-- Handle the case where $rate_master_data is empty --}}
                         <tr>
-                            <td class="ikon">
-                                <img src="{{ $data->icons }}" alt="Bank Icon">
-                                <p>
-                                    {{ $data->nama_bank }}</p>
-                            </td>
-                            <td></td>
-                            <td>{{ $data->type }}</td>
-                            <td>
-                                @if ($data->price !== null)
-                                    Rp {{ number_format($data->price, 2, ',', '.') }}
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
-                                <a class="btn {{ Request::is('edit-rate*') ? 'active' : '' }}" href="{{ route('edit_rate', ['id' => $data->id]) }}">
-                                    <iconify-icon icon="akar-icons:edit"></iconify-icon>
-                                </a>
-                            </td>
+                            <td colspan="4">No data available</td>
                         </tr>
-                    @endforeach
+                    @endforelse
                 </tbody>
             </table>
         </div>

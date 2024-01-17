@@ -59,6 +59,42 @@ class WithdrawController extends Controller
         ]);
     }
 
+    // public function payment_withdraw(Request $request, $id_pembayaran)
+    // {
+    //     $request->validate([
+    //         'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'nama' => 'required',
+    //     ]);
+
+    //     $payment_topup = Withdraw::where('id_pembayaran', $id_pembayaran)->first();
+
+    //     if (!$payment_topup) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Withdraw tidak ditemukan.'
+    //         ], 404);
+    //     }
+
+    //     $payment_topup->update(['nama' => $request->nama]);
+
+    //     if ($request->hasFile('bukti_pembayaran')) {
+    //         if ($payment_topup->bukti_pembayaran) {
+    //             Storage::delete($payment_topup->bukti_pembayaran);
+    //         }
+
+    //         $buktiPath = $request->file('bukti_pembayaran')->storeAs('bukti_pembayaran/withdraw', uniqid() . '.' . $request->file('bukti_pembayaran')->getClientOriginalExtension(), 'public');
+
+    //         $buktiURL = URL::to('/') . Storage::url($buktiPath);
+
+    //         $payment_topup->update(['bukti_pembayaran' => $buktiURL, 'status' => 'Pending']);
+    //     }
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'message' => 'Berhasil memasukkan bukti pembayaran.'
+    //     ]);
+    // }
+
     public function payment_withdraw(Request $request, $id_pembayaran)
     {
         $request->validate([
@@ -66,15 +102,10 @@ class WithdrawController extends Controller
             'nama' => 'required',
         ]);
 
-        $payment_topup = Withdraw::where('id_pembayaran', $id_pembayaran)->first();
+        // Menggunakan findOrFail untuk memastikan exception jika data tidak ditemukan
+        $payment_topup = Withdraw::findOrFail($id_pembayaran);
 
-        if (!$payment_topup) {
-            return response()->json([
-                'status' => false,
-                'message' => 'TopUp tidak ditemukan.'
-            ], 404);
-        }
-
+        // Menggunakan update langsung tanpa memeriksa ketersediaan data
         $payment_topup->update(['nama' => $request->nama]);
 
         if ($request->hasFile('bukti_pembayaran')) {
@@ -94,6 +125,7 @@ class WithdrawController extends Controller
             'message' => 'Berhasil memasukkan bukti pembayaran.'
         ]);
     }
+
 
     public function edit_withdraw($id)
     {
