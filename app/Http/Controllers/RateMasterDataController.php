@@ -235,14 +235,36 @@ class RateMasterDataController extends Controller
 
 
 
+    // public function edit_rate($id)
+    // {
+    //     // Fetch the rate data based on the $id
+    //     $rate = RateMasterData::find($id);
+
+    //     // Return the view with the rate data
+    //     return view('settings.edit_rate', ['rate' => $rate]);
+    // }
+
     public function edit_rate($id)
     {
-        // Fetch the rate data based on the $id
-        $rate = RateMasterData::find($id);
+        // Mendapatkan data rate berdasarkan $id
+        $rate = RateMasterData::findOrFail($id);
 
-        // Return the view with the rate data
-        return view('settings.edit_rate', ['rate' => $rate]);
+        // Mendapatkan nama_blockchain berdasarkan id_rate
+        $namaBlockchain = Blockchain::where('id_rate', $id)->value('nama_blockchain');
+
+        // Jika namaBlockchain ada, ambil price dari tabel blockchain
+        if ($namaBlockchain) {
+            $price = Blockchain::where('id_rate', $id)->value('price');
+        } else {
+            // Jika namaBlockchain tidak ada, ambil price dari tabel rate_master_data
+            $price = $rate->price;
+        }
+
+        return view('settings.edit_rate', compact('rate', 'namaBlockchain', 'price'));
     }
+
+
+
 
     public function update_rate(Request $request, $id)
     {
@@ -419,23 +441,165 @@ class RateMasterDataController extends Controller
     //     ]);
     // } 
 
+    // public function update_transactionmd(Request $request, $id)
+    // {
+    //     $validatorRules = [
+    //         'nama_bank' => 'required',
+    //         'type' => 'required',
+    //         'icons' => 'nullable|file|max:2048', // Make 'icons' optional
+    //     ];
 
+    //     $request->validate($validatorRules);
+
+    //     $rate = RateMasterData::find($id);
+
+    //     if (!$rate) {
+    //         return redirect()->route('edit_transactionmd', ['id' => $id])->with('error', 'Rate not found');
+    //     }
+
+    // // Update 'icons' if a new file is uploaded
+    // if ($request->hasFile('icons')) {
+    //     if ($rate->icons) {
+    //         Storage::delete($rate->icons);
+    //     }
+
+    //     $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
+
+    //     $rate->update(['icons' => URL::to('/') . Storage::url($iconPath)]);
+    // }
+
+    //     // Update 'nama_bank' and 'type' in 'rate_master_data' table
+    //     $rate->update([
+    //         'nama_bank' => $request->input('nama_bank'),
+    //         'type' => $request->input('type'),
+    //     ]);
+
+    //     // Update 'nama_blockchain' in 'blockchain' table if present
+    //     if ($request->has('nama_blockchain')) {
+    //         $namaBlockchainArray = $request->input('nama_blockchain');
+
+    //         foreach ($namaBlockchainArray as $namaBlockchain) {
+    //             $rate->blockchains()
+    //                 ->where('id_rate', $rate->id)
+    //                 ->where('nama_blockchain', $namaBlockchain)
+    //                 ->update(['nama_blockchain' => $request->input('nama_bank')]);
+    //         }
+    //     }
+
+    //     // Update 'nama_bank' and 'type' in 'blockchain' entries with the same 'id_rate'
+    //     $rate->blockchains()->where('id_rate', $rate->id)->update([
+    //         'nama_bank' => $request->input('nama_bank'),
+    //         'type' => $request->input('type'),
+    //     ]);
+
+    //     // Redirect with success message
+    //     return redirect()->route('transactionmd')->with([
+    //         'success' => 'Rate updated successfully',
+    //         'iconURL' => $rate->icons ?? null,
+    //     ]);
+    // }
+
+    // public function update_transactionmd(Request $request, $id)
+    // {
+    //     // Validasi input form
+    //     $this->validate($request, [
+    //         'nama_bank' => 'required|string',
+    //         'nama_blockchain.*' => 'required|string',
+    //         // ... tambahkan validasi sesuai kebutuhan Anda
+    //     ]);
+
+    //     // Update nama_bank di tabel rate_master_data
+    //     $rate = RateMasterData::find($id);
+    //     $rate->nama_bank = $request->nama_bank;
+    //     $rate->save();
+
+    //     // Update nama_blockchain di tabel blockchain sesuai dengan id_rate
+    //     Blockchain::where('id_rate', $rate->id)
+    //         ->update(['nama_blockchain' => $request->nama_blockchain[0]]);
+
+    //     return redirect()->route('transactionmd')->with('success', 'Data updated successfully');
+    // }
+
+    // public function update_transactionmd(Request $request, $id)
+    // {
+    //     // Validasi input form
+    //     $this->validate($request, [
+    //         'nama_bank' => 'required|string',
+    //         'nama_blockchain.*' => 'required|string',
+    //         'icons' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi untuk icons
+    //         'type' => 'required|string', // Validasi untuk type
+    //         // ... tambahkan validasi sesuai kebutuhan Anda
+    //     ]);
+
+    //     // Update nama_bank di tabel rate_master_data
+    //     $rate = RateMasterData::find($id);
+    //     $rate->nama_bank = $request->nama_bank;
+    //     $rate->save();
+
+    //     // Ambil nilai dari parameter blockchain_id
+    //     $blockchainId = $request->query('blockchain_id');
+
+    //     // Update nama_bank di tabel blockchain sesuai dengan id_rate
+    //     Blockchain::where('id_rate', $rate->id)
+    //         ->update(['nama_bank' => $request->nama_bank]);
+
+    //     // Update nama_blockchain di tabel blockchain sesuai dengan blockchain_id
+    //     Blockchain::where('nama_blockchain', $blockchainId)
+    //         ->where('nama_bank', $request->nama_bank)
+    //         ->update(['nama_blockchain' => $request->nama_blockchain[0]]);
+
+    //     // Update 'icons' if a new file is uploaded
+    //     if ($request->hasFile('icons')) {
+    //         if ($rate->icons) {
+    //             Storage::delete($rate->icons);
+    //         }
+
+    //         $iconPath = $request->file('icons')->storeAs('rate/icons', uniqid() . '.' . $request->file('icons')->getClientOriginalExtension(), 'public');
+
+    //         $rate->update(['icons' => URL::to('/') . Storage::url($iconPath)]);
+    //     }
+
+    //     // Update 'type' in both rate_master_data and blockchain
+    //     RateMasterData::where('id', $rate->id)
+    //         ->update(['type' => $request->type]);
+
+    //     Blockchain::where('id_rate', $rate->id)
+    //         ->update(['type' => $request->type]);
+
+    //     return redirect()->route('transactionmd')->with('success', 'Data updated successfully');
+    // }
 
     public function update_transactionmd(Request $request, $id)
     {
-        $validatorRules = [
-            'nama_bank' => 'required',
-            'type' => 'required',
-            'icons' => 'nullable|file|max:2048', // Make 'icons' optional
-        ];
+        // Validasi input form
+        $this->validate($request, [
+            'nama_bank' => 'required|string',
+            'nama_blockchain.*' => 'required|string',
+            'icons' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi untuk icons
+            'type' => 'required|string',
+            'nomor_rekening' => 'required|string', // Validasi untuk nomor_rekening
+            // ... tambahkan validasi sesuai kebutuhan Anda
+        ]);
 
-        $request->validate($validatorRules);
-
+        // Update nama_bank di tabel rate_master_data
         $rate = RateMasterData::find($id);
+        $rate->nama_bank = $request->nama_bank;
+        $rate->save();
 
-        if (!$rate) {
-            return redirect()->route('edit_transactionmd', ['id' => $id])->with('error', 'Rate not found');
-        }
+        // Ambil nilai dari parameter blockchain_id
+        $blockchainId = $request->query('blockchain_id');
+
+        // Update nama_bank di tabel blockchain sesuai dengan id_rate
+        Blockchain::where('id_rate', $rate->id)
+            ->update([
+                'nama_bank' => $request->nama_bank,
+                'nomor_rekening' => $request->nomor_rekening,
+            ]);
+
+        // Update nama_blockchain di tabel blockchain sesuai dengan blockchain_id
+        Blockchain::where('nama_blockchain', $blockchainId)
+            ->where('nama_bank', $request->nama_bank)
+            ->update(['nama_blockchain' => $request->nama_blockchain[0]]);
 
         // Update 'icons' if a new file is uploaded
         if ($request->hasFile('icons')) {
@@ -448,34 +612,10 @@ class RateMasterDataController extends Controller
             $rate->update(['icons' => URL::to('/') . Storage::url($iconPath)]);
         }
 
-        // Update 'nama_bank' and 'type' in 'rate_master_data' table
-        $rate->update([
-            'nama_bank' => $request->input('nama_bank'),
-            'type' => $request->input('type'),
-        ]);
+        // Update 'type' in both rate_master_data and blockchain
+        RateMasterData::where('id', $rate->id)
+            ->update(['type' => $request->type]);
 
-        // Update 'nama_blockchain' in 'blockchain' table if present
-        if ($request->has('nama_blockchain')) {
-            $namaBlockchainArray = $request->input('nama_blockchain');
-
-            foreach ($namaBlockchainArray as $namaBlockchain) {
-                $rate->blockchains()
-                    ->where('id_rate', $rate->id)
-                    ->where('nama_blockchain', $namaBlockchain)
-                    ->update(['nama_blockchain' => $request->input('nama_bank')]);
-            }
-        }
-
-        // Update 'nama_bank' and 'type' in 'blockchain' entries with the same 'id_rate'
-        $rate->blockchains()->where('id_rate', $rate->id)->update([
-            'nama_bank' => $request->input('nama_bank'),
-            'type' => $request->input('type'),
-        ]);
-
-        // Redirect with success message
-        return redirect()->route('transactionmd')->with([
-            'success' => 'Rate updated successfully',
-            'iconURL' => $rate->icons ?? null,
-        ]);
+        return redirect()->route('transactionmd')->with('success', 'Data updated successfully');
     }
 }
