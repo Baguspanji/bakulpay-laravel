@@ -29,9 +29,7 @@
 
                 <div id="blockchainFieldsContainer"> <!-- Container untuk menyimpan input blockchain dinamis -->
                     <input type="hidden" name="blockchain_id" value="{{ request('blockchain_id') }}">
-
                 </div>
-
 
                 <div class="group">
                     <div class="label">Type</div>
@@ -73,13 +71,15 @@
                         <div class="separator">:</div>
                         <div class="value">
                             @if (old('type', $rate->type) == 'Withdraw' && count($rate->blockchains) > 0)
-                                <!-- Jika ada nama blockchain, ambil dari tabel blockchain -->
                                 @php
-                                    $selectedBlockchain = $rate->blockchains[0]->nama_blockchain;
-                                    $selectedRekening = $rate->blockchains[0]->rekening_wallet;
+                                    $selectedBlockchain = $rate->blockchains->firstWhere('nama_blockchain', request('blockchain_id'));
                                 @endphp
-                                <input type="text" class="form-control" id="no_rekening" name="no_rekening"
-                                    value="{{ $selectedRekening }}" readonly>
+                                @if ($selectedBlockchain)
+                                    <input type="text" class="form-control" id="no_rekening" name="no_rekening"
+                                        value="{{ $selectedBlockchain->rekening_wallet }}">
+                                @else
+                                    <p>Blockchain dengan Nama {{ request('blockchain_id') }} tidak ditemukan.</p>
+                                @endif
                             @else
                                 <!-- Jika tidak ada nama blockchain, ambil dari tabel rate_master_data -->
                                 <input type="text" class="form-control" id="no_rekening" name="no_rekening"
@@ -97,13 +97,9 @@
 
     <script>
         $(document).ready(function() {
-            // Variable untuk melacak apakah tombol "Tambah Blockchain" telah diklik
             var blockchainButtonClicked = false;
-
-            // Mengambil nilai blockchain_id dari URL
             var blockchainIdFromUrl = getParameterByName('blockchain_id');
 
-            // Function untuk mendapatkan nilai parameter dari URL
             function getParameterByName(name, url = window.location.href) {
                 name = name.replace(/[\[\]]/g, "\\$&");
                 var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -124,30 +120,24 @@
                         '<a href="#" class="btn_1 remove-blockchain-field">X</a>' +
                         '</div>');
 
-                    // Set nilai nama_blockchain sesuai dengan blockchain_id dari URL
                     if (blockchainIdFromUrl && $('#blockchainFieldsContainer').find('[data-blockchain-id="' +
                             blockchainIdFromUrl + '"]').length === 0) {
                         var blockchainInput = blockchainGroup.find('input[name="nama_blockchain[]"]');
                         blockchainInput.val(blockchainIdFromUrl);
                         blockchainGroup.attr('data-blockchain-id', blockchainIdFromUrl);
 
-                        // Set label text to "Nama Blockchain"
                         blockchainGroup.find('.label').text('Nama Blockchain');
 
                         $('#blockchainFieldsContainer').append(blockchainGroup);
                     }
 
-                    // Nonaktifkan input "Nama" jika jenis (Type) adalah 'Withdraw' dan ada field blockchain
                     updateNamaFieldStatus();
 
-                    // Nonaktifkan tombol "Tambah Blockchain" setelah ditambahkan satu kali
                     blockchainButtonClicked = true;
                     $('#addBankBlockchainBtn').prop('disabled', true);
                 }
             }
 
-
-            // Panggil fungsi untuk menambahkan bidang blockchain
             addBankBlockchainField();
 
             function updateNamaFieldStatus() {
@@ -158,23 +148,19 @@
                 }
             }
 
-            // Event handler untuk tombol "+" terkait "Bank Name"
             $('#addBankBlockchainBtn').on('click', function(e) {
                 e.preventDefault();
                 addBankBlockchainField();
             });
 
-            // Event handler untuk tombol "-" pada bidang Blockchain yang ditambahkan secara dinamis
             $(document).on('click', '.remove-blockchain-field', function(e) {
                 e.preventDefault();
                 $(this).closest('.group').remove();
                 updateNamaFieldStatus();
-                // Aktifkan kembali tombol "Tambah Blockchain" setelah menghapus blockchain field
                 blockchainButtonClicked = false;
                 $('#addBankBlockchainBtn').prop('disabled', false);
             });
 
-            // Event handler untuk perubahan pilihan jenis
             $('#type').on('change', function() {
                 if ($(this).val() === 'Withdraw') {
                     $('#withdrawFields').show();
