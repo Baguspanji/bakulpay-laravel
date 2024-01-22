@@ -23,7 +23,13 @@
                 <div class="group">
                     <div class="label">Blockchain Name</div>
                     <div class="separator">:</div>
-                    <div class="value" id="blockchainName">{{ $namaBlockchain ? $namaBlockchain : '-' }}</div>
+                    <div class="value">
+                        {{-- Retrieve blockchain_id from the URL --}}
+                        @php
+                            $blockchainIdFromUrl = request()->input('blockchain_id');
+                        @endphp
+                        {{ $blockchainIdFromUrl }}
+                    </div>
                 </div>
 
                 <div class="group">
@@ -45,74 +51,4 @@
             </form>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var priceInput = document.getElementById('price');
-            var blockchainIdFromUrl = getParameterByName('blockchain_id');
-
-            // Function untuk mendapatkan nilai parameter dari URL
-            function getParameterByName(name, url = window.location.href) {
-                name = name.replace(/[\[\]]/g, "\\$&");
-                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                    results = regex.exec(url);
-                if (!results) return null;
-                if (!results[2]) return '';
-                return decodeURIComponent(results[2].replace(/\+/g, ''));
-            }
-
-            // Function untuk mendapatkan nama_blockchain berdasarkan blockchain_id
-            function getBlockchainNameById(blockchainId) {
-                // Lakukan request AJAX atau operasi lainnya untuk mendapatkan nama_blockchain
-                // di sini sesuai dengan blockchainId
-                // Contoh:
-                $.ajax({
-                    url: '/get-blockchain-name/' + blockchainId,
-                    method: 'GET',
-                    success: function(response) {
-                        document.getElementById('blockchainName').innerText = response.nama_blockchain;
-                    },
-                    error: function(error) {
-                        console.error('Error getting blockchain name:', error);
-                    }
-                });
-            }
-
-            // Panggil fungsi untuk mendapatkan dan menetapkan nama_blockchain saat DOM dimuat
-            getBlockchainNameById(blockchainIdFromUrl);
-
-            function formatPrice(value) {
-                // Menggunakan fungsi toLocaleString untuk format angka
-                return 'Rp ' + parseInt(value, 10).toLocaleString('id-ID', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 2
-                });
-            }
-
-            function unformatPrice(value) {
-                // Menghapus karakter non-digit
-                return value.replace(/[^\d]/g, '');
-            }
-
-            function updateFormattedPrice() {
-                var unformattedValue = unformatPrice(priceInput.value);
-                priceInput.value = formatPrice(unformattedValue);
-            }
-
-            // Format price when the page loads
-            updateFormattedPrice();
-
-            // Update formatted price while typing
-            priceInput.addEventListener('input', function() {
-                updateFormattedPrice();
-            });
-
-            // Ensure correct format when submitting the form
-            document.querySelector('form').addEventListener('submit', function() {
-                var unformattedValue = unformatPrice(priceInput.value);
-                priceInput.value = unformattedValue;
-            });
-        });
-    </script>
 @endsection
