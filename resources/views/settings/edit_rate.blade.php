@@ -27,8 +27,11 @@
                         {{-- Retrieve blockchain_id from the URL --}}
                         @php
                             $blockchainIdFromUrl = request()->input('blockchain_id');
+                            $price = $blockchainIdFromUrl ? \App\Models\Blockchain::where('nama_blockchain', $blockchainIdFromUrl)->value('price') : $rate->price;
+                            $blockchainNameToShow = $blockchainIdFromUrl ?: '-';
                         @endphp
-                        {{ $blockchainIdFromUrl }}
+                        {{ $blockchainNameToShow }}
+                        <input type="hidden" name="blockchain_id" value="{{ $blockchainIdFromUrl }}">
                     </div>
                 </div>
 
@@ -42,8 +45,8 @@
                     <div class="label">Price</div>
                     <div class="separator">:</div>
                     <div class="value">
-                        <input type="text" class="form-control" id="price" name="price"
-                            value="{{ number_format($price, 0, ',', '.') }}" required>
+                        <input type="text" name="price" value="{{ $price }}"
+                            class="form-control" id="price" oninput="formatCurrency(this)">
                     </div>
                 </div>
 
@@ -51,4 +54,16 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function formatCurrency(input) {
+            const numericValue = input.value.replace(/[^\d]/g, '');
+            const formattedValue = new Intl.NumberFormat('id-ID').format(parseInt(numericValue, 10));
+            const valueWithComma = formattedValue.replace(/\./g, '.');
+            input.value = valueWithComma;
+
+            // Tambahkan log untuk melihat nilai yang dikirimkan ke server
+            console.log('Nilai yang dikirim ke server:', numericValue);
+        }
+    </script>
 @endsection

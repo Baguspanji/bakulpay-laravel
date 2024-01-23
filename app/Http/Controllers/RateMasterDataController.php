@@ -266,29 +266,82 @@ class RateMasterDataController extends Controller
 
 
 
+    // public function update_rate(Request $request, $id)
+    // {
+    //     // Validate the form data
+    //     $request->validate([
+    //         'price' => 'required|numeric', // Add any other validation rules you need
+    //     ]);
+
+    //     // Update the rate based on the provided ID
+    //     $rate = RateMasterData::find($id);
+
+    //     if ($rate) {
+    //         $rate->update([
+    //             'price' => $request->input('price'),
+    //             // Update other fields as needed
+    //         ]);
+
+    //         // Redirect back or to a success page
+    //         return redirect()->route('rate')->with('success', 'Rate updated successfully');
+    //     } else {
+    //         // Handle case where rate with the given ID is not found
+    //         return redirect()->route('edit_rate')->with('error', 'Rate not found');
+    //     }
+    // }
+
+    // public function update_rate(Request $request, $id)
+    // {
+    //     // Validasi input jika diperlukan
+    //     $request->validate([
+    //         'price' => 'numeric',
+    //         // ... tambahkan validasi lainnya jika diperlukan
+    //     ]);
+
+    //     // Retrieve blockchain_id from the URL
+    //     $blockchainIdFromUrl = $request->input('blockchain_id');
+
+    //     // Update price based on the presence of blockchain_id
+    //     if ($blockchainIdFromUrl) {
+    //         // Update price in the blockchain table
+    //         Blockchain::where('nama_blockchain', $blockchainIdFromUrl)
+    //             ->update(['price' => $request->input('price')]);
+    //     } else {
+    //         // Update price in the rate_master_data table
+    //         RateMasterData::where('id', $id)
+    //             ->update(['price' => $request->input('price')]);
+    //     }
+
+    //     // Redirect to the rate index page or any other desired page
+    //     return redirect()->route('rate')->with('success', 'Rate updated successfully');
+    // }
+
     public function update_rate(Request $request, $id)
     {
-        // Validate the form data
+        // Validasi input jika diperlukan
         $request->validate([
-            'price' => 'required|numeric', // Add any other validation rules you need
+            'price' => 'numeric',
+            // ... tambahkan validasi lainnya jika diperlukan
         ]);
 
-        // Update the rate based on the provided ID
-        $rate = RateMasterData::find($id);
+        // Retrieve blockchain_id from the form data
+        $blockchainIdFromForm = $request->input('blockchain_id');
 
-        if ($rate) {
-            $rate->update([
-                'price' => $request->input('price'),
-                // Update other fields as needed
-            ]);
-
-            // Redirect back or to a success page
-            return redirect()->route('rate')->with('success', 'Rate updated successfully');
+        // Update price based on the presence of blockchain_id
+        if ($blockchainIdFromForm) {
+            // Update price in the blockchain table
+            Blockchain::where('nama_blockchain', $blockchainIdFromForm)
+                ->update(['price' => $request->input('price')]);
         } else {
-            // Handle case where rate with the given ID is not found
-            return redirect()->route('edit_rate')->with('error', 'Rate not found');
+            // Update price in the rate_master_data table
+            RateMasterData::where('id', $id)
+                ->update(['price' => $request->input('price')]);
         }
+
+        // Redirect to the rate index page or any other desired page
+        return redirect()->route('rate')->with('success', 'Rate updated successfully');
     }
+
 
     public function edit_transactionmd($id)
     {
@@ -810,5 +863,4 @@ class RateMasterDataController extends Controller
 
         return redirect()->route('transactionmd')->with('success', 'Data updated successfully');
     }
-
 }
