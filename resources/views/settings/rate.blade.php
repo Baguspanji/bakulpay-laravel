@@ -27,7 +27,7 @@
                         @if (count($data->blockchains) > 0)
                             @php $priceFound = false; @endphp
                             @foreach ($data->blockchains as $blockchain)
-                                @if ($blockchain->id_rate === $data->id)
+                                @if ($blockchain->id_rate === $data->id && $blockchain->active === 'true')
                                     <tr>
                                         <td class="ikon">
                                             <img src="{{ $data->icons }}" alt="Bank Icon">
@@ -41,9 +41,7 @@
                                                 $priceToShow = isset($blockchain->price) ? number_format($blockchain->price, 0, ',', '.') : number_format($data->price, 0, ',', '.');
                                             @endphp
                                             {{ $priceToShow }}
-                                            @php $priceFound = true; @endphp
                                         </td>
-
                                         <td>
                                             <a class="btn {{ Request::is('edit-rate*' . $data->id . '/' . $blockchain->id) ? 'active' : '' }}"
                                                 href="{{ route('edit_rate', ['id' => $data->id, 'blockchain_id' => $blockchain->nama_blockchain]) }}">
@@ -51,6 +49,7 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    @php $priceFound = true; @endphp
                                 @endif
                             @endforeach
                             @unless ($priceFound)
@@ -71,28 +70,23 @@
                                 </tr>
                             @endunless
                         @else
-                            {{-- Display a row with empty blockchain --}}
-                            <tr>
-                                <td class="ikon">
-                                    <img src="{{ $data->icons }}" alt="Bank Icon">
-                                    <p>{{ $data->nama_bank }}</p>
-                                </td>
-                                <td></td> {{-- Empty blockchain --}}
-                                <td>{{ $data->type }}</td>
-                                <td>
-                                    @php
-                                        // Ambil harga blockchain atau harga dari rate_master_data jika tidak ada blockchain
-                                        $priceToShow = number_format($data->price, 0, ',', '.');
-                                    @endphp
-                                    {{ $priceToShow }}
-                                </td>
-                                <td>
-                                    <a class="btn {{ Request::is('edit-rate*' . $data->id) ? 'active' : '' }}"
-                                        href="{{ route('edit_rate', ['id' => $data->id]) }}">
-                                        <iconify-icon icon="akar-icons:edit"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
+                            @if ($data->active === 'true')
+                                <tr>
+                                    <td class="ikon">
+                                        <img src="{{ $data->icons }}" alt="Bank Icon">
+                                        <p>{{ $data->nama_bank }}</p>
+                                    </td>
+                                    <td></td> {{-- Empty blockchain --}}
+                                    <td>{{ $data->type }}</td>
+                                    <td>{{ number_format($data->price, 0, ',', '.') }}</td>
+                                    <td>
+                                        <a class="btn {{ Request::is('edit-rate*' . $data->id) ? 'active' : '' }}"
+                                            href="{{ route('edit_rate', ['id' => $data->id]) }}">
+                                            <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endif
                         @endif
                     @empty
                         {{-- Handle the case where $rate_master_data is empty --}}

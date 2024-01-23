@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
 
     <!-- Add this to your HTML -->
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}"">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}""> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
@@ -41,9 +41,9 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script> --}}
+    </script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
 
@@ -68,7 +68,7 @@
         });
     </script>
 
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
                 "dom": '<"top"lf>rt<"bottom"ip>',
@@ -87,9 +87,9 @@
             $('.dataTables_filter label').append(
                 '<iconify-icon icon="ic:round-search" class="search-icon"></iconify-icon>');
         });
-    </script> --}}
+    </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
                 "dom": '<"top"lf>rt<"bottom"ip>',
@@ -141,8 +141,823 @@
                 $('#myTable').DataTable().draw();
             });
         });
-    </script>
+    </script> --}}
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #fafafa;
+        }
 
+        p {
+            font-family: "Poppins", sans-serif;
+            font-size: 1.1em;
+            font-weight: 300;
+            line-height: 1.7em;
+            color: #999;
+        }
+
+        a,
+        a:hover,
+        a:focus {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        /* .navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+} */
+
+        /* ---------------------------------------------------
+SIDEBAR STYLE
+----------------------------------------------------- */
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #ffffff;
+            color: #a8afbd;
+            transition: all 0.3s;
+        }
+
+        #sidebar.active {
+            margin-left: -250px;
+        }
+
+        #sidebar .sidebar-header {
+            background: #ffffff;
+            text-align: center;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        #sidebar ul.components li ul li a {
+            text-align: center;
+        }
+
+        #sidebar ul.components li a {
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            width: 90%;
+            margin: 10px auto;
+            text-align: center;
+        }
+
+        #sidebar ul.components li ul li a {
+            font-size: 0.8em;
+            margin: 5px 15px;
+            border-radius: 20px;
+            padding: 8px;
+            width: calc(100% - 20px);
+        }
+
+        #sidebar ul.components li ul {
+            width: 98%;
+            left: auto;
+            right: 20px;
+        }
+
+        #sidebar ul.components li ul li.active>a {
+            color: #000000;
+            background: #ffffff;
+            border: 1px solid #c2d7ff;
+            font-size: 0.5em;
+            padding: 3px;
+        }
+
+        #sidebar ul.components li.active>a iconify-icon {
+            border: 1px solid #007bff;
+            background-color: #007bff;
+            border-radius: 50%;
+            padding: 3px;
+            color: white;
+        }
+
+        #sidebar ul.components li ul li.active>a iconify-icon {
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            border-radius: 50%;
+            padding: 3px;
+            color: #37398b;
+        }
+
+        #sidebar ul.components li.active>a .arrow-icon iconify-icon {
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            border-radius: 50%;
+            padding: 3px;
+            color: rgb(0, 0, 0);
+        }
+
+        #sidebar ul li a {
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #sidebar ul li a iconify-icon {
+            margin-right: 10px;
+            font-size: 1.5em;
+        }
+
+        #sidebar ul li a:hover,
+        #sidebar ul li.active>a,
+        a[aria-expanded="true"] {
+            color: #000000;
+            background: #dcf5ff;
+            font-weight: bold;
+            border-radius: 20px;
+            width: 90%;
+        }
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        /* #sidebar ul.components li a[data-toggle="collapse"] .arrow-icon {
+    transition: transform 0.5s;
+    transform-origin: center center;
+    margin-right: 10px;
+} */
+
+        #sidebar ul.components li a[data-toggle="collapse"] .arrow-icon {
+            display: inline-block;
+            margin-left: auto;
+            /* Menempatkan ikon di sebelah kanan */
+        }
+
+        #sidebar ul.components li a[data-toggle="collapse"] .arrow-icon::before {
+            font-family: "Font Awesome 5 Free";
+            margin-left: 10px;
+            /* Sesuaikan jarak sesuai kebutuhan */
+            transition: transform 0.5s;
+            transform-origin: center center;
+        }
+
+        #sidebar ul.components li a[data-toggle="collapse"][aria-expanded="true"] .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* test */
+        /* .dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+} */
+
+        ul ul a {
+            font-size: 0.9em !important;
+            padding-left: 30px !important;
+            background: #ffffff;
+        }
+
+        ul.CTAs {
+            padding: 20px;
+        }
+
+        ul.CTAs a {
+            text-align: center;
+            font-size: 0.9em !important;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        a.download {
+            background: #fff;
+            color: #a8afbd;
+        }
+
+        a.article,
+        a.article:hover {
+            background: #ffffff !important;
+            color: #a8afbd !important;
+        }
+
+        .sidebar-header img {
+            padding-left: 25px;
+            padding-top: 30px;
+            width: 90%;
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .wrapper #sidebar hr {
+            border-top: 2px solid #c2d7ff;
+            width: 90%;
+            margin: 0 auto;
+            /* Menengahkan elemen HR */
+        }
+
+        /* ---------------------------------------------------
+CONTENT STYLE
+----------------------------------------------------- */
+
+        #content {
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+            background-color: #ECECEC;
+        }
+
+        #content .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        #content .container h2 {
+            color: #37398b;
+            font-weight: bold;
+            padding-top: 1em;
+            font-size: 18px;
+        }
+
+        #content .isi {
+            color: black;
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            padding-left: 20px;
+            padding-right: 30px;
+            width: 100%;
+        }
+
+        /* #content .isi  */
+
+        #content .isi form {
+            padding-top: 25px;
+            padding-left: 20px;
+        }
+
+        #content .isi .group {
+            color: #a8afbd;
+            display: flex;
+            margin-bottom: 15px;
+            padding-top: 5px;
+        }
+
+        #content .isi .group a #addBlockchainBtn {
+            flex: 1;
+            border: 1 solid #000000;
+            width: 2%;
+            height: 2%;
+            color: #007bff;
+            text-align: center;
+        }
+
+        /* #content .isi .group input {
+    /* width: 100%;
+    max-width: 200px; */
+        /* width: 30%; */
+        /* } */
+        /* #content .isi .group select {
+    /* width: 100%;
+    max-width: 200px; */
+        /* width: 30%; */
+        /* } */
+
+        /* .btn_1 {
+    margin-left: 10px;
+    background-color: red;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.remove-blockchain-field {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+#content .isi .label {
+    width: 150px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#content .isi .separator {
+    margin: 0 5px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#content .isi .value {
+    flex: 1;
+    padding-left: 20px;
+}
+#content .isi .value1 {
+    flex: 1;
+    padding-left: 20px;
+} */
+        /* #content .isi .value img {
+    border: 1px solid #c9c1c1;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 15px;
+    vertical-align: middle;
+    margin-top: 20px;
+    width: 30%;
+    height: 40%;
+} */
+
+        .btn_1 {
+            margin-left: 10px;
+            background-color: rgb(47, 255, 0);
+            color: rgb(0, 0, 0);
+            padding: 4px 5px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+        }
+
+        .remove-blockchain-field {
+            background-color: red;
+            color: white;
+            padding: 4px 8px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+        }
+
+        .label {
+            width: 150px;
+            color: #000000;
+            font-weight: bold;
+            display: inline-block;
+            /* tambahkan ini agar label tidak pecah */
+        }
+
+        .separator {
+            margin: 0 5px;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .value input {
+            width: 300px;
+        }
+
+        .value select {
+            width: 300px;
+        }
+
+
+        .value1 {
+            flex: 1;
+            padding-left: 20px;
+            display: inline-block;
+            /* tambahkan ini agar input field bersebelahan */
+        }
+
+
+        #content .isi .value1 img {
+            border: 1px solid #c9c1c1;
+            border-radius: 10px;
+            text-align: center;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        #content .isi form .button {
+            float: right;
+            padding: 3px;
+            border-radius: 10px;
+            width: 100px;
+            background: #ffffff;
+            margin-right: 50px;
+            border: 1px solid #fafafa;
+            background-color: #00a8ed;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        #content .isi .judul {
+            margin-bottom: 12px;
+        }
+
+        #content .isi .judul .nama {
+            color: #37398b;
+            font-weight: bold;
+            float: left;
+        }
+
+        #content .isi .judul .keterangan_2 {
+            color: #000000;
+            text-align: left;
+            padding-left: 28%;
+            font-weight: bold;
+        }
+
+        #content .isi .judul .keterangan_2 select {
+            color: #000000;
+            font-weight: bold;
+            border: none;
+            margin: 0 auto;
+        }
+
+        #content .isi .judul .keterangan_2 select option {
+            color: #000000;
+            font-weight: bold;
+            border: none;
+        }
+
+        #content .isi .judul .keterangan img {
+            width: 10%;
+            height: 5%;
+            clip: rect(0, 50%, auto, 0);
+        }
+
+        .isi .judul .keterangan input[type="file"]::file-selector-button {
+            border: none;
+            padding: 0.2em 0.4em;
+            border-radius: 10px;
+            background-color: #37398b;
+            transition: 1s;
+            color: #ffffff;
+            width: 65%;
+        }
+
+        #content .isi .judul_1 .nama_1 {
+            float: right;
+            color: #37398b;
+            font-weight: bold;
+        }
+
+        #content .isi .judul_1 .keterangan_1 {
+            float: right;
+            color: #a8afbd;
+            font-weight: bold;
+            padding-left: 15%;
+            padding-right: 5%;
+        }
+
+        #content .isi .keterangan {
+            color: #a8afbd;
+            text-align: left;
+            padding-left: 28%;
+        }
+
+        #content .isi .keterangan_3 {
+            color: #a8afbd;
+            text-align: left;
+            padding-left: 28%;
+        }
+
+        /* #content .isi .keterangan_1{
+    color: #A8AFBD;
+    text-align: left;
+    padding-left: 20%;
+} */
+
+        #content .isi .hr_edt {
+            border-top: 2px solid #c2d7ff;
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        #content .container .add {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: black;
+            margin-right: 25px;
+            padding-left: 7px;
+            padding-right: 7px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            font-size: 14;
+            font-weight: bold;
+        }
+
+        #content .container a .btn btn-primary {
+            float: right;
+            border-radius: 10px;
+            border: 1px solid white;
+            background-color: white;
+            color: black;
+            margin-right: 25px;
+            padding-left: 7px;
+            padding-right: 7px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            font-size: 14;
+            font-weight: bold;
+        }
+
+        /* Example CSS to move the search box to the left */
+        #content .isi .dataTables_wrapper .top .dataTables_filter {
+            float: left;
+            text-align: left;
+            margin-right: 100px;
+        }
+
+        #content .isi .dataTables_wrapper .top .dataTables_filter input {
+            border-radius: 50px;
+            width: 100%;
+            padding-right: 25px;
+            padding-left: 20px;
+        }
+
+        /* Example CSS to move the show entries dropdown to the right */
+        #content .isi .dataTables_wrapper .top .dataTables_length {
+            float: right;
+        }
+
+        .dataTables_filter label {
+            position: relative;
+        }
+
+        .dataTables_filter .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            /* Adjust the right position as needed */
+            transform: translateY(-50%);
+            color: #6c757d;
+            /* Adjust the icon color */
+        }
+
+        #myTable thead th {
+            font-size: 14px;
+            text-align: center;
+            color: #a8afbd;
+        }
+
+        #myTable_length label,
+        #myTable_info {
+            font-size: 14px;
+        }
+
+        #myTable_paginate .paginate_button {
+            font-size: 14px;
+        }
+
+        /* Custom styling for bank name and icon */
+        #myTable tbody img {
+            float: left;
+            border-radius: 10px;
+            border: 1px solid #a8afbd;
+            padding: 2px;
+            background-color: white;
+            width: 10%;
+            height: 5%;
+            margin-left: 35%;
+            margin-right: 5%;
+            margin-top: 2%;
+        }
+
+        /* #myTable tbody p {
+    float: left;
+    color: #000000;
+    margin-top: 2%;
+} */
+
+        #myTable tbody td {
+            text-align: center;
+            color: #000000;
+            font-size: 12px;
+        }
+
+        #myTable tbody tr td p .stats {
+            float: center;
+        }
+
+        #myTable tbody td.status-pending p,
+        #myTable tbody td.status-failed p,
+        #myTable tbody td.status-un-payment p,
+        #myTable tbody td.status-success p {
+            padding: 3px;
+            border-radius: 15px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        #myTable tbody td.status-pending p {
+            background-color: #e9f0ff;
+            /* Blue */
+            color: #00a8ed;
+            /* White text */
+        }
+
+        #myTable tbody td.status-failed p {
+            background-color: #ffe8e8;
+            /* Red */
+            color: #ff0000;
+            /* White text */
+        }
+
+        #myTable tbody td.status-un-payment p {
+            background-color: #fff4cd;
+            /* Orange */
+            color: #ff7714;
+            /* White text */
+        }
+
+        #myTable tbody td.status-success p {
+            background-color: #cdffde;
+            /* Green */
+            color: #009633;
+            /* White text */
+        }
+
+        #paymentModal .modal-dialog {
+            float: right;
+            padding-right: 8ch;
+            max-width: 85%;
+            width: 80%;
+            border-radius: 50px;
+        }
+
+        #paymentModal .modal-content {
+            width: 100%;
+        }
+
+        /* #content .modal-body {
+    width: 100%;
+    height: 100%;
+} */
+        #content .modal-body {
+            padding-top: 3%;
+            padding-left: 2%;
+        }
+
+        #content .modal-body .judul {
+            padding-bottom: 1%;
+        }
+
+        #content .modal-body .judul_1 {
+            padding-bottom: 1%;
+        }
+
+        #content .modal-body .judul_1 .nama_1 {
+            float: right;
+            color: #37398b;
+            font-weight: bold;
+            padding-right: 15%;
+        }
+
+        #content .modal-body .judul_1 .keterangan_1 {
+            float: right;
+            color: #a8afbd;
+            font-weight: bold;
+            padding-right: 3%;
+        }
+
+        #content .modal-body .judul .nama {
+            color: #37398b;
+            font-weight: bold;
+            float: left;
+            padding-left: 3%;
+        }
+
+        #content .modal-body .judul .keterangan {
+            color: #a8afbd;
+            text-align: left;
+            padding-left: 28%;
+        }
+
+        #content .modal-body .judul .keterangan_3 {
+            color: #a8afbd;
+            text-align: left;
+            padding-left: 28%;
+        }
+
+        #content .modal-body .hr_edti {
+            border-top: 2px solid #c2d7ff;
+            width: 85%;
+            margin: 0 auto;
+            /* margin-bottom: 15px; */
+            padding-right: 10%;
+            /* padding-top: 20%; */
+            margin-top: 2%;
+        }
+
+        .blue-icon {
+            color: #ff0000;
+            /* or any other blue styling */
+        }
+
+        .red-icon {
+            color: #00A8ED;
+            /* or any other red styling */
+        }
+
+        /* #myTable tbody td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+} */
+
+
+
+        /* ---------------------------------------------------
+MEDIAQUERIES
+----------------------------------------------------- */
+
+        /* @media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    #sidebarCollapse span {
+        display: none;
+    }
+} */
+
+        @media (min-width: 768px) {
+            #sidebarCollapse {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -250px;
+            }
+
+            #sidebar.active {
+                margin-left: 0;
+            }
+
+            #content .isi form .button {
+                width: 100%;
+                /* Atau nilai lain yang sesuai */
+                margin-right: 0;
+            }
+
+            #content .isi .group input {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            #content .isi .group select {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            /* #sidebarCollapse {
+        display: block;
+        position: fixed;
+        left: 10px;
+        top: 10px;
+        z-index: 1000;
+    } */
+        }
+    </style>
 
     @stack('script')
 
