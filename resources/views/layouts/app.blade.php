@@ -215,7 +215,7 @@
                         <li
                             class="{{ Request::is('bank_wd*') || Request::is('form_bankwd*') || Request::is('edit-bankwd*') ? 'active' : '' }}">
                             <a href="{{ route('bank_wd') }}"><iconify-icon
-                                    icon="material-symbols:payments"></iconify-icon>Bank Withdraw</a>
+                                    icon="material-symbols:payments"></iconify-icon>Withdraw MD</a>
                         </li>
                     </ul>
                 </li>

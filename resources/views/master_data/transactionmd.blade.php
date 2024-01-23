@@ -39,6 +39,11 @@
                                             href="{{ route('edit_transactionmd', ['id' => $data->id, 'blockchain_id' => $blockchain->nama_blockchain]) }}">
                                             <iconify-icon icon="akar-icons:edit"></iconify-icon>
                                         </a>
+                                        <a class="btn"
+                                            href="{{ $data->active === 'true' ? route('deactivate_transactionmd', ['id' => $data->id]) : route('activate_transactionmd', ['id' => $data->id]) }}">
+                                            <iconify-icon class="{{ $data->active === 'true' ? 'blue-icon' : 'red-icon' }}"
+                                                icon="{{ $data->active === 'true' ? 'ic:outline-toggle-on' : 'ic:outline-toggle-off' }}"></iconify-icon>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -55,6 +60,11 @@
                                     <a class="btn {{ Request::is('edit-transactionmd/' . $data->id) ? 'active' : '' }}"
                                         href="{{ route('edit_transactionmd', ['id' => $data->id]) }}">
                                         <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                    </a>
+                                    <a class="btn"
+                                        href="{{ $data->active === 'true' ? route('deactivate_transactionmd', ['id' => $data->id]) : route('activate_transactionmd', ['id' => $data->id]) }}">
+                                        <iconify-icon class="{{ $data->active === 'true' ? 'blue-icon' : 'red-icon' }}"
+                                            icon="{{ $data->active === 'true' ? 'ic:outline-toggle-on' : 'ic:outline-toggle-off' }}"></iconify-icon>
                                     </a>
                                 </td>
                             </tr>

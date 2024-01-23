@@ -715,6 +715,14 @@ CONTENT STYLE
     margin-top: 2%;
 }
 
+.blue-icon {
+    color: #ff0000; /* or any other blue styling */
+}
+
+.red-icon {
+    color: #00A8ED; /* or any other red styling */
+}
+
 /* #myTable tbody td div {
     display: flex;
     align-items: center;

@@ -11,7 +11,8 @@
 
     <div class="container">
         <h2>Bank Withdraw</h2>
-        <a class="add {{ Request::is('form_bankwd*') ? 'active' : '' }}" href="{{ url('/form_bankwd') }}" role="button">+ Add New</a>
+        <a class="add {{ Request::is('form_bankwd*') ? 'active' : '' }}" href="{{ url('/form_bankwd') }}" role="button">+ Add
+            New</a>
         <div class="isi">
             <table id="myTable" class="display">
                 <thead>
@@ -29,8 +30,14 @@
                             </td>
                             <td>{{ $data->nama_bank }}</td>
                             <td>
-                                <a class="btn {{ Request::is('edit-bankwd*') ? 'active' : '' }}" href="{{ route('edit_bankwd', ['id' => $data->id]) }}">
+                                <a class="btn {{ Request::is('edit-bankwd*') ? 'active' : '' }}"
+                                    href="{{ route('edit_bankwd', ['id' => $data->id]) }}">
                                     <iconify-icon icon="akar-icons:edit"></iconify-icon>
+                                </a>
+                                <a class="btn"
+                                    href="{{ $data->active === 'true' ? route('deactivate_bankwd', ['id' => $data->id]) : route('activate_bankwd', ['id' => $data->id]) }}">
+                                    <iconify-icon class="{{ $data->active === 'true' ? 'blue-icon' : 'red-icon' }}"
+                                        icon="{{ $data->active === 'true' ? 'ic:outline-toggle-on' : 'ic:outline-toggle-off' }}"></iconify-icon>
                                 </a>
                             </td>
                         </tr>

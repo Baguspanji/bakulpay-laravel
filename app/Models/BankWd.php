@@ -10,5 +10,5 @@ class BankWd extends Model
     use HasFactory;
 
     protected $table = 'bank_wd';
-    protected $fillable = ['nama_bank', 'icons'];
+    protected $fillable = ['nama_bank', 'icons','active'];
 }

@@ -58,6 +58,9 @@ Route::post('submit/form_transactionmd', [RateMasterDataController::class, 'subm
 Route::get('/edit-transactionmd/{id}', [RateMasterDataController::class, 'edit_transactionmd'])->name('edit_transactionmd');
 Route::post('/update-transactionmd/{id}', [RateMasterDataController::class, 'update_transactionmd'])->name('update_transactionmd');
 
+Route::get('/activate-transactionmd/{id}', [RateMasterDataController::class, 'activate'])->name('activate_transactionmd');
+Route::get('/deactivate-transactionmd/{id}', [RateMasterDataController::class, 'deactivate'])->name('deactivate_transactionmd');
+
 Route::get('/form_paymentmd', [PaymentMasterDataController::class, 'createFormPaymentMasterData']);
 Route::post('submit/form_paymentmd', [PaymentMasterDataController::class, 'submitForm'])->name('submit.form_paymentmd');
 Route::get('/edit-paymentmd/{id}', [PaymentMasterDataController::class, 'edit_paymentmd'])->name('edit_paymentmd');
@@ -67,6 +70,9 @@ Route::get('/form_bankwd', [BankWdController::class, 'createFormBankWd']);
 Route::post('submit/form_bankwd', [BankWdController::class, 'submitForm'])->name('submit.form_bankwd');
 Route::get('/edit-bankwd/{id}', [BankWdController::class, 'edit_bankwd'])->name('edit_bankwd');
 Route::post('/update-bankwd/{id}', [BankWdController::class, 'update_bankwd'])->name('update_bankwd');
+
+Route::get('/activate-bankwd/{id}', [BankWdController::class, 'activate'])->name('activate_bankwd');
+Route::get('/deactivate-bankwd/{id}', [BankWdController::class, 'deactivate'])->name('deactivate_bankwd');
 
 Route::get('/edit-rate/{id}', [RateMasterDataController::class, 'edit_rate'])->name('edit_rate');
 Route::post('/update-rate/{id}', [RateMasterDataController::class, 'update_rate'])->name('update_rate');

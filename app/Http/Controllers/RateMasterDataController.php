@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankWd;
 use App\Models\Blockchain;
 use App\Models\RateMasterData;
 use Illuminate\Http\Request;
@@ -865,5 +866,24 @@ class RateMasterDataController extends Controller
             ->update(['type' => $request->type]);
 
         return redirect()->route('transactionmd')->with('success', 'Data updated successfully');
+    }
+
+
+    public function activate($id)
+    {
+        $bankWithdraw = BankWd::findOrFail($id);
+        $bankWithdraw->active = 'true'; // Note: Use string 'true'
+        $bankWithdraw->save();
+
+        return redirect()->back()->with('success', 'Bank withdrawal activated successfully.');
+    }
+
+    public function deactivate($id)
+    {
+        $bankWithdraw = BankWd::findOrFail($id);
+        $bankWithdraw->active = 'false'; // Note: Use string 'false'
+        $bankWithdraw->save();
+
+        return redirect()->back()->with('success', 'Bank withdrawal deactivated successfully.');
     }
 }

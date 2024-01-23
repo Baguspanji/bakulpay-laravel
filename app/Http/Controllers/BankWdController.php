@@ -84,4 +84,24 @@ class BankWdController extends Controller
             return redirect()->route('master_data.edit_bankwd', ['id' => $id])->with('error', 'payment not found');
         }
     }
+
+    
+    public function activate($id)
+    {
+        $bankWithdraw = BankWd::findOrFail($id);
+        $bankWithdraw->active = 'true'; // Note: Use string 'true'
+        $bankWithdraw->save();
+
+        return redirect()->back()->with('success', 'Bank withdrawal activated successfully.');
+    }
+
+    public function deactivate($id)
+    {
+        $bankWithdraw = BankWd::findOrFail($id);
+        $bankWithdraw->active = 'false'; // Note: Use string 'false'
+        $bankWithdraw->save();
+
+        return redirect()->back()->with('success', 'Bank withdrawal deactivated successfully.');
+    }
+
 }
