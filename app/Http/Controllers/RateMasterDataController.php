@@ -871,7 +871,7 @@ class RateMasterDataController extends Controller
 
     public function activate($id)
     {
-        $bankWithdraw = BankWd::findOrFail($id);
+        $bankWithdraw = RateMasterData::findOrFail($id);
         $bankWithdraw->active = 'true'; // Note: Use string 'true'
         $bankWithdraw->save();
 
@@ -880,10 +880,11 @@ class RateMasterDataController extends Controller
 
     public function deactivate($id)
     {
-        $bankWithdraw = BankWd::findOrFail($id);
+        $bankWithdraw = RateMasterData::findOrFail($id);
         $bankWithdraw->active = 'false'; // Note: Use string 'false'
         $bankWithdraw->save();
 
         return redirect()->back()->with('success', 'Bank withdrawal deactivated successfully.');
     }
+    
 }
