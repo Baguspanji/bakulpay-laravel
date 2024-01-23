@@ -93,4 +93,21 @@ class PaymentMasterDataController extends Controller
         }
     }
 
+    public function activate($id)
+    {
+        $bankWithdraw = PaymentMasterData::findOrFail($id);
+        $bankWithdraw->active = 'false'; // Note: Use string 'true'
+        $bankWithdraw->save();
+
+        return redirect()->back()->with('success', 'Bank withdrawal activated successfully.');
+    }
+
+    public function deactivate($id)
+    {
+        $bankWithdraw = PaymentMasterData::findOrFail($id);
+        $bankWithdraw->active = 'true'; // Note: Use string 'false'
+        $bankWithdraw->save();
+
+        return redirect()->back()->with('success', 'Bank withdrawal deactivated successfully.');
+    }
 }

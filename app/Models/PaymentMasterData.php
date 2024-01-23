@@ -9,6 +9,6 @@ class PaymentMasterData extends Model
 {
 
     protected $table = 'payment_master_data';
-    protected $fillable = ['nama_bank', 'icons', 'nama', 'no_rekening'];
+    protected $fillable = ['nama_bank', 'icons', 'nama', 'no_rekening','active'];
     use HasFactory;
 }

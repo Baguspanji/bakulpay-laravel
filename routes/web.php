@@ -61,10 +61,16 @@ Route::post('/update-transactionmd/{id}', [RateMasterDataController::class, 'upd
 Route::get('/activate-transactionmd/{id}', [RateMasterDataController::class, 'activate'])->name('activate_transactionmd');
 Route::get('/deactivate-transactionmd/{id}', [RateMasterDataController::class, 'deactivate'])->name('deactivate_transactionmd');
 
+Route::get('/activate-blockchain/{id}/{blockchain_id}', [RateMasterDataController::class, 'activate_blockchain'])->name('activate_blockchain');
+Route::get('/deactivate-blockchain/{id}/{blockchain_id}', [RateMasterDataController::class, 'deactivate_blockchain'])->name('deactivate_blockchain');
+
 Route::get('/form_paymentmd', [PaymentMasterDataController::class, 'createFormPaymentMasterData']);
 Route::post('submit/form_paymentmd', [PaymentMasterDataController::class, 'submitForm'])->name('submit.form_paymentmd');
 Route::get('/edit-paymentmd/{id}', [PaymentMasterDataController::class, 'edit_paymentmd'])->name('edit_paymentmd');
 Route::post('/update-paymentmd/{id}', [PaymentMasterDataController::class, 'update_paymentmd'])->name('update_paymentmd');
+
+Route::get('/activate-paymentmd/{id}', [PaymentMasterDataController::class, 'activate'])->name('activate_paymentmd');
+Route::get('/deactivate-paymentmd/{id}', [PaymentMasterDataController::class, 'deactivate'])->name('deactivate_paymentmd');
 
 Route::get('/form_bankwd', [BankWdController::class, 'createFormBankWd']);
 Route::post('submit/form_bankwd', [BankWdController::class, 'submitForm'])->name('submit.form_bankwd');

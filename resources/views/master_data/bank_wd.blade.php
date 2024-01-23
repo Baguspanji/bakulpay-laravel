@@ -35,9 +35,9 @@
                                     <iconify-icon icon="akar-icons:edit"></iconify-icon>
                                 </a>
                                 <a class="btn"
-                                    href="{{ $data->active === 'true' ? route('deactivate_bankwd', ['id' => $data->id]) : route('activate_bankwd', ['id' => $data->id]) }}">
-                                    <iconify-icon class="{{ $data->active === 'true' ? 'blue-icon' : 'red-icon' }}"
-                                        icon="{{ $data->active === 'true' ? 'ic:outline-toggle-on' : 'ic:outline-toggle-off' }}"></iconify-icon>
+                                    href="{{ $data->active === 'false' ? route('deactivate_bankwd', ['id' => $data->id]) : route('activate_bankwd', ['id' => $data->id]) }}">
+                                    <iconify-icon class="{{ $data->active === 'false' ? 'blue-icon' : 'red-icon' }}"
+                                        icon="{{ $data->active === 'false' ? 'ic:outline-toggle-on' : 'ic:outline-toggle-off' }}"></iconify-icon>
                                 </a>
                             </td>
                         </tr>

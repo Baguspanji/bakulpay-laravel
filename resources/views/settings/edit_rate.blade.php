@@ -45,10 +45,13 @@
                     <div class="label">Price</div>
                     <div class="separator">:</div>
                     <div class="value">
-                        <input type="text" name="price" value="{{ number_format($price, 0, ',', '.') }}" class="form-control" id="price"
-                            oninput="formatCurrency(this)">
+                        <input type="text" name="price" value="Rp {{ number_format($price, 0, ',', '.') }}"
+                            class="form-control" id="price" oninput="formatCurrency(this)">
+                        <!-- Hidden input to store numeric value -->
+                        <input type="hidden" name="numeric_price" id="numeric_price" value="{{ $price }}">
                     </div>
                 </div>
+
 
                 <button type="submit" class="button">Save</button>
             </form>
@@ -60,10 +63,14 @@
             const numericValue = input.value.replace(/[^\d]/g, '');
             const formattedValue = new Intl.NumberFormat('id-ID').format(parseInt(numericValue, 10));
             const valueWithComma = formattedValue.replace(/\./g, '.');
-            input.value = valueWithComma;
+            input.value = `Rp ${valueWithComma}`;
+
+            // Update hidden input with numeric value
+            document.getElementById('numeric_price').value = numericValue;
 
             // Tambahkan log untuk melihat nilai yang dikirimkan ke server
             console.log('Nilai yang dikirim ke server:', numericValue);
         }
     </script>
+
 @endsection

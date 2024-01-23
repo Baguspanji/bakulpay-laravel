@@ -38,6 +38,12 @@
                                     href="{{ route('edit_paymentmd', ['id' => $data->id]) }}">
                                     <iconify-icon icon="akar-icons:edit"></iconify-icon>
                                 </a>
+
+                                <a class="btn"
+                                    href="{{ $data->active === 'false' ? route('deactivate_paymentmd', ['id' => $data->id]) : route('activate_paymentmd', ['id' => $data->id]) }}">
+                                    <iconify-icon class="{{ $data->active === 'false' ? 'blue-icon' : 'red-icon' }}"
+                                        icon="{{ $data->active === 'false' ? 'ic:outline-toggle-on' : 'ic:outline-toggle-off' }}"></iconify-icon>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

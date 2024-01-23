@@ -317,34 +317,61 @@ class RateMasterDataController extends Controller
     //     return redirect()->route('rate')->with('success', 'Rate updated successfully');
     // }
 
+    // public function update_rate(Request $request, $id)
+    // {
+    //     // Validasi input jika diperlukan
+    //     $request->validate([
+    //         'price' => 'numeric',
+    //         // ... tambahkan validasi lainnya jika diperlukan
+    //     ]);
+
+    //     // Retrieve blockchain_id from the form data
+    //     $blockchainIdFromForm = $request->input('blockchain_id');
+
+    //     // Remove commas from the formatted price
+    //     $formattedPrice = str_replace('.', '', $request->input('price'));
+
+    //     // Update price based on the presence of blockchain_id
+    //     if ($blockchainIdFromForm) {
+    //         // Update price in the blockchain table
+    //         Blockchain::where('nama_blockchain', $blockchainIdFromForm)
+    //             ->update(['price' => $formattedPrice]);
+    //     } else {
+    //         // Update price in the rate_master_data table
+    //         RateMasterData::where('id', $id)
+    //             ->update(['price' => $formattedPrice]);
+    //     }
+
+    //     // Redirect to the rate index page or any other desired page
+    //     return redirect()->route('rate')->with('success', 'Rate updated successfully');
+    // }
+
     public function update_rate(Request $request, $id)
     {
         // Validasi input jika diperlukan
         $request->validate([
-            'price' => 'numeric',
+            'numeric_price' => 'numeric',
             // ... tambahkan validasi lainnya jika diperlukan
         ]);
 
         // Retrieve blockchain_id from the form data
         $blockchainIdFromForm = $request->input('blockchain_id');
 
-        // Remove commas from the formatted price
-        $formattedPrice = str_replace('.', '', $request->input('price'));
-
         // Update price based on the presence of blockchain_id
         if ($blockchainIdFromForm) {
             // Update price in the blockchain table
             Blockchain::where('nama_blockchain', $blockchainIdFromForm)
-                ->update(['price' => $formattedPrice]);
+                ->update(['price' => $request->input('numeric_price')]);
         } else {
             // Update price in the rate_master_data table
             RateMasterData::where('id', $id)
-                ->update(['price' => $formattedPrice]);
+                ->update(['price' => $request->input('numeric_price')]);
         }
 
         // Redirect to the rate index page or any other desired page
         return redirect()->route('rate')->with('success', 'Rate updated successfully');
     }
+
 
 
     public function edit_transactionmd($id)
@@ -872,7 +899,7 @@ class RateMasterDataController extends Controller
     public function activate($id)
     {
         $bankWithdraw = RateMasterData::findOrFail($id);
-        $bankWithdraw->active = 'true'; // Note: Use string 'true'
+        $bankWithdraw->active = 'false'; // Note: Use string 'true'
         $bankWithdraw->save();
 
         return redirect()->back()->with('success', 'Bank withdrawal activated successfully.');
@@ -881,10 +908,27 @@ class RateMasterDataController extends Controller
     public function deactivate($id)
     {
         $bankWithdraw = RateMasterData::findOrFail($id);
-        $bankWithdraw->active = 'false'; // Note: Use string 'false'
+        $bankWithdraw->active = 'true'; // Note: Use string 'false'
         $bankWithdraw->save();
 
         return redirect()->back()->with('success', 'Bank withdrawal deactivated successfully.');
     }
-    
+
+    public function activate_blockchain($id, $blockchain_id)
+    {
+        $blockchain = Blockchain::where('nama_blockchain', $blockchain_id)->firstOrFail();
+        $blockchain->active = 'false'; // Use string 'true'
+        $blockchain->save();
+
+        return redirect()->back()->with('success', 'Blockchain activated successfully.');
+    }
+
+    public function deactivate_blockchain($id, $blockchain_id)
+    {
+        $blockchain = Blockchain::where('nama_blockchain', $blockchain_id)->firstOrFail();
+        $blockchain->active = 'true'; // Use string 'false'
+        $blockchain->save();
+
+        return redirect()->back()->with('success', 'Blockchain deactivated successfully.');
+    }
 }
