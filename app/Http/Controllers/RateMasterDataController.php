@@ -327,15 +327,18 @@ class RateMasterDataController extends Controller
         // Retrieve blockchain_id from the form data
         $blockchainIdFromForm = $request->input('blockchain_id');
 
+        // Remove commas from the formatted price
+        $formattedPrice = str_replace('.', '', $request->input('price'));
+
         // Update price based on the presence of blockchain_id
         if ($blockchainIdFromForm) {
             // Update price in the blockchain table
             Blockchain::where('nama_blockchain', $blockchainIdFromForm)
-                ->update(['price' => $request->input('price')]);
+                ->update(['price' => $formattedPrice]);
         } else {
             // Update price in the rate_master_data table
             RateMasterData::where('id', $id)
-                ->update(['price' => $request->input('price')]);
+                ->update(['price' => $formattedPrice]);
         }
 
         // Redirect to the rate index page or any other desired page

@@ -36,9 +36,14 @@
                                         <td>{{ $blockchain->nama_blockchain }}</td>
                                         <td>{{ $data->type }}</td>
                                         <td>
-                                            {{ $blockchain->price ?? '-' }}
+                                            @php
+                                                // Ambil harga blockchain atau harga dari rate_master_data jika tidak ada blockchain
+                                                $priceToShow = isset($blockchain->price) ? number_format($blockchain->price, 0, ',', '.') : number_format($data->price, 0, ',', '.');
+                                            @endphp
+                                            {{ $priceToShow }}
                                             @php $priceFound = true; @endphp
                                         </td>
+
                                         <td>
                                             <a class="btn {{ Request::is('edit-rate*' . $data->id . '/' . $blockchain->id) ? 'active' : '' }}"
                                                 href="{{ route('edit_rate', ['id' => $data->id, 'blockchain_id' => $blockchain->nama_blockchain]) }}">
@@ -74,7 +79,13 @@
                                 </td>
                                 <td></td> {{-- Empty blockchain --}}
                                 <td>{{ $data->type }}</td>
-                                <td>{{ $data->price ?? '-' }}</td>
+                                <td>
+                                    @php
+                                        // Ambil harga blockchain atau harga dari rate_master_data jika tidak ada blockchain
+                                        $priceToShow = number_format($data->price, 0, ',', '.');
+                                    @endphp
+                                    {{ $priceToShow }}
+                                </td>
                                 <td>
                                     <a class="btn {{ Request::is('edit-rate*' . $data->id) ? 'active' : '' }}"
                                         href="{{ route('edit_rate', ['id' => $data->id]) }}">

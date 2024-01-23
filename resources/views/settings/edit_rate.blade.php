@@ -45,8 +45,8 @@
                     <div class="label">Price</div>
                     <div class="separator">:</div>
                     <div class="value">
-                        <input type="text" name="price" value="{{ $price }}"
-                            class="form-control" id="price" oninput="formatCurrency(this)">
+                        <input type="text" name="price" value="{{ number_format($price, 0, ',', '.') }}" class="form-control" id="price"
+                            oninput="formatCurrency(this)">
                     </div>
                 </div>
 
