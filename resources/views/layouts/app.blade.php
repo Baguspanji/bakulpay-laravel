@@ -8,6 +8,143 @@
 
     <title>@yield('title')</title>
 
+
+
+    <link rel="icon" href="../assets/images/nyar.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="../assets/images/nyar.png" sizes="32x32" type="image/png">
+
+
+    <!-- Bootstrap CSS CDN -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    {{-- ok --}}
+
+    <!-- Our Custom CSS -->
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
+    <!-- Add this to your HTML -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}""> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+    </script>
+
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
+    </script>
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script> --}}
+
+    <!-- jQuery Custom Scroller CDN -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                "dom": '<"top"lf>rt<"bottom"ip>',
+                "language": {
+                    "search": "",
+                    "searchPlaceholder": "Search...",
+                },
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+            });
+
+            // Add search icon
+            $('.dataTables_filter input').attr('placeholder', 'Search');
+            $('.dataTables_filter label').append(
+                '<iconify-icon icon="ic:round-search" class="search-icon"></iconify-icon>');
+        });
+    </script>
+
+    {{-- <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                "dom": '<"top"lf>rt<"bottom"ip>',
+                "language": {
+                    "search": "",
+                    "searchPlaceholder": "Search...",
+                },
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+            });
+
+            // Add search icon
+            $('.dataTables_filter input').attr('placeholder', 'Search');
+            $('.dataTables_filter label').append(
+                '<iconify-icon icon="ic:round-search" class="search-icon"></iconify-icon>');
+
+            // Custom filter for Bank Name (replace 3 with your Bank Name column index)
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var selectedBank = $('#bank-filter').val();
+                    var bankName = data[3]; // Assuming Bank Name is in the fourth column (adjust as needed)
+
+                    if (selectedBank === '' || selectedBank === bankName) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            );
+
+            // Custom filter for Status (replace 1 with your Status column index)
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var selectedStatus = $('#status-filter').val();
+                    var status = data[1]; // Assuming Status is in the second column (adjust as needed)
+
+                    if (selectedStatus === '' || selectedStatus === status) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            );
+
+            // Apply custom filters on select change
+            $('#bank-filter, #status-filter').on('change', function() {
+                $('#myTable').DataTable().draw();
+            });
+        });
+    </script> --}}
+
     <style>
         body {
             font-family: "Poppins", sans-serif;
@@ -840,141 +977,6 @@ MEDIAQUERIES
     } */
         }
     </style>
-
-    <link rel="icon" href="../assets/images/nyar.png" sizes="16x16" type="image/png">
-    <link rel="icon" href="../assets/images/nyar.png" sizes="32x32" type="image/png">
-
-
-    <!-- Bootstrap CSS CDN -->
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-
-    {{-- ok --}}
-
-    <!-- Our Custom CSS -->
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-
-    <!-- Add this to your HTML -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}""> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-
-
-    <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
-    </script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
-    </script>
-
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-
-
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
-    </script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous">
-    </script>
-
-    {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script> --}}
-
-    <!-- jQuery Custom Scroller CDN -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#sidebarCollapse').on('click', function() {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                "dom": '<"top"lf>rt<"bottom"ip>',
-                "language": {
-                    "search": "",
-                    "searchPlaceholder": "Search...",
-                },
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-            });
-
-            // Add search icon
-            $('.dataTables_filter input').attr('placeholder', 'Search');
-            $('.dataTables_filter label').append(
-                '<iconify-icon icon="ic:round-search" class="search-icon"></iconify-icon>');
-        });
-    </script>
-
-    {{-- <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                "dom": '<"top"lf>rt<"bottom"ip>',
-                "language": {
-                    "search": "",
-                    "searchPlaceholder": "Search...",
-                },
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-            });
-
-            // Add search icon
-            $('.dataTables_filter input').attr('placeholder', 'Search');
-            $('.dataTables_filter label').append(
-                '<iconify-icon icon="ic:round-search" class="search-icon"></iconify-icon>');
-
-            // Custom filter for Bank Name (replace 3 with your Bank Name column index)
-            $.fn.dataTable.ext.search.push(
-                function(settings, data, dataIndex) {
-                    var selectedBank = $('#bank-filter').val();
-                    var bankName = data[3]; // Assuming Bank Name is in the fourth column (adjust as needed)
-
-                    if (selectedBank === '' || selectedBank === bankName) {
-                        return true;
-                    }
-
-                    return false;
-                }
-            );
-
-            // Custom filter for Status (replace 1 with your Status column index)
-            $.fn.dataTable.ext.search.push(
-                function(settings, data, dataIndex) {
-                    var selectedStatus = $('#status-filter').val();
-                    var status = data[1]; // Assuming Status is in the second column (adjust as needed)
-
-                    if (selectedStatus === '' || selectedStatus === status) {
-                        return true;
-                    }
-
-                    return false;
-                }
-            );
-
-            // Apply custom filters on select change
-            $('#bank-filter, #status-filter').on('change', function() {
-                $('#myTable').DataTable().draw();
-            });
-        });
-    </script> --}}
 
     @stack('script')
 
