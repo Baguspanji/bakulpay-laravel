@@ -676,14 +676,28 @@ CONTENT STYLE
     float: right;
     color: #37398b;
     font-weight: bold;
-    padding-right: 15%;
+    padding-right: 18.5%;
+}
+#content .modal-body .judul_1 .nama_2 {
+    float: right;
+    color: #37398b;
+    font-weight: bold;
+    padding-right: 17.3%;
 }
 
 #content .modal-body .judul_1 .keterangan_1 {
     float: right;
     color: #a8afbd;
     font-weight: bold;
-    padding-right: 3%;
+    padding-right: 6.5%;
+    text-align: left;
+}
+#content .modal-body .judul_1 .keterangan_2 {
+    float: right;
+    color: #a8afbd;
+    font-weight: bold;
+    padding-right: 10%;
+    text-align: left;
 }
 
 #content .modal-body .judul .nama {

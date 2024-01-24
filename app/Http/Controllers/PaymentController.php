@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class PaymentController extends Controller
         return view('transactions.form_payment', ['payment' => $payment]);
     }
 
-    public function submitForm(Request $request)
+    public function submitFormPay(Request $request)
     {
         // Validasi form
         $request->validate([

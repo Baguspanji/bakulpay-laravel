@@ -84,13 +84,13 @@
                     </div>
 
                     <div class="judul">
-                        <div class="nama">ID Client</div>
+                        <div class="nama">No ID</div>
                         <div class="keterangan"><span id="payment-id"></div>
                     </div>
 
                     <div class="judul_1">
-                        <div class="keterangan_1"><span id="payment-status"></span></div>
-                        <div class="nama_1">Status</div>
+                        <div class="keterangan_2"><span id="payment-status"></span></div>
+                        <div class="nama_2">Status</div>
                     </div>
 
                     <div class="judul">
@@ -98,6 +98,27 @@
                         <div class="keterangan_3"><span id="payment-nama"></div>
                     </div>
                     <hr class="hr_edti">
+
+                    <div class="judul">
+                        <div class="nama">Bank</div>
+                        <div class="keterangan_3"><span id="payment-id"></div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">Email</div>
+                        <div class="keterangan_3"><span id="payment-id"></div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">Number Transaction</div>
+                        <div class="keterangan"><span id="payment-id"></div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">Transaction</div>
+                        <div class="keterangan"><span id="payment-id"></div>
+                    </div>
+
                 </div>
 
             </div>
@@ -140,7 +161,7 @@
         }
     </script>
 
-    
+
 
     <script>
         $(document).ready(function() {

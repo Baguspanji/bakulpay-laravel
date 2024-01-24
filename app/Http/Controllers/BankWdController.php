@@ -86,19 +86,19 @@ class BankWdController extends Controller
     }
 
     
-    public function activate($id)
+    public function activate_bankwd($id)
     {
         $bankWithdraw = BankWd::findOrFail($id);
-        $bankWithdraw->active = 'true'; // Note: Use string 'true'
+        $bankWithdraw->active = 'false'; // Note: Use string 'true'
         $bankWithdraw->save();
 
         return redirect()->back()->with('success', 'Bank withdrawal activated successfully.');
     }
 
-    public function deactivate($id)
+    public function deactivate_bankwd($id)
     {
         $bankWithdraw = BankWd::findOrFail($id);
-        $bankWithdraw->active = 'false'; // Note: Use string 'false'
+        $bankWithdraw->active = 'true'; // Note: Use string 'false'
         $bankWithdraw->save();
 
         return redirect()->back()->with('success', 'Bank withdrawal deactivated successfully.');
