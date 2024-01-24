@@ -75,7 +75,7 @@ class BankController extends Controller
     {
         try {
             // Fetch data using get() method
-            $rate = RateMasterData::get();
+            $rate = RateMasterData::all();
 
             if ($rate->isEmpty()) {
                 return response()->json([
