@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Http;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'ProsesLogin'])->name('ProsesLogin');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
 

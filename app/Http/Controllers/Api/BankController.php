@@ -203,16 +203,30 @@ class BankController extends Controller
         return view('transactions.form_payment', ['payment' => $payment]);
     }
 
+    // public function getBlockchainByBank($nama_bank)
+    // {
+    //     $blockchainData = Blockchain::where('nama_bank', $nama_bank)->get();
+
+    //     if ($blockchainData->isEmpty()) {
+    //         return response()->json(['message' => 'Data tidak ditemukan'], 404);
+    //     }
+
+    //     return response()->json($blockchainData);
+    // }
+
     public function getBlockchainByBank($nama_bank)
     {
-        $blockchainData = Blockchain::where('nama_bank', $nama_bank)->get();
+        $blockchainData = Blockchain::where('nama_bank', $nama_bank)
+            ->where('type', 'withdraw')
+            ->get();
 
         if ($blockchainData->isEmpty()) {
-            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+            return response()->json(['message' => 'Data withdraw tidak ditemukan'], 404);
         }
 
         return response()->json($blockchainData);
     }
+
 
     // public function history(Request $request)
     // {
