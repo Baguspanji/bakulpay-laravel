@@ -45,10 +45,37 @@ class BankController extends Controller
     }
 
 
+    // public function rate()
+    // {
+    //     try {
+    //         $rate = RateMasterData::all();
+
+    //         if ($rate->isEmpty()) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Data rate tidak ditemukan'
+    //             ], 404);
+    //         }
+
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Data rate ditemukan',
+    //             'data' => $rate
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         // Tangkap exception jika terjadi error
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
     public function rate()
     {
         try {
-            $rate = RateMasterData::all();
+            // Fetch data using get() method
+            $rate = RateMasterData::get();
 
             if ($rate->isEmpty()) {
                 return response()->json([
@@ -57,19 +84,29 @@ class BankController extends Controller
                 ], 404);
             }
 
+            // Modify the response data without using map
+            foreach ($rate as $item) {
+                foreach ($item->getAttributes() as $key => $value) {
+                    $item->$key = $value !== null && $value !== '' ? $value : 'n/a';
+                }
+            }
+
             return response()->json([
                 'status' => true,
                 'message' => 'Data rate ditemukan',
                 'data' => $rate
             ], 200);
         } catch (\Exception $e) {
-            // Tangkap exception jika terjadi error
+            // Handle exception if an error occurs
             return response()->json([
                 'status' => false,
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
         }
     }
+
+
+
 
 
     public function metode_pembayaran()
