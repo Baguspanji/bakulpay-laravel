@@ -52,13 +52,13 @@
                                     @php $priceFound = true; @endphp
                                 @endif
                             @endforeach
-                            @unless ($priceFound)
+                            {{-- @unless ($priceFound)
                                 <tr>
                                     <td class="ikon">
                                         <img src="{{ $data->icons }}" alt="Bank Icon">
                                         <p>{{ $data->nama_bank }}</p>
                                     </td>
-                                    <td></td> {{-- Empty blockchain --}}
+                                    <td></td>
                                     <td>{{ $data->type }}</td>
                                     <td>{{ '-' }}</td>
                                     <td>
@@ -68,7 +68,7 @@
                                         </a>
                                     </td>
                                 </tr>
-                            @endunless
+                            @endunless --}}
                         @else
                             @if ($data->active === 'true')
                                 <tr>
