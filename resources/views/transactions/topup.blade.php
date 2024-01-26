@@ -66,12 +66,11 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                {{-- <div class="modal-header">
-                    <h5 class="modal-title" id="paymentModalLabel">Payment Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div> --}}
+                {{-- <div class="modal-header"> --}}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{-- </div> --}}
 
                 <div class="modal-body">
                     {{-- <p>ID: <span id="payment-id"></span></p>
@@ -81,6 +80,7 @@
                     <div class="judul_1">
                         <div class="keterangan_1"><span id="payment-date"></span></div>
                         <div class="nama_1">Date</div>
+                        {{-- kiri --}}
                     </div>
 
                     <div class="judul">
@@ -91,32 +91,62 @@
                     <div class="judul_1">
                         <div class="keterangan_2"><span id="payment-status"></span></div>
                         <div class="nama_2">Status</div>
+                        {{-- kiri --}}
                     </div>
 
                     <div class="judul">
                         <div class="nama">Client Name</div>
-                        <div class="keterangan_3"><span id="payment-nama"></div>
+                        <div class="keterangan_3"><span id="payment-nama"></span></div>
                     </div>
                     <hr class="hr_edti">
 
-                    <div class="judul">
-                        <div class="nama">Bank</div>
-                        <div class="keterangan_3"><span id="payment-id"></div>
+                    <div class="judul_1">
+                        <div class="keterangan_1"><span id="payment-buktipembayaran"><img
+                                    src="{{ $data->bukti_pembayaran }}" alt="Bank Icon"></span></div>
+                        <div class="nama_1">Photo</div>
+                        {{-- kiri --}}
                     </div>
 
                     <div class="judul">
+                        <div class="nama">Bank</div>
+                        <div class="keterangan"><span id="payment-namabank"></div>
+                    </div>
+
+                    <div class="judul_3">
                         <div class="nama">Email</div>
-                        <div class="keterangan_3"><span id="payment-id"></div>
+                        <div class="keterangan"><span id="payment-rekclient"></div>
                     </div>
 
                     <div class="judul">
                         <div class="nama">Number Transaction</div>
-                        <div class="keterangan"><span id="payment-id"></div>
+                        <div class="keterangan"><span id="payment-idpembayaran"></div>
                     </div>
 
                     <div class="judul">
                         <div class="nama">Transaction</div>
-                        <div class="keterangan"><span id="payment-id"></div>
+                        <div class="keterangan">Top-Up</div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">Payment</div>
+                        <div class="keterangan"><span id="payment-product"></div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">Price</div>
+                        <div class="keterangan"><span id="payment-pricerate"></div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama">Quantity</div>
+                        <div class="keterangan"><span id="payment-jumlah"></div>
+                    </div>
+
+                    <hr class="hr_edti">
+
+                    <div class="judul">
+                        <div class="nama">Total</div>
+                        <div class="keterangan"><span id="payment-totalpembayaran"></div>
                     </div>
 
                 </div>
@@ -145,8 +175,9 @@
                         $('#payment-jumlah').html(data.jumlah)
                         $('#payment-totalpembayaran').html(data.total_pembayaran)
                         $('#payment-namabank').html(data.nama_bank)
-                        $('#payment-nama').html(data.nama)
-                        $('#payment-buktipembayaran').html(data.bukti_pembayaran)
+                        $('#payment-nama').html(data.nama ? data.nama : '-');
+                        $('#payment-buktipembayaran').html('<img src="' + data.bukti_pembayaran +
+                            '" alt="Payment Image">')
                         $('#payment-product').html(data.product)
                         $('#payment-pricerate').html(data.price_rate)
                         $('#payment-status').html(data.status)
