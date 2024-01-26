@@ -103,8 +103,16 @@ class WithdrawController extends Controller
         ]);
 
         // Menggunakan findOrFail untuk memastikan exception jika data tidak ditemukan
-        $payment_topup = Withdraw::findOrFail($id_pembayaran);
+        $payment_topup = Withdraw::where('id_pembayaran', $id_pembayaran)->first();
 
+        if (!$payment_topup) {
+            return response()->json([
+                'status' => false,
+                'message' => 'TopUp tidak ditemukan.'
+            ], 404);
+        }
+
+        
         // Menggunakan update langsung tanpa memeriksa ketersediaan data
         $payment_topup->update(['nama' => $request->nama]);
 

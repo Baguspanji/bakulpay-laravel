@@ -77,34 +77,41 @@
                     <p>Date: <span id="payment-date"></span></p>
                     <p>Number Whatsapp: <span id="payment-number"></span></p>
                     <p>Customer: <span id="payment-customer"></span></p> --}}
-                    <div class="judul_1">
+                    {{-- <div class="judul_1">
                         <div class="keterangan_1"><span id="payment-date"></span></div>
-                        <div class="nama_1">Date</div>
+                        <div class="nama_1">Date</div> --}}
                         {{-- kiri --}}
-                    </div>
+                    {{-- </div> --}}
+
+                    <div class="judul_01">
 
                     <div class="judul">
                         <div class="nama">No ID</div>
                         <div class="keterangan"><span id="payment-id"></div>
                     </div>
 
-                    <div class="judul_1">
-                        <div class="keterangan_1"><span id="payment-status"></span></div>
-                        <div class="nama_1">Status</div>
-                        {{-- kiri --}}
+                    <div class="judul_2">
+                        <div class="nama">Date</div>
+                        <div class="keterangan"><span id="payment-date"></span></div>
+                    </div>
+
                     </div>
 
                     <div class="judul">
-                        <div class="nama">Client Name</div>
-                        <div class="keterangan_3"><span id="payment-nama"></span></div>
+                        <div class="nama_2">Client Name</div>
+                        <div class="keterangan"><span id="payment-nama"></span></div>
+
+                        <div class="nama">Status</div>
+                        <div class="keterangan"><span id="payment-status"></span></div>
                     </div>
+
                     <hr class="hr_edti">
 
-                    <div class="judul_1">
-                        <div class="keterangan_1"><span id="payment-buktipembayaran"></span></div>
+                    {{-- <div class="judul_1">
+                        <div class="keterangan_3"><span id="payment-buktipembayaran"></span></div>
                         <div class="nama_1">Photo</div>
-                        {{-- kiri --}}
-                    </div>
+                    </div> --}}
+                    {{-- kiri --}}
 
                     <div class="judul">
                         <div class="nama">Bank</div>

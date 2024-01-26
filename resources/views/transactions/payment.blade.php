@@ -39,8 +39,8 @@
                             <td>{{ $data->customer }}</td>
                             <td>
                                 <!-- Icon mata (eyes) untuk membuka modal -->
-                                <iconify-icon icon="iconamoon:eye" data-id="{{ $data->id }}"
-                                    onclick="onDetail(this)"></iconify-icon>
+                                {{-- <iconify-icon icon="iconamoon:eye" data-id="{{ $data->id }}"
+                                    onclick="onDetail(this)"></iconify-icon> --}}
                                 <!-- Tombol edit -->
                                 <a class="btn {{ Request::is('edit-payment*') ? 'active' : '' }}"
                                     href="{{ route('edit_payment', $data->id) }}">
