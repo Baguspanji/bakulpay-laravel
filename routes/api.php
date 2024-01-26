@@ -27,47 +27,37 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('test', function() {
-    return 'Wellcome to Api Bakulpay';
+Route::get('test', function () {
+    return 'Welcome to Api Bakulpay';
 });
 
-Route::post('daftar', [DaftarController::class,'store']);
+Route::post('daftar', [DaftarController::class, 'store']);
 
-//AUTHENTICATION
-// Route::post('register', [AuthController::class,'Register']);
-// Route::post('login', [AuthController::class,'Login']);
-// Route::post('logout', [AuthController::class, 'logout']);
-// Route::get('users', [AuthController::class, 'index']);
-
-//ADMIN AUTHENTICATION
-Route::post('register', [AdminController::class,'Daftar']);
-Route::post('login', [AdminController::class,'Masuk'])->name('Masuk');
-Route::post('login_gm', [AdminController::class,'Login_GM'])->name('Login_GM');
+// ADMIN AUTHENTICATION
+Route::post('register', [AdminController::class, 'Daftar']);
+Route::post('login', [AdminController::class, 'Masuk'])->name('Masuk');
+Route::post('login_gm', [AdminController::class, 'Login_GM'])->name('Login_GM');
 Route::post('logout', [AdminController::class, 'logout']);
 Route::get('admins', [AdminController::class, 'index']);
 
-
 // MAIN API BANK
 Route::get('/payment/{type}', [BankController::class, 'showByType']);
-// Route::get('bankwd', [MasterDataController::class, 'BankWd'])->name('bankwd');
 Route::get('bankwd', [BankController::class, 'BankWd'])->name('bankwd');
-//TOPUP
+
+// TOPUP
 Route::get('/top_up', [TopUpController::class, 'index']);
-Route::post('/top_up', [TopUpController::class,'Store']);
+Route::post('/top_up', [TopUpController::class, 'Store']);
 Route::post('/payment/top_up/{id_pembayaran}', [TopUpController::class, 'payment_topup']);
 
-//WITHDRAW
+// WITHDRAW
 Route::get('/withdraw', [WithdrawController::class, 'index']);
-Route::post('/withdraw', [WithdrawController::class,'Store']);
+Route::post('/withdraw', [WithdrawController::class, 'Store']);
 Route::post('/payment/withdraw/{id_pembayaran}', [WithdrawController::class, 'payment_withdraw']);
 
+// Authenticated route for getting user's history
+Route::middleware('auth:sanctum')->get('history/{user_id}', [BankController::class, 'history']);
 
-Route::get('rate',[BankController::class,'rate']);
-Route::get('metode_pembayaran',[BankController::class,'metode_pembayaran']);
+Route::get('rate', [BankController::class, 'rate']);
+Route::get('metode_pembayaran', [BankController::class, 'metode_pembayaran']);
 
 Route::get('blockchain/{nama_bank}', [BankController::class, 'getBlockchainByBank']);
-
-// Route::get('history',[MasterDataController::class,'index']);
-
-//History
-Route::get('history/{user_id}', [BankController::class, 'history']);
