@@ -71,41 +71,222 @@ class BankController extends Controller
     //     }
     // }
 
+    // public function rate()
+    // {
+    //     try {
+    //         // Fetch data using get() method
+    //         $rate = RateMasterData::all();
+
+    //         if ($rate->isEmpty()) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Data rate tidak ditemukan'
+    //             ], 404);
+    //         }
+
+    //         // Modify the response data without using map
+    //         foreach ($rate as $item) {
+    //             foreach ($item->getAttributes() as $key => $value) {
+    //                 $item->$key = $value !== null && $value !== '' ? $value : 'n/a';
+    //             }
+    //         }
+
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Data rate ditemukan',
+    //             'data' => $rate
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         // Handle exception if an error occurs
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+    // public function rate()
+    // {
+    //     try {
+    //         // Fetch data using get() method
+    //         $rateData = RateMasterData::all();
+
+    //         if ($rateData->isEmpty()) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Data rate tidak ditemukan'
+    //             ], 404);
+    //         }
+
+    //         // Modify the response data without using map
+    //         foreach ($rateData as $item) {
+    //             foreach ($item->getAttributes() as $key => $value) {
+    //                 $item->$key = $value !== null && $value !== '' ? $value : 'n/a';
+    //             }
+
+    //             // Check if there is a corresponding blockchain entry
+    //             $blockchainEntry = Blockchain::where('id_rate', $item->id)->first();
+
+    //             if ($blockchainEntry) {
+    //                 // If there is a matching entry in blockchain, add a 'range' field
+    //                 $item->range = $blockchainEntry->calculateRange(); // You may need to define a method to calculate the range in your Blockchain model
+    //             } else {
+    //                 $item->range = 'n/a'; // Set a default value if no matching entry is found
+    //             }
+    //         }
+
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Data rate ditemukan',
+    //             'data' => $rateData
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         // Handle exception if an error occurs
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+    // public function rate()
+    // {
+    //     try {
+    //         // Fetch data using join() method
+    //         $rateData = RateMasterData::leftJoin('blockchain', function ($join) {
+    //             $join->on('rate_master_data.id', '=', 'blockchain.id_rate')
+    //                 ->on('rate_master_data.nama_bank', '=', 'blockchain.nama_bank');
+    //         })
+    //             ->select('rate_master_data.*', 'blockchain.id_rate as blockchain_id_rate', 'blockchain.nama_bank as blockchain_nama_bank')
+    //             ->get();
+
+    //         if ($rateData->isEmpty()) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Data rate tidak ditemukan'
+    //             ], 404);
+    //         }
+
+    //         // Modify the response data without using map
+    //         foreach ($rateData as $item) {
+    //             foreach ($item->getAttributes() as $key => $value) {
+    //                 $item->$key = $value !== null && $value !== '' ? $value : 'n/a';
+    //             }
+
+    //             // Check if there is a corresponding blockchain entry
+    //             if ($item->blockchain_id_rate !== null) {
+    //                 // If there is a matching entry in blockchain, add a 'range' field
+    //                 $blockchainEntry = Blockchain::where('id_rate', $item->blockchain_id_rate)
+    //                     ->where('nama_bank', $item->blockchain_nama_bank)
+    //                     ->first();
+
+    //                 if ($blockchainEntry) {
+    //                     $item->range = $blockchainEntry->calculateRange(); // You may need to define a method to calculate the range in your Blockchain model
+    //                 } else {
+    //                     $item->range = 'n/a'; // Set a default value if no matching entry is found
+    //                 }
+    //             } else {
+    //                 $item->range = 'n/a'; // Set a default value if no matching entry is found
+    //             }
+    //         }
+
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Data rate ditemukan',
+    //             'data' => $rateData
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         // Handle exception if an error occurs
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+    // public function rate()
+    // {
+    //     try {
+    //         // Fetch data using join() method
+    //         $rateData = RateMasterData::leftJoin('blockchain', function ($join) {
+    //             $join->on('rate_master_data.id', '=', 'blockchain.id_rate')
+    //                 ->on('rate_master_data.nama_bank', '=', 'blockchain.nama_bank');
+    //         })
+    //             ->select('rate_master_data.*', 'blockchain.id_rate as blockchain_id_rate', 'blockchain.nama_bank as blockchain_nama_bank')
+    //             ->get();
+
+    //         if ($rateData->isEmpty()) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Data rate tidak ditemukan'
+    //             ], 404);
+    //         }
+
+    //         // Modify the response data using map
+    //         $formattedRateData = $rateData->map(function ($item) {
+    //             $formattedItem = [
+    //                 'id' => $item->id,
+    //                 'nama_bank' => $item->nama_bank,
+    //                 'icons' => $item->icons,
+    //                 'type' => $item->type,
+    //                 'price' => $item->price,
+    //                 'nama' => $item->nama,
+    //                 'no_rekening' => $item->no_rekening,
+    //                 'active' => $item->active,
+    //                 'created_at' => $item->created_at,
+    //                 'updated_at' => $item->updated_at,
+    //                 'blockchain' => $item->blockchain_id_rate !== null ? [
+    //                     'id' => $item->blockchain_id,
+    //                     'id_rate' => $item->blockchain_id_rate,
+    //                     'nama_bank' => $item->blockchain_nama_bank,
+    //                     'nama_blockchain' => $item->nama_blockchain,
+    //                     'rekening_wallet' => $item->rekening_wallet,
+    //                     'type' => $item->blockchain_type,
+    //                     'price' => $item->blockchain_price,
+    //                     'active' => $item->blockchain_active,
+    //                     'created_at' => $item->blockchain_created_at,
+    //                     'updated_at' => $item->blockchain_updated_at,
+    //                 ] : null,
+    //             ];
+
+    //             return $formattedItem;
+    //         });
+
+    //         return response()->json([
+    //             'status' => true,
+    //             'message' => 'Data rate ditemukan',
+    //             'data' => $formattedRateData
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         // Handle exception if an error occurs
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+
     public function rate()
     {
         try {
-            // Fetch data using get() method
-            $rate = RateMasterData::all();
+            // Ambil semua data dari tabel RateMasterData
+            $rates = RateMasterData::all();
 
-            if ($rate->isEmpty()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data rate tidak ditemukan'
-                ], 404);
+            // Loop melalui setiap data RateMasterData
+            foreach ($rates as $rate) {
+                // Ambil data dari tabel Blockchain yang memiliki nama_bank yang sama
+                $blockchainData = Blockchain::where('nama_bank', $rate->nama_bank)->get();
+
+                // Tambahkan data blockchain ke dalam properti baru pada objek RateMasterData
+                $rate->blockchain_data = $blockchainData;
             }
 
-            // Modify the response data without using map
-            foreach ($rate as $item) {
-                foreach ($item->getAttributes() as $key => $value) {
-                    $item->$key = $value !== null && $value !== '' ? $value : 'n/a';
-                }
-            }
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Data rate ditemukan',
-                'data' => $rate
-            ], 200);
+            return response()->json($rates);
         } catch (\Exception $e) {
-            // Handle exception if an error occurs
-            return response()->json([
-                'status' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ], 500);
+            return response()->json(['error' => 'Gagal mendapatkan data rate.'], 500);
         }
     }
-
-
 
 
 
