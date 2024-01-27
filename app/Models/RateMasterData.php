@@ -9,7 +9,7 @@ class RateMasterData extends Model
 {
 
     protected $table = 'rate_master_data';
-    protected $fillable = ['nama_bank', 'icons', 'type', 'price','active'];
+    protected $fillable = ['nama_bank', 'icons', 'type', 'price','active','biaya_transaksi'];
 
     use HasFactory;
 

@@ -12,6 +12,7 @@ class TopUp extends Model
     protected $fillable = [
         'user_id',
         'product',
+        'nama_blockchain',
         'price_rate',
         'id_pembayaran',
         'rek_client',

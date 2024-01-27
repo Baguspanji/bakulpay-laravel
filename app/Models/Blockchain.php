@@ -10,7 +10,7 @@ class Blockchain extends Model
     use HasFactory;
 
     protected $table = 'blockchain';
-    protected $fillable = ['id_rate', 'nama_bank', 'nama_blockchain', 'rekening_wallet', 'type', 'price', 'active'];
+    protected $fillable = ['id_rate', 'nama_bank', 'nama_blockchain', 'rekening_wallet', 'type', 'price', 'active','biaya_transaksi'];
 
     public function rateMasterData()
     {

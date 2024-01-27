@@ -24,10 +24,9 @@
                     <div class="label">Blockchain Name</div>
                     <div class="separator">:</div>
                     <div class="value">
-                        {{-- Retrieve blockchain_id from the URL --}}
                         @php
                             $blockchainIdFromUrl = request()->input('blockchain_id');
-                            $price = $blockchainIdFromUrl ? \App\Models\Blockchain::where('nama_blockchain', $blockchainIdFromUrl)->value('price') : $rate->price;
+                            $biaya_transaksi = $blockchainIdFromUrl ? \App\Models\Blockchain::where('nama_blockchain', $blockchainIdFromUrl)->value('biaya_transaksi') : $rate->biaya_transaksi;
                             $blockchainNameToShow = $blockchainIdFromUrl ?: '-';
                         @endphp
                         {{ $blockchainNameToShow }}
@@ -45,13 +44,24 @@
                     <div class="label">Price</div>
                     <div class="separator">:</div>
                     <div class="value">
-                        <input type="text" name="price" value="Rp {{ number_format($price, 0, ',', '.') }}"
-                            class="form-control" id="price" oninput="formatCurrency(this)">
-                        <!-- Hidden input to store numeric value -->
-                        <input type="hidden" name="numeric_price" id="numeric_price" value="{{ $price }}">
+                        <input type="text" name="price" id="price_input"
+                            value="Rp {{ number_format($rate->price, 0, ',', '.') }}" class="form-control"
+                            oninput="formatCurrency(this, 'numeric_price')">
+                        <input type="hidden" name="numeric_price" id="numeric_price" value="{{ $rate->price }}">
                     </div>
                 </div>
 
+                <div class="group">
+                    <div class="label">Cost Transaction</div>
+                    <div class="separator">:</div>
+                    <div class="value">
+                        <input type="text" name="biaya_transaksi"
+                            value="Rp {{ number_format($biaya_transaksi, 0, ',', '.') }}" class="form-control"
+                            id="biaya_transaksi" oninput="formatCurrency(this, 'numeric_biaya_transaksi')">
+                        <input type="hidden" name="numeric_biaya_transaksi" id="numeric_biaya_transaksi"
+                            value="{{ $biaya_transaksi }}">
+                    </div>
+                </div>
 
                 <button type="submit" class="button">Save</button>
             </form>
@@ -59,18 +69,22 @@
     </div>
 
     <script>
-        function formatCurrency(input) {
+        function formatCurrency(input, targetFieldId) {
             const numericValue = input.value.replace(/[^\d]/g, '');
             const formattedValue = new Intl.NumberFormat('id-ID').format(parseInt(numericValue, 10));
             const valueWithComma = formattedValue.replace(/\./g, '.');
             input.value = `Rp ${valueWithComma}`;
 
             // Update hidden input with numeric value
-            document.getElementById('numeric_price').value = numericValue;
+            document.getElementById(targetFieldId).value = numericValue;
 
-            // Tambahkan log untuk melihat nilai yang dikirimkan ke server
-            console.log('Nilai yang dikirim ke server:', numericValue);
+            // Log the value sent to the server
+            console.log(`Value sent to the server for ${targetFieldId}:`, numericValue);
         }
+
+        // Call the function for the "biaya_transaksi" and "Price" fields
+        formatCurrency(document.getElementById('biaya_transaksi'), 'numeric_biaya_transaksi');
+        formatCurrency(document.getElementById('price_input'), 'numeric_price');
     </script>
 
 @endsection

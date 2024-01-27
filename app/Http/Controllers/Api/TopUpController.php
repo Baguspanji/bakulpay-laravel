@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blockchain;
 use App\Models\TopUp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +22,47 @@ class TopUpController extends Controller
         return response()->json($top_up);
     }
 
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'user_id' => 'required',
+    //         'product' => 'required',
+    //         'price_rate' => 'required',
+    //         'rek_client' => 'required',
+    //         'jumlah' => 'required',
+    //         'total_pembayaran' => 'required',
+    //         'nama_bank' => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json($validator->errors(), 422);
+    //     }
+
+    //     $post = new TopUp();
+    //     $post->user_id = $request->user_id;
+    //     $post->rek_client = $request->rek_client;
+    //     $post->jumlah = $request->jumlah;
+    //     $post->total_pembayaran = $request->total_pembayaran;
+    //     $post->nama_bank = $request->nama_bank;
+    //     $post->product = $request->product;
+    //     $post->price_rate = $request->price_rate;
+    //     // $post->nama = $request->nama;
+
+    //     $post->status = 'Un Payment';
+
+    //     $post->id_pembayaran = Str::random(10);
+
+    //     $post->tanggal = now();
+
+    //     $post->save();
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'message' => 'Berhasil memasukkan data',
+    //         'id_pembayaran' => $post->id_pembayaran,
+    //     ]);
+    // }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -37,6 +79,25 @@ class TopUpController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
+        // Check if the product exists in the Blockchain table
+        $productExistsInBlockchain = Blockchain::where('nama_bank', $request->product)->exists();
+
+        if ($productExistsInBlockchain) {
+            // Validate that nama_blockchain is present if product exists in Blockchain
+            $validator = Validator::make($request->all(), [
+                'nama_blockchain' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            $namaBlockchain = $request->nama_blockchain;
+        } else {
+            // No need for nama_blockchain if product doesn't exist in Blockchain
+            $namaBlockchain = null;
+        }
+
         $post = new TopUp();
         $post->user_id = $request->user_id;
         $post->rek_client = $request->rek_client;
@@ -45,13 +106,12 @@ class TopUpController extends Controller
         $post->nama_bank = $request->nama_bank;
         $post->product = $request->product;
         $post->price_rate = $request->price_rate;
-        // $post->nama = $request->nama;
-
         $post->status = 'Un Payment';
-
         $post->id_pembayaran = Str::random(10);
-
         $post->tanggal = now();
+
+        // Set nama_blockchain based on the condition
+        $post->nama_blockchain = $namaBlockchain;
 
         $post->save();
 
@@ -61,6 +121,7 @@ class TopUpController extends Controller
             'id_pembayaran' => $post->id_pembayaran,
         ]);
     }
+
 
     public function payment_topup(Request $request, $id_pembayaran)
     {

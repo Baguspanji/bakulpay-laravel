@@ -606,33 +606,43 @@ class RateMasterDataController extends Controller
             ->with('iconURL', $iconURL);
     }
 
-
     public function update_rate(Request $request, $id)
     {
         // Validasi input jika diperlukan
         $request->validate([
-            'numeric_price' => 'numeric',
-            // ... tambahkan validasi lainnya jika diperlukan
+            'numeric_biaya_transaksi' => 'numeric',
+            'numeric_price' => 'required|numeric',
         ]);
 
         // Retrieve blockchain_id from the form data
         $blockchainIdFromForm = $request->input('blockchain_id');
 
-        // Update price based on the presence of blockchain_id
         if ($blockchainIdFromForm) {
-            // Update price in the blockchain table
+            // Update biaya_transaksi in the blockchain table
             Blockchain::where('nama_blockchain', $blockchainIdFromForm)
+                ->update(['biaya_transaksi' => $request->input('numeric_biaya_transaksi')]);
+
+            // Fetch the corresponding 'id_rate' from the Blockchain table
+            $blockchainData = Blockchain::where('nama_blockchain', $blockchainIdFromForm)->first();
+
+            // Fetch the corresponding 'id_rate' from the RateMasterData table based on 'nama_bank'
+            $rateMasterDataIdRate = RateMasterData::where('nama_bank', $blockchainData->nama_bank)->value('id');
+
+            // Update 'price' in the RateMasterData table based on 'id_rate'
+            RateMasterData::where('id', $rateMasterDataIdRate)
                 ->update(['price' => $request->input('numeric_price')]);
         } else {
-            // Update price in the rate_master_data table
+            // Update biaya_transaksi and price in the rate_master_data table
             RateMasterData::where('id', $id)
-                ->update(['price' => $request->input('numeric_price')]);
+                ->update([
+                    'biaya_transaksi' => $request->input('numeric_biaya_transaksi'),
+                    'price' => $request->input('numeric_price')
+                ]);
         }
 
         // Redirect to the rate index page or any other desired page
         return redirect()->route('rate')->with('success', 'Rate updated successfully');
     }
-
 
 
     public function edit_transactionmd($id)
