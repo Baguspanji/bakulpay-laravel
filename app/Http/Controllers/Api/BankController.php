@@ -542,7 +542,7 @@ class BankController extends Controller
     public function history(Request $request, $userId)
     {
         $page = $request->query('page', 1);
-        $limit = $request->query('limit', 10);
+        $limit = $request->query('limit', 5);
 
         $withdraws = Withdraw::where('user_id', $userId)
             ->whereNotIn('status', ['un payment'])
