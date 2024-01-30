@@ -14,6 +14,8 @@ use App\Models\TopUp;
 use App\Models\Withdraw;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class BankController extends Controller
 {
@@ -267,6 +269,27 @@ class BankController extends Controller
     // }
 
 
+    // public function rate()
+    // {
+    //     try {
+    //         // Ambil semua data dari tabel RateMasterData
+    //         $rates = RateMasterData::all();
+
+    //         // Loop melalui setiap data RateMasterData
+    //         foreach ($rates as $rate) {
+    //             // Ambil data dari tabel Blockchain yang memiliki nama_bank yang sama
+    //             $blockchainData = Blockchain::where('nama_bank', $rate->nama_bank)->get();
+
+    //             // Tambahkan data blockchain ke dalam properti baru pada objek RateMasterData
+    //             $rate->blockchain_data = $blockchainData;
+    //         }
+
+    //         return response()->json($rates);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => 'Gagal mendapatkan data rate.'], 500);
+    //     }
+    // }
+
     public function rate()
     {
         try {
@@ -279,7 +302,11 @@ class BankController extends Controller
                 $blockchainData = Blockchain::where('nama_bank', $rate->nama_bank)->get();
 
                 // Tambahkan data blockchain ke dalam properti baru pada objek RateMasterData
-                $rate->blockchain_data = $blockchainData;
+                $rate->blockchain_data = $blockchainData->map(function ($item) {
+                    // Ubah nilai 'true' atau 'false' menjadi boolean
+                    $item['active'] = ($item['active'] === 'true');
+                    return $item;
+                });
             }
 
             return response()->json($rates);
@@ -465,9 +492,57 @@ class BankController extends Controller
     //     ]);
     // }
 
-    public function history(Request $request)
+    // public function history(Request $request)
+    // {
+    //     $userId = $request->user_id;
+
+    //     $withdraws = Withdraw::where('user_id', $userId)
+    //         ->whereNotIn('status', ['un payment'])
+    //         ->get();
+
+    //     $topups = TopUp::where('user_id', $userId)
+    //         ->whereNotIn('status', ['un payment'])
+    //         ->get();
+
+    //     $history = [];
+
+    //     if (!$withdraws->isEmpty()) {
+    //         $modifiedWithdraws = $withdraws->map(function ($withdraw) {
+    //             $withdraw['type'] = 'Withdraw';
+    //             return $withdraw;
+    //         });
+
+    //         $history = $modifiedWithdraws->toArray();
+    //     }
+
+    //     if (!$topups->isEmpty()) {
+    //         $modifiedTopups = $topups->map(function ($topup) {
+    //             $topup['type'] = 'Top-Up';
+    //             return $topup;
+    //         });
+
+    //         $history = array_merge($history, $modifiedTopups->toArray());
+    //     }
+
+    //     if (empty($history)) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'No history found',
+    //             'data' => null,
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'History retrieved successfully',
+    //         'data' => $history,
+    //     ]);
+    // }
+
+    public function history(Request $request, $userId)
     {
-        $userId = $request->user_id;
+        $page = $request->query('page', 1);
+        $limit = $request->query('limit', 10);
 
         $withdraws = Withdraw::where('user_id', $userId)
             ->whereNotIn('status', ['un payment'])
@@ -477,27 +552,30 @@ class BankController extends Controller
             ->whereNotIn('status', ['un payment'])
             ->get();
 
-        $history = [];
+        $modifiedWithdraws = $withdraws->map(function ($withdraw) {
+            $withdraw['type'] = 'Withdraw';
+            return $withdraw;
+        });
 
-        if (!$withdraws->isEmpty()) {
-            $modifiedWithdraws = $withdraws->map(function ($withdraw) {
-                $withdraw['type'] = 'Withdraw';
-                return $withdraw;
-            });
+        $modifiedTopups = $topups->map(function ($topup) {
+            $topup['type'] = 'Top-Up';
+            return $topup;
+        });
 
-            $history = $modifiedWithdraws->toArray();
-        }
+        $history = $modifiedWithdraws->merge($modifiedTopups);
 
-        if (!$topups->isEmpty()) {
-            $modifiedTopups = $topups->map(function ($topup) {
-                $topup['type'] = 'Top-Up';
-                return $topup;
-            });
+        $currentPage = Paginator::resolveCurrentPage('page');
+        $items = $history->forPage($currentPage, $limit)->values();
 
-            $history = array_merge($history, $modifiedTopups->toArray());
-        }
+        $paginatedHistory = new LengthAwarePaginator(
+            $items,
+            $history->count(),
+            $limit,
+            $currentPage,
+            ['path' => Paginator::resolveCurrentPath()]
+        );
 
-        if (empty($history)) {
+        if ($paginatedHistory->isEmpty()) {
             return response()->json([
                 'success' => false,
                 'message' => 'No history found',
@@ -508,7 +586,14 @@ class BankController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'History retrieved successfully',
-            'data' => $history,
+            'data' => [
+                'data' => $paginatedHistory->items(),
+                'pagination' => [
+                    'total' => $paginatedHistory->total(),
+                    'per_page' => $paginatedHistory->perPage(),
+                    'current_page' => $paginatedHistory->currentPage(),
+                ],
+            ],
         ]);
     }
 }

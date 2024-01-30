@@ -57,6 +57,7 @@ Route::post('/payment/withdraw/{id_pembayaran}', [WithdrawController::class, 'pa
 // Authenticated route for getting user's history
 Route::middleware('auth:sanctum')->get('history/{user_id}', [BankController::class, 'history']);
 
+
 Route::get('rate', [BankController::class, 'rate']);
 Route::get('metode_pembayaran', [BankController::class, 'metode_pembayaran']);
 

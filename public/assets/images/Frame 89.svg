@@ -1,0 +1,28 @@
+<svg width="300" height="172" viewBox="0 0 300 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="300" height="172" rx="20" fill="url(#paint0_linear_1520_106)"/>
+<g style="mix-blend-mode:color-dodge" opacity="0.5">
+<path d="M211 132C211 93.3401 242.34 62 281 62H300V152C300 163.046 291.046 172 280 172H211V132Z" fill="#37398B"/>
+</g>
+<g style="mix-blend-mode:color-dodge">
+<mask id="path-3-inside-1_1520_106" fill="white">
+<path d="M275 86.5C275 79.5964 280.596 74 287.5 74V74C294.404 74 300 79.5964 300 86.5V152C300 163.046 291.046 172 280 172H275V86.5Z"/>
+</mask>
+<path d="M275 86.5C275 79.5964 280.596 74 287.5 74V74C294.404 74 300 79.5964 300 86.5V152C300 163.046 291.046 172 280 172H275V86.5Z" fill="#37398B"/>
+<path d="M275 74H300H275ZM300 172H275H300ZM274 172V87.5C274 80.0442 280.044 74 287.5 74C281.149 74 276 79.5964 276 86.5V172H274ZM300 74V172V74Z" fill="black" mask="url(#path-3-inside-1_1520_106)"/>
+</g>
+<g style="mix-blend-mode:color-dodge">
+<path d="M251 110C251 101.716 257.716 95 266 95H275V172H251V110Z" fill="#37398B"/>
+</g>
+<g style="mix-blend-mode:overlay">
+<circle cx="184.5" cy="30.5" r="9.5" fill="#D9D9D9"/>
+</g>
+<g style="mix-blend-mode:overlay">
+<circle cx="196.5" cy="30.5" r="9.5" fill="#D9D9D9"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_1520_106" x1="154.441" y1="5.375" x2="232.666" y2="175.25" gradientUnits="userSpaceOnUse">
+<stop offset="0.0490364" stop-color="#37398B"/>
+<stop offset="1" stop-color="#00A8ED"/>
+</linearGradient>
+</defs>
+</svg>
