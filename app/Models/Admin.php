@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -46,4 +47,14 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function topups()
+    {
+        return $this->hasMany(Topup::class, 'user_id');
+    }
+
+    public function withdraws()
+    {
+        return $this->hasMany(Withdraw::class, 'user_id');
+    }
 }

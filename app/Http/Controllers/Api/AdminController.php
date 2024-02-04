@@ -224,6 +224,7 @@ class AdminController extends Controller
         }
 
         $input['password'] = bcrypt($input['password']);
+        $input['active'] = 'true';
 
         // Ensure 'noHp' is added to the fillable property in the Admin model
         $user = Admin::create($input);

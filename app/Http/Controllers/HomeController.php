@@ -125,6 +125,35 @@ class HomeController extends Controller
 
     public function cs_management()
     {
-        return view('settings.cs_management');
+        $admins = Admin::all();
+        $totals = [];
+
+        foreach ($admins as $admin) {
+            $totals[$admin->id] = $this->calculateTotals($admin);
+        }
+
+        return view('settings.cs_management', ['admins' => $admins, 'totals' => $totals]);
+    }
+
+    // Add other methods as needed
+
+    private function calculateTotals($admin)
+    {
+        $successTotal = $admin->topups()->where('status', 'success')->count();
+        $failedTotal = $admin->topups()->where('status', 'failed')->count();
+        $pendingTotal = $admin->topups()->where('status', 'pending')->count();
+
+        $successTotal += $admin->withdraws()->where('status', 'success')->count();
+        $failedTotal += $admin->withdraws()->where('status', 'failed')->count();
+        $pendingTotal += $admin->withdraws()->where('status', 'pending')->count();
+
+        $overallTotal = $successTotal + $failedTotal + $pendingTotal;
+
+        return [
+            'success' => $successTotal,
+            'failed' => $failedTotal,
+            'pending' => $pendingTotal,
+            'overall' => $overallTotal,
+        ];
     }
 }

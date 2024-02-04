@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\TopUpController;
 use App\Http\Controllers\Api\WithdrawController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankWdController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentMasterDataController;
@@ -44,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/activate-transactionmd/{id}', [RateMasterDataController::class, 'activate'])->name('activate_transactionmd');
     Route::get('/deactivate-transactionmd/{id}', [RateMasterDataController::class, 'deactivate'])->name('deactivate_transactionmd');
+
+    Route::get('/activate-customer/{id}', [CustomerController::class, 'activate'])->name('activate_customer');
+    Route::get('/deactivate-customer/{id}', [CustomerController::class, 'deactivate'])->name('deactivate_customer');
 
     Route::get('/activate-blockchain/{id}/{blockchain_id}', [RateMasterDataController::class, 'activate_blockchain'])->name('activate_blockchain');
     Route::get('/deactivate-blockchain/{id}/{blockchain_id}', [RateMasterDataController::class, 'deactivate_blockchain'])->name('deactivate_blockchain');

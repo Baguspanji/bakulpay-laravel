@@ -948,6 +948,132 @@ CONTENT STYLE
     font-weight: bold;
 }
 
+#content .container .data-customer {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+#content .container .hr_cs {
+    border-color: #00a8ed; /* Change the color to your desired color code */
+    margin-top: 5px;
+}
+
+#content .container .data-cs {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+#content .container .data-cs_1 {
+    float: left;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#content .container .data-cs_2 {
+    font-weight: bold;
+}
+
+.active-status {
+    color: #51b404;
+    float: left;
+}
+
+.inactive-status {
+    color: #ff0000;
+    float: left;
+}
+
+#content .container .data-cs_12 {
+    color: #00a8ed;
+    float: left;
+}
+
+#content .container .data-cs_13 {
+    color: #00a8ed;
+    float: left;
+}
+
+#content .container .data-cs_15 {
+    color: #00a8ed;
+    float: left;
+    margin-left: 45%;
+}
+
+#content .container .data-cs_3 {
+    margin-left: 95%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #00a8ed;
+}
+
+#content .container .data-cs_4 {
+    float: left;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+#content .container .data-cs_6 {
+    color: #00a8ed;
+}
+
+#content .container .data-cs_7 {
+    color: #00a8ed;
+    margin-left: 82%;
+    font-size: 20px;
+    font-weight: bold;
+}
+#content .container .data-cs_8 {
+    color: #00a8ed;
+    margin-left: 80%;
+    font-weight: bold;
+}
+
+#content .container .data-cs_9 {
+    color: #a8afbd;
+    margin-left: 25px;
+}
+#content .container .data-cs_16 {
+    color: #000000;
+    margin-left: 25px;
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#content .container .data-cs_10 {
+    margin-left: 25px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #000000;
+}
+
+#content .container .data-cs_11 {
+    margin-left: 25px;
+    color: #00a8ed;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#content .container .data-cs_12 {
+    margin-left: 49%;
+    font-weight: bold;
+}
+#content .container .data-cs_14 {
+    float: left;
+    font-size: 18px;
+    margin-right: 70px;
+}
+
+#content .container .data-cs img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    float: left;
+}
+
 @media screen and (max-width: 600px) {
     #content .data-item {
         flex: 1 0 100%;
