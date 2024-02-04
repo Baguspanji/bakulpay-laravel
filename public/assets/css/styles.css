@@ -846,10 +846,30 @@ CONTENT STYLE
     padding-left: 20px;
 }
 
+#content .data-item .data-isi .data-cont1 {
+    margin-top: 10%;
+    margin-left: 8%;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#content .data-item .data-isi .data-cont2 {
+    margin-left: 8%;
+    color: #00a8ed;
+    font-weight: bold;
+}
+#content .data-item .data-isi img {
+    width: 25%;
+    height: 25%;
+    float: right;
+    margin-top: -20%;
+    margin-right: 5%;
+}
+
 #content .data-item .data-keterangan {
     background-image: linear-gradient(to right, #37398b, #00a8ed);
     color: #ffffff;
-    margin-top: 29%;
+    margin-top: 9%;
     height: 43px;
     font-size: 14px;
     padding-top: 10px;
@@ -859,12 +879,74 @@ CONTENT STYLE
     border-top-right-radius: 0; /* Set radius pojok kanan bawah menjadi 0 */
     border-top-left-radius: 0; /* Set radius pojok kiri bawah menjadi 0 */
 }
+#content .data-item .data-background img {
+    height: 150px;
+    width: 100%;
+    /* border-radius: 25px; */
+}
+
+#dropdownContainer {
+    position: relative;
+    display: inline-block;
+}
+
+#dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    /* min-width: fit-content; */
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 20px;
+    right: 0;
+    text-align: center;
+}
+
+#dropdownContent p:hover {
+    background-image: linear-gradient(to right, #37398b, #00a8ed);
+    color: #fff; /* Change text color as needed */
+    border-radius: 20px;
+}
+
+#dropdownContent p {
+    padding: 5px;
+    margin: 0;
+}
+
+#dropdownTrigger:hover #dropdownContent {
+    display: block;
+}
+
+.data-background {
+    position: relative;
+    overflow: hidden;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 45%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    color: white; /* Set the text color */
+    font-weight: bold;
+}
+.overlay-text-1 {
+    margin-bottom: 15px;
+    /* margin-left: 8%; */
+    font-size: 14px;
+}
+.overlay-text-2 {
+    margin-bottom: 10px;
+    /* margin-left: 8%; */
+    font-size: 20px;
+}
 
 #content .data-item .data-keterangan iconify-icon {
     margin-left: 170px;
     font-size: 16px;
     font-weight: bold;
-   }
+}
 
 @media screen and (max-width: 600px) {
     #content .data-item {

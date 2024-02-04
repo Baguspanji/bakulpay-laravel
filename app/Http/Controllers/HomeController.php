@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\BankWd;
 use App\Models\Payment;
 use App\Models\PaymentMasterData;
 use App\Models\RateMasterData;
 use App\Models\TopUp;
 use App\Models\Withdraw;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
@@ -16,8 +18,51 @@ class HomeController extends Controller
 {
     public function dashboard()
     {
-        return view('home'); // Gantilah 'home' dengan nama file view dashboard Anda
+        // Calculate the date one month ago from today
+        $lastMonth = Carbon::now()->subMonth();
+
+        // Fetch new users registered in the last month
+        $newUsersLastMonth = Admin::where('created_at', '>=', $lastMonth)->get();
+
+        // Calculate the total count of new users
+        $totalNewUsers = $newUsersLastMonth->count();
+
+        // Fetch pending topup and withdraw records
+        $pendingTopups = TopUp::where('status', 'pending')->get();
+        $pendingWithdraws = Withdraw::where('status', 'pending')->get();
+
+        // Fetch pending topup and withdraw records
+        $statusTopups = TopUp::where('status', 'success')->get();
+        $statusWithdraws = Withdraw::where('status', 'success')->get();
+
+        // Calculate the total sum of total_pembayaran from both tables
+        $totalPembayaran = $this->sumTotalPembayaran($statusTopups) + $this->sumTotalPembayaran($statusWithdraws);
+
+        // Calculate total pending transactions
+        $totalPending = $pendingTopups->count() + $pendingWithdraws->count();
+
+        // Pass the data to the view
+        return view('home', [
+            'pendingTopups' => $pendingTopups,
+            'pendingWithdraws' => $pendingWithdraws,
+            'totalPembayaran' => $totalPembayaran,
+            'totalPending' => $totalPending,
+            'totalNewUsers' => $totalNewUsers,
+        ]);
     }
+
+    private function sumTotalPembayaran($items)
+    {
+        // Calculate the sum of total_pembayaran from the given items
+        return $items->sum(function ($item) {
+            // Extract the numeric part from the string (assuming it's always in the format "Rp.xxx")
+            $numericPart = filter_var($item->total_pembayaran, FILTER_SANITIZE_NUMBER_INT);
+
+            // Convert the string to a numeric value
+            return intval($numericPart);
+        });
+    }
+
 
     // public function dashboard()
     // {

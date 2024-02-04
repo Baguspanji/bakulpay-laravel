@@ -30,4 +30,9 @@ class Withdraw extends Model
     {
         return $this->belongsTo(RateMasterData::class, 'nama_bank', 'nama_bank');
     }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'user_id');
+    }
 }

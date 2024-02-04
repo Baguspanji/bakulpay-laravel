@@ -160,7 +160,7 @@
 
             <ul class="list-unstyled components">
 
-                <li class="{{ Request::is('/dashboard') ? 'active' : '' }}">
+                <li class="{{ Request::is('dashboard*') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}"><iconify-icon
                             icon="material-symbols:dashboard"></iconify-icon>Dashboard</a>
                 </li>
