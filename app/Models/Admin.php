@@ -50,7 +50,7 @@ class Admin extends Authenticatable
 
     public function topups()
     {
-        return $this->hasMany(Topup::class, 'user_id');
+        return $this->hasMany(TopUp::class, 'user_id');
     }
 
     public function withdraws()

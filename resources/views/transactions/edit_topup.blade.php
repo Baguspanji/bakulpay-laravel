@@ -16,9 +16,9 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $topup->id }}">
 
-                <div class="judul_1">
-                    <div class="keterangan_1">{{ \Carbon\Carbon::parse($topup->tanggal)->format('j M Y') }}</div>
-                    <div class="nama_1">Date</div>
+                <div class="judul">
+                    <div class="nama">Date</div>
+                    <div class="keterangan">{{ \Carbon\Carbon::parse($topup->tanggal)->format('j M Y') }}</div>
 
                 </div>
 
@@ -117,7 +117,7 @@
             });
         });
     </script>
-    
+
 
 
 
