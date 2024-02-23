@@ -80,80 +80,81 @@
                     {{-- <div class="judul_1">
                         <div class="keterangan_1"><span id="payment-date"></span></div>
                         <div class="nama_1">Date</div> --}}
-                        {{-- kiri --}}
+                    {{-- kiri --}}
                     {{-- </div> --}}
 
-                    <div class="judul_01">
+
 
                     <div class="judul">
                         <div class="nama">No ID</div>
-                        <div class="keterangan"><span id="payment-id"></div>
-                    </div>
-
-                    <div class="judul_2">
-                        <div class="nama">Date</div>
-                        <div class="keterangan"><span id="payment-date"></span></div>
-                    </div>
-
+                        <div class="keterangan"><span id="payment-id"></span></div>
                     </div>
 
                     <div class="judul">
-                        <div class="nama_2">Client Name</div>
-                        <div class="keterangan"><span id="payment-nama"></span></div>
+                        <div class="nama_1">Date</div>
+                        <div class="keterangan_3"><span id="payment-date"></span></div>
+                    </div>
 
-                        <div class="nama">Status</div>
-                        <div class="keterangan"><span id="payment-status"></span></div>
+                    <div class="judul">
+                        <div class="nama">Client Name</div>
+                        <div class="keterangan_2"><span id="payment-nama"></span></div>
+                    </div>
+
+                    <div class="judul">
+                        <div class="nama_1">Status</div>
+                        <div class="keterangan_1"><span id="payment-status"></span></div>
                     </div>
 
                     <hr class="hr_edti">
 
-                    {{-- <div class="judul_1">
-                        <div class="keterangan_3"><span id="payment-buktipembayaran"></span></div>
-                        <div class="nama_1">Photo</div>
-                    </div> --}}
-                    {{-- kiri --}}
-
-                    <div class="judul">
+                    <div class="judul_2">
                         <div class="nama">Bank</div>
                         <div class="keterangan"><span id="payment-namabank"></div>
                     </div>
 
+                    <div class="judul_2">
+                        <div class="nama_1">Photo</div>
+                        <div class="keterangan_4"><span id="payment-buktipembayaran"></div>
+                    </div>
+
                     <div class="judul_3">
                         <div class="nama">Email</div>
-                        <div class="keterangan"><span id="payment-rekclient"></div>
+                        <div class="keterangan_2"><span id="payment-rekclient"></div>
                     </div>
 
-                    <div class="judul">
+
+
+                    <div class="judul_4">
                         <div class="nama">Number Transaction</div>
-                        <div class="keterangan"><span id="payment-idpembayaran"></div>
+                        <div class="keterangan_2"><span id="payment-idpembayaran"></div>
                     </div>
 
-                    <div class="judul">
+                    <div class="judul_5">
                         <div class="nama">Transaction</div>
-                        <div class="keterangan">Top-Up</div>
+                        <div class="keterangan_2">Top-Up</div>
                     </div>
 
-                    <div class="judul">
+                   {{--  <div class="judul_1">
                         <div class="nama">Payment</div>
                         <div class="keterangan"><span id="payment-product"></div>
                     </div>
 
-                    <div class="judul">
+                    <div class="judul_1">
                         <div class="nama">Price</div>
                         <div class="keterangan"><span id="payment-pricerate"></div>
                     </div>
 
-                    <div class="judul">
+                    <div class="judul_1">
                         <div class="nama">Quantity</div>
                         <div class="keterangan"><span id="payment-jumlah"></div>
-                    </div>
+                    </div> --}}
 
-                    <hr class="hr_edti">
+                    {{-- <hr class="hr_edti"> --}}
 
-                    <div class="judul">
+                    {{-- <div class="judul">
                         <div class="nama">Total</div>
                         <div class="keterangan"><span id="payment-totalpembayaran"></div>
-                    </div>
+                    </div> --}}
 
                 </div>
 

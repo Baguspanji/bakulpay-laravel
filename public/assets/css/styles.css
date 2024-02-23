@@ -435,7 +435,6 @@ CONTENT STYLE
 #content .isi .judul .nama {
     color: #37398b;
     font-weight: bold;
-    float: left;
 }
 
 #content .isi .judul .keterangan_2 {
@@ -670,128 +669,185 @@ CONTENT STYLE
     /* padding-top: 2%; */
     padding-left: 2%;
 }
-#content .modal-body .judul {
-    padding-bottom: 2%;
-}
 
-#content .modal-body .judul_3 {
-    padding-bottom: 4%;
+#content .modal-body .judul {
+    padding-left: 4%;
+    float: left;
+    width: 50%;
+    padding-bottom: 2%;
 }
 
 #content .modal-body .judul_2 {
+    padding-left: 4%;
+    float: left;
+    width: 50%;
+    padding-bottom: 2%;
+    padding-top: 3%;
+}
+
+#content .modal-body .judul_1 {
+    padding-left: 4%;
+    width: 50%;
+    padding-bottom: 2%;
+    padding-top: 3%;
+}
+
+#content .modal-body .judul_3 {
+    float: left;
+    padding-left: 4%;
+    width: 50%;
     padding-bottom: 2%;
 }
 
-#content .modal-body .judul_1 .nama_1 {
+#content .modal-body .judul_4 {
     float: left;
-    color: #37398b;
-    font-weight: bold;
-    /* padding-right: 20%; */
-}
-/* #content .modal-body .judul_1 .nama_2 {
-    float: right;
-    color: #37398b;
-    font-weight: bold;
-    padding-right: 17.3%;
-} */
-
-#content .modal-body .judul_1 .keterangan_1 {
-    float: left;
-    color: #a8afbd;
-    font-weight: bold;
-    /* padding-right: 6.5%; */
+    padding-left: -4%;
+    width: 50%;
 }
 
-#content .modal-body .judul_1 .keterangan_3 img {
-    float: right;
-    padding-right: 6.5%;
-    width: 20%;
-    height: 40%;
-}
-/* #content .modal-body .judul_1 .keterangan_2 {
-    float: right;
-    color: #a8afbd;
-    font-weight: bold;
-    padding-right: 10%;
-    text-align: left;
-} */
-
-#content .modal-body .judul_3 .nama,
 #content .modal-body .judul .nama {
     color: #37398b;
     font-weight: bold;
+    width: 25%;
     float: left;
-    padding-left: 3%;
 }
 
-/* #content .modal-body .judul .nama_4 {
+#content .modal-body .judul_3 .nama {
     color: #37398b;
-    float: left;
     font-weight: bold;
-    padding-left: 3%;
-} */
-#content .modal-body .judul_01 {
-    display: flex;
+    width: 25%;
+    float: left;
+    margin-top: -70%;
 }
 
-#content .modal-body .judul_2 .nama_2 {
+#content .modal-body .judul_4 .nama {
     color: #37398b;
     font-weight: bold;
+    width: 50%;
     float: left;
-    padding-left: 3%;
+    margin-top: -50%;
+    margin-left: -92%;
+
 }
 
-/* #content .modal-body .judul_2 .keterangan_2 {
-    color: #a8afbd;
-    text-align: left;
-    padding-left: 20%;
-} */
-
-/* #content .modal-body .judul .nama_3 {
+#content .modal-body .judul_5 .nama {
     color: #37398b;
     font-weight: bold;
+    width: 50%;
     float: left;
-    padding-left: 3%;
-    padding-top: 1%;
-} */
+    margin-top: -40%;
+    margin-left: -92%;
 
-/* #content .modal-body .judul .nama_1 {
+}
+
+#content .modal-body .judul_1 .nama {
     color: #37398b;
     font-weight: bold;
+    width: 40%;
     float: left;
-    padding-left: 3%;
-} */
+}
 
-#content .modal-body .judul_2 .keterangan,
-#content .modal-body .judul_3 .keterangan,
 #content .modal-body .judul .keterangan {
-    color: #a8afbd;
-    text-align: left;
-    padding-left: 28%;
+    color: #000000;
+    padding-left: 60%;
 }
 
-/* #content .modal-body .judul .keterangan_3 {
-    color: #a8afbd;
-    text-align: left;
-    padding-left: 28%;
-} */
+#content .modal-body .judul_2 .nama {
+    color: #37398b;
+    font-weight: bold;
+    width: 25%;
+    float: left;
+}
+
+#content .modal-body .judul_2 .keterangan {
+    color: #000000;
+    padding-left: 60%;
+}
+#content .modal-body .judul .keterangan_2 {
+    color: #000000;
+    padding-left: 60%;
+    font-weight: bold;
+}
+#content .modal-body .judul_1 .keterangan_2 {
+    color: #000000;
+    padding-left: 60%;
+    font-weight: bold;
+}
+
+#content .modal-body .judul_3 .keterangan_2 {
+    color: #000000;
+    padding-left: 60%;
+    font-weight: bold;
+    margin-top: -70%;
+}
+#content .modal-body .judul_4 .keterangan_2 {
+    color: #000000;
+    padding-left: 60%;
+    font-weight: bold;
+    margin-top: -50%;
+    margin-left: -97%;
+}
+
+#content .modal-body .judul_5 .keterangan_2 {
+    color: #000000;
+    padding-left: 60%;
+    font-weight: bold;
+    margin-top: -40%;
+    margin-left: -97%;
+}
+#content .modal-body .judul .nama_1 {
+    color: #37398b;
+    font-weight: bold;
+    width: 25%;
+    float: left;
+    padding-left: 25%;
+}
+
+#content .modal-body .judul_2 .nama_1 {
+    color: #37398b;
+    font-weight: bold;
+    width: 25%;
+    float: left;
+    padding-left: 25%;
+}
+#content .modal-body .judul .keterangan_1 {
+    color: #000000;
+    padding-left: 60%;
+}
+#content .modal-body .judul .keterangan_3 {
+    color: #A8AFBD;
+    padding-left: 60%;
+}
+
+#content .modal-body .judul_2 .keterangan_1 {
+    color: #000000;
+    padding-left: 70%;
+}
+#content .modal-body .judul_2 .keterangan_3 {
+    color: #A8AFBD;
+    padding-left: 70%;
+}
+
+#content .modal-body .judul_2 .keterangan_4 {
+    color: #A8AFBD;
+    padding-left: 60%;
+    width: 10px;
+}
 
 #content .modal-body .hr_edti {
-    border-top: 2px solid #c2d7ff;
+    border: 1px solid #c2d7ff;
     width: 85%;
     margin: 0 auto;
-    margin-bottom: 2%;
     padding-right: 10%;
-    /* padding-top: 20%; */
-    /* margin-top: 1%; */
+    margin-top: 10%;
 }
 
 .blue-icon {
-    color: #ff0000; /* or any other blue styling */
+    color: #ff0000;
 }
 
 .red-icon {
-    color: #00a8ed; /* or any other red styling */
+    color: #00a8ed;
 }
 
 #content .container_1 {
